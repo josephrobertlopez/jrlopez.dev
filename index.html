@@ -3,105 +3,53 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joseph Lopez</title>
+<title>Joey Lopez</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f0f1a;color:#e0e0e0;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7}
+body{background:#0f0f1a;color:#b0b0b0;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7;max-width:36rem;margin:0 auto;padding:3rem 1.5rem}
 a{color:#58a6ff;text-decoration:none}a:hover{text-decoration:underline}
-.hero{text-align:center;padding:4rem 2rem 2.5rem;background:linear-gradient(135deg,#0f3460,#1a1a2e);border-bottom:2px solid #2a2a4a}
-.hero h1{font-size:2rem;color:#fff;margin-bottom:.3rem}
-.hero .role{color:#a0a0b0;font-size:1rem}
-.hero .loc{color:#666;font-size:.85rem;margin-top:.3rem}
-.hero .links{margin-top:1.2rem}
-.hero .links a{margin:0 .5rem;padding:.3rem .8rem;border:1px solid #2a2a4a;border-radius:16px;font-size:.85rem}
-.hero .links a:hover{border-color:#58a6ff;background:#16213e}
-.content{max-width:44rem;margin:0 auto;padding:2rem 1.5rem}
-h2{font-size:1.2rem;color:#888;margin:2rem 0 .8rem;text-transform:uppercase;letter-spacing:.08em;font-weight:400}
-.paper{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:1.3rem;margin:1rem 0}
-.paper h3{color:#fff;font-size:1.05rem;margin-bottom:.3rem}
-.paper .venue{font-size:.75rem;color:#e94560;margin-bottom:.6rem}
-.paper p{font-size:.9rem;color:#888;margin-bottom:.8rem}
-.paper .tags span{display:inline-block;background:#0f3460;color:#58a6ff;padding:.1em .5em;border-radius:10px;font-size:.7rem;margin:.15rem .15rem}
-.paper .plinks{margin-top:.8rem}
-.paper .plinks a{margin-right:.8rem;font-size:.85rem}
-.about{color:#a0a0b0;font-size:.95rem}
-.about p{margin-bottom:.8rem}
-.exp{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:1.3rem;margin:.8rem 0}
-.exp h3{color:#fff;font-size:1rem;margin-bottom:.1rem}
-.exp .where{color:#58a6ff;font-size:.85rem}
-.exp .when{color:#666;font-size:.8rem;margin-bottom:.5rem}
-.exp p{color:#888;font-size:.88rem}
-.blog-card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;padding:1.3rem;margin:.8rem 0;opacity:.6}
-.blog-card h3{color:#ccc;font-size:.95rem;margin-bottom:.2rem}
-.blog-card .date{font-size:.75rem;color:#666}
-.blog-card p{font-size:.85rem;color:#666;margin-top:.3rem}
-.footer{text-align:center;color:#555;font-size:.75rem;padding:2rem;margin-top:2rem}
+h1{color:#fff;font-size:1.6rem;margin-bottom:.2rem}
+.sub{color:#666;font-size:.9rem;margin-bottom:2rem}
+h2{color:#666;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;margin:2.5rem 0 .8rem;font-weight:400}
+.item{margin-bottom:1.5rem}
+.item h3{color:#ddd;font-size:.95rem;font-weight:500}
+.item .meta{color:#555;font-size:.8rem}
+.item p{font-size:.88rem;margin-top:.3rem}
+.links{margin-top:.4rem;font-size:.85rem}
+.links a{margin-right:.8rem}
+.tag{display:inline-block;background:#1a1a2e;color:#666;padding:.1em .4em;border-radius:6px;font-size:.7rem;margin:.1rem .1rem}
+.footer{color:#333;font-size:.7rem;margin-top:4rem;text-align:center}
 </style>
 </head>
 <body>
 
-<div class="hero">
-<h1>Joseph Lopez</h1>
-<div class="role">Senior Data Engineer · Part-time security researcher</div>
-<div class="loc">Milwaukee, WI</div>
-<div class="links">
-<a href="https://github.com/josephrobertlopez">GitHub</a>
-<a href="mailto:josephrobertlopez@gmail.com">Email</a>
-</div>
-</div>
+<h1>Joey Lopez</h1>
+<div class="sub">Data engineer in Milwaukee. I write about things I find interesting on the side.</div>
 
-<div class="content">
+<h2>Writing</h2>
 
-<h2>Research</h2>
-
-<div class="paper">
+<div class="item">
 <h3>Algebraic and Computational Limits of LLM Guardrails</h3>
-<div class="venue">Preprint · Targeting USENIX Security 2027</div>
-<p>I got curious about why "read every other character" jailbreaks work against LLM safety filters. Turns out there's an algebraic reason — regex guardrails have aperiodic syntactic monoids, placing them in AC⁰, which provably can't compute modular counting. The paper also covers information-theoretic (Fano bound) and computational (NP-completeness) barriers for inference-layer guardrails. First paper — learned a lot.</p>
-<div class="tags">
-<span>syntactic-monoids</span>
-<span>AC⁰</span>
-<span>LLM-safety</span>
-<span>formal-languages</span>
-</div>
-<div class="plinks">
-<a href="https://github.com/josephrobertlopez/aperiodic-guardrails">Code & Paper</a>
-<a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">PDF</a>
+<div class="meta">2026 · preprint</div>
+<p>I wanted to understand why simple jailbreaks like "read every other character" work against AI safety filters. Ended up proving it's an algebraic property — regex filters sit in a complexity class that mathematically can't detect certain encodings. My first paper.</p>
+<div class="links">
+<a href="https://github.com/josephrobertlopez/aperiodic-guardrails">paper + code</a>
 </div>
 </div>
 
-<h2>Day Job</h2>
+<h2>Work</h2>
 
-<div class="exp">
-<h3>Senior Data Engineer</h3>
-<div class="where">Accenture</div>
-<div class="when">Nov 2024 – Present</div>
-<p>Data infrastructure modernization for a top US banking client. Kafka, AWS, Java microservices. Previously Data Engineer at Accenture since Jul 2021.</p>
+<div class="item">
+<h3>Senior Data Engineer · Accenture</h3>
+<div class="meta">2021 – present · Milwaukee</div>
+<p>Data infrastructure for banking. Kafka, AWS, Java. Previously data analyst roles at Bates White and S&P Global Mobility.</p>
 </div>
 
-<div class="exp">
-<h3>Data Analyst</h3>
-<div class="where">Bates White Economic Consulting · Market Scan (S&P Global Mobility)</div>
-<div class="when">2020 – 2021</div>
-<p>Analytics and visualization roles before moving into engineering.</p>
-</div>
-
-<h2>Education</h2>
-
-<div class="exp">
-<h3>UC Irvine</h3>
-<div class="when">Alumni</div>
-</div>
-
-<h2>Blog</h2>
-
-<div class="blog-card">
-<h3>How an AI Peer Reviewer Caught Its Own Overclaimed Result</h3>
-<div class="date">Coming soon</div>
-<p>The research pipeline that went from REJECT (3/10 rigor) to WEAK ACCEPT in 4 review rounds.</p>
-</div>
-
-</div>
+<h2>Links</h2>
+<p>
+<a href="https://github.com/josephrobertlopez">github</a> · 
+<a href="mailto:josephrobertlopez@gmail.com">email</a>
+</p>
 
 <div class="footer">2026</div>
 
