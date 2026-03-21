@@ -1,8 +1,100 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>jrlopez.dev</title>
-<style>body{background:#0f0f1a;color:#e0e0e0;font-family:system-ui;text-align:center;padding:4rem 2rem}
-h1{font-size:2.5rem;color:#fff}p{color:#8888aa;max-width:500px;margin:1rem auto}
-a{color:#58a6ff;text-decoration:none}a:hover{text-decoration:underline}</style></head>
-<body><h1>Joseph Robert Lopez</h1><p>Independent security researcher. Milwaukee, WI.</p>
-<p><a href="https://github.com/josephrobertlopez/aperiodic-guardrails">Current Paper</a> · 
-<a href="https://github.com/josephrobertlopez">GitHub</a></p></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joseph Robert Lopez — Security Research</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f1a;color:#e0e0e0;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7}
+a{color:#58a6ff;text-decoration:none}a:hover{text-decoration:underline}
+.hero{text-align:center;padding:5rem 2rem 3rem;background:linear-gradient(135deg,#0f3460,#1a1a2e,#16213e);border-bottom:3px solid #e94560}
+.hero h1{font-size:2.5rem;color:#fff;margin-bottom:.5rem}
+.hero p{color:#8888aa;font-size:1.1rem;max-width:500px;margin:.5rem auto}
+.hero .links{margin-top:1.5rem}
+.hero .links a{margin:0 .8rem;padding:.4rem 1rem;border:1px solid #2a2a4a;border-radius:20px;font-size:.9rem}
+.hero .links a:hover{border-color:#58a6ff;background:#16213e}
+.content{max-width:48rem;margin:0 auto;padding:2rem 1.5rem}
+h2{font-size:1.4rem;color:#fff;margin:2.5rem 0 1rem;border-bottom:1px solid #2a2a4a;padding-bottom:.5rem}
+.paper{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:1.5rem;margin:1rem 0;border-left:4px solid #e94560}
+.paper h3{color:#fff;font-size:1.2rem;margin-bottom:.5rem}
+.paper .venue{font-size:.8rem;color:#e94560;margin-bottom:.8rem}
+.paper p{font-size:.95rem;color:#a0a0b0;margin-bottom:1rem}
+.paper .tags{margin-bottom:1rem}
+.paper .tag{display:inline-block;background:#0f3460;color:#58a6ff;padding:.15em .6em;border-radius:12px;font-size:.75rem;margin:.2rem .2rem}
+.paper .links a{margin-right:1rem;font-size:.9rem}
+.about{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:1.5rem;margin:1rem 0}
+.about ul{margin:.5rem 0 0 1.2rem}
+.about li{margin-bottom:.3rem;color:#a0a0b0}
+.blog-card{background:#1a1a2e;border:1px solid #2a2a4a;border-radius:12px;padding:1.5rem;margin:1rem 0;border-left:4px solid #58a6ff;opacity:.7}
+.blog-card h3{color:#fff;font-size:1.1rem;margin-bottom:.3rem}
+.blog-card .date{font-size:.8rem;color:#8888aa;margin-bottom:.5rem}
+.blog-card p{font-size:.9rem;color:#a0a0b0}
+.footer{text-align:center;color:#8888aa;font-size:.8rem;padding:2rem;border-top:1px solid #2a2a4a;margin-top:3rem}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>Joseph Robert Lopez</h1>
+<p>Independent security researcher. Formal methods applied to AI safety.</p>
+<p style="color:#666;font-size:.9rem">Milwaukee, WI</p>
+<div class="links">
+<a href="https://github.com/josephrobertlopez">GitHub</a>
+<a href="mailto:josephrobertlopez@gmail.com">Email</a>
+<a href="#research">Research</a>
+<a href="#blog">Blog</a>
+</div>
+</div>
+
+<div class="content">
+
+<h2 id="research">Research</h2>
+
+<div class="paper">
+<h3>Algebraic and Computational Limits of LLM Guardrails</h3>
+<div class="venue">Under Review — USENIX Security 2027</div>
+<p>We prove that LLM guardrails face four structurally distinct barriers: algebraic blindness (syntactic monoid aperiodicity places regex filters in AC⁰, provably unable to compute MOD_p), information-theoretic loss (Fano bound), computational intractability (NP-completeness of instantiation verification), and syntactic indistinguishability of adversarial from legitimate formal reasoning. Validated on 91 regex patterns (97.1% aperiodic) and an N=20 Tree-of-Thought benchmark.</p>
+<div class="tags">
+<span class="tag">syntactic-monoids</span>
+<span class="tag">AC⁰</span>
+<span class="tag">LLM-safety</span>
+<span class="tag">formal-languages</span>
+<span class="tag">guardrails</span>
+<span class="tag">Krohn-Rhodes</span>
+</div>
+<div class="links">
+<a href="https://github.com/josephrobertlopez/aperiodic-guardrails">Code & Paper</a>
+<a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">PDF</a>
+<span style="color:#666;font-size:.9rem">arXiv — pending endorsement</span>
+</div>
+</div>
+
+<h2 id="about">About</h2>
+
+<div class="about">
+<p>I work on applying algebraic automata theory and information theory to AI safety problems. My current focus is on proving structural limitations of LLM guardrail systems — not finding bugs in specific implementations, but establishing mathematical impossibility results for entire classes of defenses.</p>
+<ul>
+<li><strong>Focus:</strong> Syntactic monoids, circuit complexity (AC⁰/TC⁰), Fano bounds, free category functoriality</li>
+<li><strong>Tools:</strong> Python, LaTeX, Claude Code, Ollama, behave (BDD)</li>
+<li><strong>Methodology:</strong> Agentic research pipeline with adversarial AI peer review — the same LLM reasoning capability that enables guardrail bypass also enables research quality gates</li>
+</ul>
+</div>
+
+<h2 id="blog">Blog</h2>
+
+<div class="blog-card">
+<h3>How an AI Peer Reviewer Caught Its Own Overclaimed Result</h3>
+<div class="date">March 2026</div>
+<p>The peer review agent that produced V1 REJECT scores on our own paper — identified a BFS-vs-ToT confound, forced an honest reframe, and made the paper stronger. Why adversarial self-review is the most underrated part of AI-assisted research.</p>
+<a href="#" style="font-size:.85rem;color:#666">Coming soon</a>
+</div>
+
+</div>
+
+<div class="footer">
+Joseph Robert Lopez · 2026 · Built with Claude Code
+</div>
+
+</body>
+</html>
