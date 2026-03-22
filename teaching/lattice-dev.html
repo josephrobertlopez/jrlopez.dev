@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lattice-Driven Development | Joey Lopez</title>
+<meta name="description" content="Why dependency ordering, verification gates, and topological execution beat hope-based AI workflows.">
+<meta property="og:title" content="Lattice-Driven Development | Joey Lopez">
+<meta property="og:description" content="Why dependency ordering, verification gates, and topological execution beat hope-based AI workflows.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/lattice-dev.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+    --orange: #f0883e;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* NAV */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-pill:hover, .nav-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* PROGRESS */
+  .progress-track {
+    position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200;
+    background: var(--border);
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--blue));
+    transition: width 0.2s;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+    padding: 80px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--text-bright);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero .subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+  .hero .author { color: var(--blue); font-size: 0.95em; margin-bottom: 20px; }
+  .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .hero-tag {
+    padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    border: 1px solid; cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .hero-tag:hover { background: rgba(255,255,255,0.08); text-decoration: none; }
+  .hero-tag.red { color: var(--accent); border-color: var(--accent); }
+  .hero-tag.blue { color: var(--blue); border-color: var(--blue); }
+  .hero-tag.green { color: var(--green); border-color: var(--green); }
+
+  /* CONTAINER */
+  .container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+  /* LESSON */
+  .lesson {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 60px;
+  }
+  .lesson-num {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    color: var(--accent); letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .lesson h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
+    color: var(--text-bright);
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  .lesson p { margin-bottom: 16px; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-left: 4px solid var(--border);
+  }
+  .card.insight { border-left-color: var(--green); }
+  .card.try-it { border-left-color: var(--blue); }
+  .card.warning { border-left-color: var(--accent); }
+  .card-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 8px;
+  }
+  .card.insight .card-label { color: var(--green); }
+  .card.try-it .card-label { color: var(--blue); }
+  .card.warning .card-label { color: var(--accent); }
+
+  /* CODE */
+  pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 16px 0;
+    color: var(--text-bright);
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .code-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--green); margin-bottom: 4px;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    font-weight: 700;
+    color: var(--text-bright);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: var(--bg-code);
+  }
+  td { color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ASCII DIAGRAM */
+  .ascii-diagram {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    color: var(--text-bright);
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: #555;
+    font-size: 14px;
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  a { color: var(--blue); }
+  strong { color: var(--text-bright); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .nav-bar { padding: 8px 12px; }
+    .nav-pill { font-size: 12px; padding: 5px 10px; }
+    pre { font-size: 12px; padding: 12px; }
+    .card { padding: 16px; }
+    .ascii-diagram { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<nav class="nav-bar">
+  <a class="nav-pill" href="https://jrlopez.dev">jrlopez.dev</a>
+  <a class="nav-pill" href="#why-lattice">Pipeline vs Lattice</a>
+  <a class="nav-pill" href="#spec-folder">Spec Folder</a>
+  <a class="nav-pill" href="#verification">Verification</a>
+  <a class="nav-pill" href="#topo-sort">Topo Sort</a>
+  <a class="nav-pill" href="#security">Security</a>
+  <a class="nav-pill" href="#formal">Formal</a>
+  <a class="nav-pill" href="#start">Getting Started</a>
+</nav>
+
+<section class="hero">
+  <h1>Lattice-Driven <span>Development</span></h1>
+  <p class="subtitle">Why dependency ordering, verification gates, and topological execution beat hope-based AI workflows.</p>
+  <p class="author">Joey Lopez</p>
+  <div class="hero-tags">
+    <a class="hero-tag red" href="#why-lattice">Why Lattice</a>
+    <a class="hero-tag blue" href="#verification">Verification</a>
+    <a class="hero-tag green" href="#security">Security</a>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- S01: PIPELINE VS LATTICE -->
+  <section class="lesson" id="why-lattice">
+    <div class="lesson-num">Section 01</div>
+    <h2>Pipeline vs. Lattice</h2>
+    <p>I spent years running pipelines. A→B→C. Fast feedback loop. Ship it. Find out what broke in production.</p>
+
+    <p>Then I hit a wall. One hallucination in step A silently corrupted everything downstream. By the time we caught it at C, the cascade had already spread. The problem: pipelines have zero verification. You only know if something is wrong after execution.</p>
+
+    <p>A lattice inverts this. Before C runs, it verifies that its input matches the contract defined by B. Before B runs, it verifies that its input matches A. Each layer is a proof, not a hope.</p>
+
+    <div class="ascii-diagram">PIPELINE (hope-based):
+┌────────┐    ┌────────┐    ┌────────┐
+│  A     │───→│  B     │───→│  C     │
+└────────┘    └────────┘    └────────┘
+                                  ↓
+                         Find bug in production
+
+LATTICE (verification gates):
+┌────────┐    ✓ check    ┌────────┐    ✓ check    ┌────────┐
+│  A     │             │  B     │               │  C     │
+└────────┘    ✓ verify  └────────┘   ✓ verify   └────────┘
+              (A→B)                  (B→C)
+                         ↓
+              Prevent bad state before C</div>
+
+    <div class="card warning">
+      <div class="card-label">Warning</div>
+      <p>AI is fast but unreliable. It will confidently generate wrong output. If you run a pipeline, a hallucination becomes a bug in production. If you run a lattice, a hallucination becomes a broken edge that never executes. Fail at verification, not at scale.</p>
+    </div>
+
+    <p>That's the core distinction. Pipelines assume each step is correct. Lattices verify it. In a world where your agent is an LLM, lattices are the only way to stay sane.</p>
+  </section>
+
+  <!-- S02: THE SPEC FOLDER -->
+  <section class="lesson" id="spec-folder">
+    <div class="lesson-num">Section 02</div>
+    <h2>The Spec Folder</h2>
+    <p>A lattice is physical. It lives in a folder. I call it <code>spec/</code>.</p>
+
+    <p>The spec folder is your ground truth. It contains five files, in dependency order:</p>
+
+    <div class="ascii-diagram">spec/
+├── KNOWLEDGE.md      ← Ground truth (human-written, verified once)
+├── SPEC.md           ← Contract (verified against KNOWLEDGE)
+├── PLAN.md           ← Execution order (verified against SPEC)
+├── OUTPUT/           ← Generated artifacts
+└── EXECUTION.log     ← Audit trail</div>
+
+    <p>Each file is a layer in the lattice. Each layer depends on the previous one. This creates a directed acyclic graph (DAG).</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Purpose</th>
+          <th>Written By</th>
+          <th>Verified By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>KNOWLEDGE.md</strong></td>
+          <td>Immutable facts. What is true about the domain, prior art, constraints, invariants.</td>
+          <td>Human</td>
+          <td>Human code review</td>
+        </tr>
+        <tr>
+          <td><strong>SPEC.md</strong></td>
+          <td>Contract. What the system will do. Acceptance criteria. Interface definitions.</td>
+          <td>LLM + Human</td>
+          <td>Human + KNOWLEDGE check</td>
+        </tr>
+        <tr>
+          <td><strong>PLAN.md</strong></td>
+          <td>Execution roadmap. Decomposed tasks. Dependency graph. Build order.</td>
+          <td>LLM + Human</td>
+          <td>Human + SPEC check</td>
+        </tr>
+        <tr>
+          <td><strong>OUTPUT/</strong></td>
+          <td>Generated files. Code, configs, docs. One per task.</td>
+          <td>LLM</td>
+          <td>Human + PLAN check</td>
+        </tr>
+        <tr>
+          <td><strong>EXECUTION.log</strong></td>
+          <td>Audit trail. Who did what, when, and why.</td>
+          <td>System</td>
+          <td>N/A (immutable)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card insight">
+      <div class="card-label">Core Insight</div>
+      <p><strong>KNOWLEDGE.md is the ground truth.</strong> Human-written, human-verified, never auto-generated. Everything downstream is checked against it. If KNOWLEDGE is solid, SPEC and PLAN can be verified mechanically. If KNOWLEDGE drifts, everything breaks.</p>
+    </div>
+  </section>
+
+  <!-- S03: VERIFICATION GATES -->
+  <section class="lesson" id="verification">
+    <div class="lesson-num">Section 03</div>
+    <h2>Verification Gates</h2>
+    <p>Each layer has a verification gate. A gate is a test: "Does this layer comply with the contract defined by the previous layer?"</p>
+
+    <p>I don't do elaborate formal verification. I do manual spot-checks. But they're systematic:</p>
+
+    <ul style="margin: 16px 0 16px 20px;">
+      <li><strong>KNOWLEDGE gate:</strong> Human reads it once. Is it factual? Is it complete? Sign off.</li>
+      <li><strong>SPEC gate:</strong> Human + automated check. Does SPEC satisfy all constraints in KNOWLEDGE? No contradictions? Sign off.</li>
+      <li><strong>PLAN gate:</strong> Human + automated check. Does PLAN cover all tasks in SPEC? Is the dependency graph acyclic? Can it execute top-to-bottom? Sign off.</li>
+      <li><strong>OUTPUT gate:</strong> Human + automated check. Do the generated files match PLAN? Do they work? Can they be integrated? Sign off.</li>
+    </ul>
+
+    <div class="ascii-diagram">KNOWLEDGE.md
+    ↓ (human review + sign-off)
+  ✓ KNOWLEDGE verified
+    ↓
+SPEC.md
+    ↓ (human + constraint check)
+  ✓ SPEC verified against KNOWLEDGE
+    ↓
+PLAN.md
+    ↓ (human + DAG check)
+  ✓ PLAN verified against SPEC
+    ↓
+OUTPUT/
+    ↓ (human + integration test)
+  ✓ OUTPUT verified against PLAN
+    ↓
+EXECUTION (immutable audit trail)</div>
+
+    <div class="card try-it">
+      <div class="card-label">Try It</div>
+      <p>Take your current project. Can you draw the dependency graph? Can you list the verification gates? If not, you don't have a lattice—you have a pile. Start there.</p>
+    </div>
+
+    <p>The gates don't need to be fancy. A checklist in Markdown is enough. What matters is that each gate is <em>explicit</em>. You know what you're checking for, and you do it before proceeding.</p>
+  </section>
+
+  <!-- S04: TOPOLOGICAL EXECUTION -->
+  <section class="lesson" id="topo-sort">
+    <div class="lesson-num">Section 04</div>
+    <h2>Topological Execution</h2>
+    <p>Once the dependency graph is defined, the execution order is determined. This is topological sort.</p>
+
+    <p>Topological sort is how <code>make</code> works. It's how <code>webpack</code> works. It's how every build system works. You define the graph, the system figures out what to build first.</p>
+
+    <p>I apply the same principle to AI workflows. PLAN.md contains a dependency list. Each task lists its prerequisites. From this, I derive the topological sort—the correct build order.</p>
+
+    <pre>PLAN.md example:
+
+TASK 1: Write KNOWLEDGE.md
+  Prerequisites: (none)
+
+TASK 2: Write SPEC.md
+  Prerequisites: TASK 1
+
+TASK 3: Write PLAN.md
+  Prerequisites: TASK 2
+
+TASK 4: Generate code for Feature A
+  Prerequisites: TASK 3
+
+TASK 5: Generate code for Feature B
+  Prerequisites: TASK 3
+
+TASK 6: Integrate all outputs
+  Prerequisites: TASK 4, TASK 5
+
+Topological sort:
+  1 → 2 → 3 → (4, 5 in parallel) → 6</pre>
+
+    <div class="card insight">
+      <div class="card-label">Core Insight</div>
+      <p>The dependency graph determines the build order. You don't manually schedule tasks. You declare the graph, and the system executes it correctly. The same principle that makes build systems reliable makes LDD reliable.</p>
+    </div>
+
+    <p>This matters because it eliminates scheduling mistakes. If you forget that Task 4 depends on Task 3, you'll discover it in the verification gate, not in production.</p>
+  </section>
+
+  <!-- S05: NO EXECUTION PATH -->
+  <section class="lesson" id="security">
+    <div class="lesson-num">Section 05</div>
+    <h2>No Execution Path</h2>
+    <p>Here's where LDD gets strange and powerful: the LLM never gets direct access to the shell.</p>
+
+    <p>In a typical workflow, you write a prompt, the LLM generates a bash script, and you run it. If the prompt is malicious or compromised, the LLM can execute arbitrary code. Guardrails try to prevent this by filtering bad patterns. But filtering is a game the attacker always wins.</p>
+
+    <p>LDD inverts this. The LLM generates files. A human reads them. The human decides whether to execute. The LLM's output is never executable—it's always a <em>declaration</em>.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Shell Script Workflow</th>
+          <th>Lattice Workflow</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>No escalation path</strong></td>
+          <td>LLM → bash → system. Escalation is immediate.</td>
+          <td>LLM → file → human review → execution. Human is the escalation gate.</td>
+        </tr>
+        <tr>
+          <td><strong>Built-in audit trail</strong></td>
+          <td>History is implicit. What ran? No clear record.</td>
+          <td>Every file, every gate, every execution is logged in EXECUTION.log. Full provenance.</td>
+        </tr>
+        <tr>
+          <td><strong>Blast radius</strong></td>
+          <td>One bad script = system compromise. Radius = unbounded.</td>
+          <td>One bad file = one human-reviewable decision. Radius = the scope of that one decision.</td>
+        </tr>
+        <tr>
+          <td><strong>Execution inversion</strong></td>
+          <td>LLM decides what runs. Human trusts the LLM.</td>
+          <td>Human decides what runs. LLM proposes, human disposes.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card warning">
+      <div class="card-label">Warning</div>
+      <p>Regex-based guardrails can't stop certain attack classes. The answer isn't better filters. It's separating declaration from execution. If the LLM can't execute, it can't cause harm. Read <a href="guardrails-engineers.html">guardrails-engineers.html</a> for the full argument.</p>
+    </div>
+
+    <p>This is why I call it "no execution path." The LLM proposes, but it never executes. The human is always in the loop.</p>
+  </section>
+
+  <!-- S06: FORMAL FOUNDATIONS -->
+  <section class="lesson" id="formal">
+    <div class="lesson-num">Section 06</div>
+    <h2>Formal Foundations</h2>
+    <p>LDD isn't just engineering intuition. It's grounded in formal methods and contract theory.</p>
+
+    <p><strong>The spec is a contract.</strong> It defines the interface between the system and the user. It specifies preconditions (what must be true before execution), postconditions (what will be true after execution), and invariants (what is always true).</p>
+
+    <p><strong>The lattice is a partial order.</strong> Dependency is a relation: A ≤ B means "A must complete before B." This induces a DAG. Topological sort finds a linear extension of this partial order—a valid execution sequence.</p>
+
+    <p><strong>Convergence via constraints.</strong> Each layer (KNOWLEDGE → SPEC → PLAN → OUTPUT) narrows the solution space. KNOWLEDGE eliminates invalid domains. SPEC eliminates invalid contracts. PLAN eliminates invalid schedules. OUTPUT eliminates invalid implementations. By the time you execute, only correct solutions remain.</p>
+
+    <div class="card insight">
+      <div class="card-label">Core Insight</div>
+      <p>The spec isn't documentation. It's a constraint system. Each layer removes entropy from the solution space. Design by contract. Verify each layer. The result is a proof, not a hope.</p>
+    </div>
+
+    <p>I prefer not to formalize this further. The math is there if you need it (lattice theory, order theory, design by contract). But the practice is simple: define the graph, verify each layer, execute in topological order.</p>
+  </section>
+
+  <!-- S07: GETTING STARTED -->
+  <section class="lesson" id="start">
+    <div class="lesson-num">Section 07</div>
+    <h2>Getting Started</h2>
+    <p>You don't need to rewrite your entire workflow. Start with the next feature. Five concrete steps:</p>
+
+    <ol style="margin: 16px 0 16px 20px;">
+      <li><strong>Create <code>spec/</code> folder.</strong> One folder per project.</li>
+      <li><strong>Write KNOWLEDGE.md.</strong> What is true about this domain? Constraints? Invariants? Prior art? One hour max. Human-only.</li>
+      <li><strong>Write SPEC.md.</strong> What will the system do? Acceptance criteria? Interface definitions? Ask an LLM to draft it, then verify against KNOWLEDGE. One hour max.</li>
+      <li><strong>Write PLAN.md.</strong> How will you build it? Decompose into tasks. Define dependencies. Ask an LLM to draft it, then verify against SPEC. Check that the graph is acyclic and executable. One hour max.</li>
+      <li><strong>Execute PLAN.</strong> For each task, ask the LLM to generate the output. Review it against PLAN. Run the gate check. Move on.</li>
+    </ol>
+
+    <div class="card try-it">
+      <div class="card-label">Try It</div>
+      <p>Pick your next feature. Before touching code, write the three files: KNOWLEDGE, SPEC, PLAN. Spend three hours. Then compare the result to how you usually build features. The difference is dramatic.</p>
+    </div>
+
+    <p>That's it. No fancy tooling. No formal verification. Just structure, gates, and honesty about what you know and what you don't.</p>
+
+    <p>The result: fewer bugs, faster development, and—most importantly—sleep. You know what your system will do before it does it.</p>
+  </section>
+
+</div>
+
+<div class="footer">
+  <p>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></p>
+  <p style="margin-top:12px"><a href="../index.html">&larr; jrlopez.dev</a> &middot; <a href="mermaid-prompts.html">&larr; diagrams as prompts</a> &middot; <a href="guardrails-engineers.html">guardrails &rarr;</a></p>
+</div>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    document.getElementById('progressFill').style.width = scrollPercent + '%';
+  });
+
+  // Nav link scroll
+  document.querySelectorAll('.nav-pill').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      const href = pill.getAttribute('href');
+      if (!href.startsWith('#')) return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Hero tag scroll
+  document.querySelectorAll('.hero-tag').forEach(tag => {
+    tag.addEventListener('click', (e) => {
+      const href = tag.getAttribute('href');
+      if (!href.startsWith('#')) return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Scroll observer for active nav pill
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll('.nav-pill').forEach(pill => {
+          pill.classList.remove('active');
+          if (pill.getAttribute('href') === '#' + id) {
+            pill.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.lesson').forEach(lesson => {
+    observer.observe(lesson);
+  });
+</script>
+
+</body>
+</html>

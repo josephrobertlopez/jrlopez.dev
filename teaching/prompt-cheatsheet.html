@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompts Are Programs | Prompt Cheat Sheet</title>
+<meta name="description" content="A composition cheat sheet for prompts. Attention positioning, token density, core operations, and every pattern with citations.">
+<meta property="og:title" content="Prompts Are Programs | Joey Lopez">
+<meta property="og:description" content="A composition cheat sheet. Attention positioning, token density, core operations, and every pattern with citations.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/prompt-cheatsheet.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+    --orange: #f0883e;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* NAV */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-pill:hover, .nav-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* PROGRESS */
+  .progress-track {
+    position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200;
+    background: var(--border);
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--blue));
+    transition: width 0.2s;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+    padding: 80px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--text-bright);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero .subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+  .hero .author { color: var(--blue); font-size: 0.95em; margin-bottom: 20px; }
+  .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .hero-tag {
+    padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    border: 1px solid; cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .hero-tag:hover { background: rgba(255,255,255,0.08); text-decoration: none; }
+  .hero-tag.red { color: var(--accent); border-color: var(--accent); }
+  .hero-tag.blue { color: var(--blue); border-color: var(--blue); }
+  .hero-tag.green { color: var(--green); border-color: var(--green); }
+
+  /* CONTAINER */
+  .container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+  /* LESSON */
+  .lesson {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 60px;
+  }
+  .lesson-num {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    color: var(--accent); letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .lesson h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
+    color: var(--text-bright);
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  .lesson p { margin-bottom: 16px; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-left: 4px solid var(--border);
+  }
+  .card.insight { border-left-color: var(--green); }
+  .card.try-it { border-left-color: var(--blue); }
+  .card.warning { border-left-color: var(--accent); }
+  .card-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 8px;
+  }
+  .card.insight .card-label { color: var(--green); }
+  .card.try-it .card-label { color: var(--blue); }
+  .card.warning .card-label { color: var(--accent); }
+
+  /* CODE */
+  pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 16px 0;
+    color: var(--text-bright);
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .code-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--green); margin-bottom: 4px;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    font-weight: 700;
+    color: var(--text-bright);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: var(--bg-code);
+  }
+  td { color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ASCII DIAGRAM */
+  .ascii-diagram {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    color: var(--text-bright);
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: #555;
+    font-size: 14px;
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  a { color: var(--blue); }
+  strong { color: var(--text-bright); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .nav-bar { padding: 8px 12px; }
+    .nav-pill { font-size: 12px; padding: 5px 10px; }
+    pre { font-size: 12px; padding: 12px; }
+    .card { padding: 16px; }
+    .ascii-diagram { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<nav class="nav-bar">
+  <a class="nav-pill" href="https://jrlopez.dev">jrlopez.dev</a>
+  <a class="nav-pill active" href="#formula">Formula</a>
+  <a class="nav-pill" href="#attention">Attention</a>
+  <a class="nav-pill" href="#density">Density</a>
+  <a class="nav-pill" href="#operations">Operations</a>
+  <a class="nav-pill" href="#structure">Structure</a>
+  <a class="nav-pill" href="#patterns">Patterns</a>
+  <a class="nav-pill" href="#persistence">Persistence</a>
+  <a class="nav-pill" href="#reference">Reference</a>
+  <a class="nav-pill" href="#mistakes">Mistakes</a>
+</nav>
+
+<section class="hero">
+  <h1>Prompts Are <span>Programs</span></h1>
+  <p class="subtitle">A composition cheat sheet. Attention positioning, token density, core operations, and every pattern with citations.</p>
+  <p class="author">Joey Lopez</p>
+  <div class="hero-tags">
+    <a class="hero-tag red" href="#attention">Attention</a>
+    <a class="hero-tag blue" href="#operations">Operations</a>
+    <a class="hero-tag green" href="#patterns">Patterns</a>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- 01: THE FORMULA -->
+  <section class="lesson" id="formula">
+    <div class="lesson-num">Section 01</div>
+    <h2>The Formula</h2>
+    <p>Every prompt you've ever written follows this structure. Template defines <em>how</em> to think. Context defines <em>what</em> to think about. Output is the novel result.</p>
+
+    <div class="ascii-diagram">Template (static)  + Context (dynamic) = Output (novel)
+   ↓                    ↓                   ↓
+How to think      What to think about   Result for THIS context</div>
+
+    <p>This isn't metaphorical. It's literal. The template is reusable—you can apply it to any context. The context is unique to this instance. The output is only possible because both exist together.</p>
+
+    <div class="card insight">
+      <div class="card-label">Core Insight</div>
+      <p>Every prompt you've ever written is an instance of this formula. Template + Context = Output. Reuse templates across contexts. Never mix them.</p>
+    </div>
+  </section>
+
+  <!-- 02: ATTENTION POSITIONING -->
+  <section class="lesson" id="attention">
+    <div class="lesson-num">Section 02</div>
+    <h2>Where Attention Falls</h2>
+    <p>Language models don't distribute attention equally. Transformer architectures have positional bias: top and bottom get more focus. Middle content—even if critical—gets statistically less attention.</p>
+
+    <div class="ascii-diagram">┌─────────────────────────────────┐
+│ TOP: Critical instructions      │ ← HIGH attention (primacy)
+│ - Role, constraints, "never X"  │
+├─────────────────────────────────┤
+│ MIDDLE: Reference material      │ ← LOWER attention
+│ - Code, data, examples          │
+├─────────────────────────────────┤
+│ BOTTOM: Task + output format    │ ← HIGH attention (recency)
+│ - Specific ask, reminders       │
+└─────────────────────────────────┘</div>
+
+    <p><strong>Sandwich technique:</strong> Put critical constraints at TOP and BOTTOM. Never bury your most important instruction in the middle, no matter how well you explain it.</p>
+
+    <div class="card warning">
+      <div class="card-label">Warning</div>
+      <p>If your critical instruction is in the middle, the model is statistically less likely to follow it. This isn't a design choice—it's an artifact of positional encoding in transformers.</p>
+    </div>
+
+    <p><strong>Citation:</strong> Liu et al. (2023) <em>Lost in the Middle: How Language Models Use Long Contexts</em> arXiv:2307.03172</p>
+  </section>
+
+  <!-- 03: TOKEN DENSITY -->
+  <section class="lesson" id="density">
+    <div class="lesson-num">Section 03</div>
+    <h2>Token Density</h2>
+    <p>Whitespace, prose, and formatting all cost tokens. The same idea expressed densely uses 3-5x fewer tokens. Denser tokens = more context available for the model to use.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Density</th>
+          <th>Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pseudocode</td>
+          <td>Highest</td>
+          <td>Technical specs</td>
+        </tr>
+        <tr>
+          <td>Collapsed JSON</td>
+          <td>Very High</td>
+          <td>Tabular data to LLM</td>
+        </tr>
+        <tr>
+          <td>XML</td>
+          <td>High</td>
+          <td>Structured instructions</td>
+        </tr>
+        <tr>
+          <td>YAML</td>
+          <td>Medium</td>
+          <td>Human-readable config</td>
+        </tr>
+        <tr>
+          <td>Prose</td>
+          <td>Low</td>
+          <td>Explanations</td>
+        </tr>
+        <tr>
+          <td>Formatted JSON</td>
+          <td>Lower</td>
+          <td>Pretty-printed output</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Example:</strong></p>
+
+    <div class="code-label">Dense (15 tokens)</div>
+    <pre>def get_user(id: int) -> User:
+    """Cache 5min, raise NotFound"""</pre>
+
+    <div class="code-label">Sparse (45 tokens)</div>
+    <pre>The get_user function accepts an integer ID parameter
+and returns a User object. Results are cached for 5
+minutes. Raises NotFound if the user doesn't exist.</pre>
+
+    <div class="card try-it">
+      <div class="card-label">Try It</div>
+      <p>Take your last prompt. Rewrite the specification section as pseudocode instead of prose. Count how many tokens you save. Share the ratio with a colleague.</p>
+    </div>
+  </section>
+
+  <!-- 04: OPERATIONS -->
+  <section class="lesson" id="operations">
+    <div class="lesson-num">Section 04</div>
+    <h2>Load, Chain, Compose</h2>
+    <p>There are only three things you can do with a prompt. Everything else is a combination of these three operations.</p>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">1. Load</h3>
+    <p>Bring artifacts into context—files, git status, command output, external data.</p>
+    <pre>&lt;context&gt;
+  &lt;file path="./src/auth.py"/&gt;
+  &lt;command&gt;!`git status --short`&lt;/command&gt;
+&lt;/context&gt;</pre>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">2. Chain</h3>
+    <p>Output of step A becomes input to step B. Preserve state across steps.</p>
+    <pre>Step 1: Analyze requirements → requirements.md
+Step 2: Load requirements.md → Generate plan → plan.md
+Step 3: Load plan.md → Implement with full context</pre>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">3. Compose</h3>
+    <p>Combine a template with context to produce a specialized output.</p>
+    <pre>Template: "Review code for $CRITERIA"
+Context:  CRITERIA=security, FILE=auth.py
+Output:   Security review of auth.py</pre>
+
+    <div class="card insight">
+      <div class="card-label">Core Insight</div>
+      <p>These are the only three things you can do with a prompt. Everything else—chaining, few-shot, meta-prompting—is a combination of Load, Chain, and Compose.</p>
+    </div>
+  </section>
+
+  <!-- 05: XML STRUCTURE -->
+  <section class="lesson" id="structure">
+    <div class="lesson-num">Section 05</div>
+    <h2>XML Structure</h2>
+    <p>XML tags create clear boundaries between objective, context, requirements, constraints, output, and verification. The model respects structured boundaries more reliably than prose.</p>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">6-Tag Pattern</h3>
+    <pre>&lt;objective&gt;What and why&lt;/objective&gt;
+&lt;context&gt;Background, files to load&lt;/context&gt;
+&lt;requirements&gt;Specific instructions&lt;/requirements&gt;
+&lt;constraints&gt;What to avoid and WHY&lt;/constraints&gt;
+&lt;output&gt;Where to save, format&lt;/output&gt;
+&lt;verification&gt;How to confirm success&lt;/verification&gt;</pre>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Tag Selection by Complexity</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Task Type</th>
+          <th>Include Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Simple</td>
+          <td>objective, output, verification</td>
+        </tr>
+        <tr>
+          <td>Complex</td>
+          <td>Add context, constraints</td>
+        </tr>
+        <tr>
+          <td>Pattern demo</td>
+          <td>Add examples, before/after</td>
+        </tr>
+        <tr>
+          <td>Security risk</td>
+          <td>Add security_checklist</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Full Template</h3>
+    <pre>&lt;objective&gt;
+Refactor the authentication module to use industry-standard bcrypt
+instead of custom hashing, improving security and maintainability.
+&lt;/objective&gt;
+
+&lt;context&gt;
+&lt;file path="./src/auth.py"/&gt;
+&lt;file path="./tests/test_auth.py"/&gt;
+&lt;current_password_hash&gt;custom_sha256 with salt rotation every 30 days&lt;/current_password_hash&gt;
+&lt;/context&gt;
+
+&lt;requirements&gt;
+1. Replace custom hash with bcrypt
+2. Maintain backward compatibility for existing hashes
+3. All existing tests must pass
+4. New tests for bcrypt edge cases
+&lt;/requirements&gt;
+
+&lt;constraints&gt;
+- No new external dependencies (bcrypt must already be in requirements)
+- Cost factor must be ≥12
+- Never log passwords, hashes, or salt
+- Migration path for existing users
+&lt;/constraints&gt;
+
+&lt;output&gt;
+Refactored auth.py with clear comments at hash/verify boundaries.
+Updated test_auth.py with new test cases. Provide migration guide.
+&lt;/output&gt;
+
+&lt;verification&gt;
+All tests pass, including new bcrypt tests.
+Manual check: old hashes still verify, new hashes use bcrypt.
+No new secrets in logs.
+&lt;/verification&gt;</pre>
+  </section>
+
+  <!-- 06: PATTERNS -->
+  <section class="lesson" id="patterns">
+    <div class="lesson-num">Section 06</div>
+    <h2>The Pattern Catalog</h2>
+    <p>These are the patterns that work. Not because they're trendy—because they're grounded in how transformers process language.</p>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Foundational Patterns</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>Template</th>
+          <th>When</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Persona</strong></td>
+          <td>"You are an expert [role] with [skills]..."</td>
+          <td>Every prompt. Anchors behavior.</td>
+        </tr>
+        <tr>
+          <td><strong>Few-Shot</strong></td>
+          <td>2-3 input → output examples</td>
+          <td>Complex output format or rare patterns.</td>
+        </tr>
+        <tr>
+          <td><strong>Template</strong></td>
+          <td>"Respond in this format: [structure]"</td>
+          <td>When output structure is critical.</td>
+        </tr>
+        <tr>
+          <td><strong>Chain-of-Thought</strong></td>
+          <td>"Think step by step before answering"</td>
+          <td>Multi-step reasoning, math, logic.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Advanced Patterns</h3>
+
+    <h4 style="color: var(--text); margin-top: 20px;">ReAct (Reasoning + Action)</h4>
+    <pre>THINK: What should I do?
+ACT: Do specific action
+OBSERVE: Check result
+→ Repeat until done</pre>
+    <p><strong>Citation:</strong> Yao et al. (2022) <em>ReAct: Synergizing Reasoning and Acting in Language Models</em> arXiv:2210.03629</p>
+
+    <h4 style="color: var(--text); margin-top: 20px;">Tree of Thoughts</h4>
+    <pre>1. Generate 3 approaches
+2. Evaluate pros/cons each
+3. Choose best, execute</pre>
+    <p><strong>Citation:</strong> Yao et al. (2023) <em>Tree of Thoughts: Deliberate Problem Solving with Large Language Models</em> arXiv:2305.10601</p>
+
+    <h4 style="color: var(--text); margin-top: 20px;">Meta-Prompting</h4>
+    <p>Use AI to generate prompts for other AI to execute. Separates analysis from execution—one model does clarification, another does the work with fresh context.</p>
+    <pre>You (vague idea) → AI #1 (generates detailed prompt) → AI #2 (executes with full attention)</pre>
+    <p><strong>Why it works:</strong> AI #1 asks clarifying questions, adds structure, defines success criteria. AI #2 gets clean, specific instructions with full attention. No context wasted on negotiation.</p>
+
+    <div class="card insight">
+      <div class="card-label">Pattern Insight</div>
+      <p>Persona + Few-Shot should be in every prompt. Use Chain-of-Thought for reasoning. Use ReAct for iteration. Use Meta-Prompting when one model can't hold both the goal and the execution strategy.</p>
+    </div>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Citations</h3>
+    <ul style="margin-left: 20px;">
+      <li>Wei et al. (2022) <em>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</em> arXiv:2201.11903</li>
+      <li>White et al. (2023) <em>A Prompt Pattern Catalog to Enhance Prompt Engineering with ChatGPT</em> arXiv:2302.11382</li>
+    </ul>
+  </section>
+
+  <!-- 07: PERSISTENCE -->
+  <section class="lesson" id="persistence">
+    <div class="lesson-num">Section 07</div>
+    <h2>Making Context Survive</h2>
+    <p>Context windows fill up. Conversations end. Projects span weeks. These three files are how you maintain coherence across boundaries.</p>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Spec Folder Pattern</h3>
+    <pre>spec/
+├── KNOWLEDGE.md   # WHY - Decisions, constraints, patterns
+├── SPEC.md        # WHAT - Requirements, acceptance criteria
+└── PLAN.md        # HOW - Phases, tasks, verification</pre>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Surgical Loading</h3>
+    <p>Load based on what you're doing, not everything at once:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Load This</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Understanding constraints</td>
+          <td>KNOWLEDGE.md only</td>
+          <td>Focus on why, not what or how</td>
+        </tr>
+        <tr>
+          <td>Checking requirements</td>
+          <td>SPEC.md only</td>
+          <td>Verify acceptance criteria</td>
+        </tr>
+        <tr>
+          <td>Executing next step</td>
+          <td>PLAN.md only</td>
+          <td>Get unblocked, don't re-design</td>
+        </tr>
+        <tr>
+          <td>Planning a phase</td>
+          <td>SPEC.md + KNOWLEDGE.md</td>
+          <td>Requirements + constraints</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card warning">
+      <div class="card-label">Warning</div>
+      <p>Never load all three at once. It wastes context on irrelevant information. You're optimizing for attention—load only what this step needs.</p>
+    </div>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Context Handoff Template</h3>
+    <pre>&lt;original_task&gt;
+What was requested at the start
+&lt;/original_task&gt;
+
+&lt;work_completed&gt;
+Files created/modified, decisions made, blockers resolved
+&lt;/work_completed&gt;
+
+&lt;work_remaining&gt;
+Specific next tasks with file paths
+&lt;/work_remaining&gt;
+
+&lt;attempted_approaches&gt;
+What failed and why - avoid repeating mistakes
+&lt;/attempted_approaches&gt;
+
+&lt;critical_context&gt;
+Gotchas, assumptions, constraints discovered in the work
+&lt;/critical_context&gt;
+
+&lt;current_state&gt;
+What's finalized vs still draft. Which files are safe to change.
+&lt;/current_state&gt;</pre>
+
+    <p>Save this as <code>HANDOFF.md</code> or <code>CONTEXT.md</code>. Load it at the start of your next session.</p>
+
+    <div class="card insight">
+      <div class="card-label">Forward Link</div>
+      <p>This folder structure isn't arbitrary. It's a dependency lattice. Knowledge informs Spec. Spec informs Plan. Plan refers back to both. This is Lattice-Driven Development.</p>
+    </div>
+  </section>
+
+  <!-- 08: REFERENCE -->
+  <section class="lesson" id="reference">
+    <div class="lesson-num">Section 08</div>
+    <h2>Quick Reference</h2>
+    <p>Bookmark this section. Use these tables every time you write a prompt.</p>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Attention Positioning</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Put Here</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Top</td>
+          <td>Role, constraints, "never X"</td>
+          <td>Primacy bias</td>
+        </tr>
+        <tr>
+          <td>Middle</td>
+          <td>Code, data, examples</td>
+          <td>Reference material</td>
+        </tr>
+        <tr>
+          <td>Bottom</td>
+          <td>Task, output format, reminders</td>
+          <td>Recency bias</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Core Operations</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>What</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Load</td>
+          <td>Bring into context</td>
+          <td>&lt;file path="./auth.py"/&gt;</td>
+        </tr>
+        <tr>
+          <td>Chain</td>
+          <td>Output → Input</td>
+          <td>plan.md → implementation</td>
+        </tr>
+        <tr>
+          <td>Compose</td>
+          <td>Template + Context</td>
+          <td>"Review $FILE for $CRITERIA"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Token Optimization</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Do</th>
+          <th>Don't</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pseudocode</td>
+          <td>Verbose prose</td>
+        </tr>
+        <tr>
+          <td>Collapsed JSON</td>
+          <td>Formatted JSON</td>
+        </tr>
+        <tr>
+          <td>XML tags</td>
+          <td>Markdown headings</td>
+        </tr>
+        <tr>
+          <td>TOON for arrays</td>
+          <td>Nested JSON</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Patterns to Use</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>When</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Persona + Few-shot</td>
+          <td>Every prompt</td>
+        </tr>
+        <tr>
+          <td>Chain-of-Thought</td>
+          <td>Complex reasoning</td>
+        </tr>
+        <tr>
+          <td>ReAct</td>
+          <td>Multi-step with validation</td>
+        </tr>
+        <tr>
+          <td>Tree of Thoughts</td>
+          <td>Trade-off decisions</td>
+        </tr>
+        <tr>
+          <td>Meta-Prompting</td>
+          <td>AI generates prompts</td>
+        </tr>
+        <tr>
+          <td>Sandwich</td>
+          <td>Critical constraints</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px; margin-bottom: 16px; color: var(--text-bright);">Persistence Files</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Contains</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>KNOWLEDGE.md</td>
+          <td>Why (decisions, constraints)</td>
+        </tr>
+        <tr>
+          <td>SPEC.md</td>
+          <td>What (requirements, criteria)</td>
+        </tr>
+        <tr>
+          <td>PLAN.md</td>
+          <td>How (tasks, phases)</td>
+        </tr>
+        <tr>
+          <td>CONTEXT.md</td>
+          <td>State (handoff, current progress)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 09: COMMON MISTAKES -->
+  <section class="lesson" id="mistakes">
+    <div class="lesson-num">Section 09</div>
+    <h2>Common Mistakes</h2>
+    <p>These happen in almost every project. Learn to spot them early.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Wrong</th>
+          <th>Right</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Load entire repo into prompt</td>
+          <td>Load only what this step needs</td>
+          <td>Wastes context, dilutes attention on relevant code</td>
+        </tr>
+        <tr>
+          <td>"Make it better"</td>
+          <td>"Refactor X to use Y pattern"</td>
+          <td>Vague instructions breed vague outputs</td>
+        </tr>
+        <tr>
+          <td>Analyze + fix in one prompt</td>
+          <td>Analyze → report → fresh context → fix</td>
+          <td>Separate concerns let model focus on one thing</td>
+        </tr>
+        <tr>
+          <td>Bury critical instruction in middle</td>
+          <td>Put at top AND bottom (sandwich)</td>
+          <td>Positional attention bias; recency + primacy</td>
+        </tr>
+        <tr>
+          <td>Prose for specs</td>
+          <td>Pseudocode or XML</td>
+          <td>Dense is better; whitespace costs tokens</td>
+        </tr>
+        <tr>
+          <td>Load KNOWLEDGE + SPEC + PLAN together</td>
+          <td>Surgical load: pick one or two per step</td>
+          <td>Irrelevant files waste context window</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card try-it">
+      <div class="card-label">Try It</div>
+      <p>Pick your last 3 prompts. Check each against this table. Did you make any of these mistakes? Rewrite one to fix it. Share the before/after with a colleague.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></p>
+  <p style="margin-top:12px;"><a href="../index.html">&larr; jrlopez.dev</a> &middot; <a href="guardrails-engineers.html">&larr; guardrails</a> &middot; <a href="prompting.html">foundational patterns &rarr;</a></p>
+</div>
+
+<script>
+  // Progress bar
+  const progressBar = document.getElementById('progressFill');
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    progressBar.style.width = scrolled + '%';
+  });
+
+  // Active nav pill on scroll
+  const navPills = document.querySelectorAll('.nav-pill');
+  const lessons = document.querySelectorAll('.lesson');
+
+  window.addEventListener('scroll', () => {
+    let currentLesson = null;
+    lessons.forEach(lesson => {
+      const rect = lesson.getBoundingClientRect();
+      if (rect.top <= 120) {
+        currentLesson = lesson.id;
+      }
+    });
+
+    navPills.forEach(pill => {
+      const href = pill.getAttribute('href');
+      if (!href.startsWith('#')) return;
+
+      pill.classList.remove('active');
+      if (currentLesson && href === '#' + currentLesson) {
+        pill.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
