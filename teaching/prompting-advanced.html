@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Prompt Engineering Patterns</title>
+<meta name="description" content="Advanced prompting patterns: ReAct, Tree of Thoughts, Spec-Kit workflows. Multi-step reasoning and orchestration.">
+<meta property="og:title" content="Advanced Prompt Engineering Patterns | Joey Lopez">
+<meta property="og:description" content="Advanced prompting patterns: ReAct, Tree of Thoughts, Spec-Kit workflows. Multi-step reasoning and orchestration.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/prompting-advanced.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+    --orange: #f0883e;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-pill:hover, .nav-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* PROGRESS */
+  .progress-track {
+    position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200;
+    background: var(--border);
+  }
+  .progress-fill {
+    height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--blue));
+    transition: width 0.2s;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+    padding: 80px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--text-bright);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero .subtitle {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+  .hero .author { color: var(--blue); font-size: 0.95em; margin-bottom: 20px; }
+  .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .hero-tag {
+    padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    border: 1px solid; cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .hero-tag:hover { background: rgba(255,255,255,0.08); text-decoration: none; }
+  .hero-tag.red { color: var(--accent); border-color: var(--accent); }
+  .hero-tag.blue { color: var(--blue); border-color: var(--blue); }
+  .hero-tag.green { color: var(--green); border-color: var(--green); }
+
+  /* CONTAINER */
+  .container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+  /* LESSON */
+  .lesson {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 60px;
+  }
+  .lesson-num {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    color: var(--accent); letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .lesson h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
+    color: var(--text-bright);
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  .lesson p { margin-bottom: 16px; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-left: 4px solid var(--border);
+  }
+  .card.insight { border-left-color: var(--green); }
+  .card.tip { border-left-color: var(--blue); }
+  .card.warning { border-left-color: var(--accent); }
+  .card-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 8px;
+  }
+  .card.insight .card-label { color: var(--green); }
+  .card.tip .card-label { color: var(--blue); }
+  .card.warning .card-label { color: var(--accent); }
+
+  /* CODE */
+  pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 16px 0;
+    color: var(--text-bright);
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    background: var(--bg-code);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .code-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--green); margin-bottom: 4px;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    font-weight: 700;
+    color: var(--text-bright);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: var(--bg-code);
+  }
+  td { color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* FOOTER */
+  .footer {
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: #555;
+    font-size: 14px;
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  a { color: var(--blue); }
+  strong { color: var(--text-bright); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .nav-bar { padding: 8px 12px; }
+    .nav-pill { font-size: 12px; padding: 5px 10px; }
+    pre { font-size: 12px; padding: 12px; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<nav class="nav-bar">
+  <a class="nav-pill" href="https://jrlopez.dev">jrlopez.dev</a>
+  <a class="nav-pill active" href="#react">ReAct</a>
+  <a class="nav-pill" href="#tree-of-thoughts">Tree of Thoughts</a>
+  <a class="nav-pill" href="#spec-kit">Spec-Kit</a>
+  <a class="nav-pill" href="#when-to-use">When to Use</a>
+  <a class="nav-pill" href="#reference">Reference</a>
+</nav>
+
+<section class="hero">
+  <h1>Advanced Prompting <span>Patterns</span></h1>
+  <p class="subtitle">When foundational patterns aren't enough. Multi-step reasoning, decision frameworks, and orchestrated workflows.</p>
+  <p class="author">Joey Lopez</p>
+  <div class="hero-tags">
+    <a class="hero-tag red" href="#react">ReAct</a>
+    <a class="hero-tag blue" href="#tree-of-thoughts">Tree of Thoughts</a>
+    <a class="hero-tag green" href="#spec-kit">Spec-Kit</a>
+  </div>
+</section>
+
+<div class="container">
+
+  <section class="lesson" id="react">
+    <div class="lesson-num">Pattern 1</div>
+    <h2>ReAct: Think → Act → Observe</h2>
+
+    <p>ReAct is a multi-phase reasoning pattern where you explicitly separate thinking from action. The key insight is that you don't just dump everything into one prompt—you pause at validation checkpoints between phases.</p>
+
+    <p>I use this when each step builds on the previous one and I need confidence that we're not compounding errors. Before moving to the next phase, I check: Did the last step actually work?</p>
+
+    <div class="card insight">
+      <div class="card-label">Core Idea</div>
+      <p>ReAct (Reasoning + Acting) was formalized by Yao et al. (2022). The principle: explicit validation checkpoints between reasoning phases prevent hallucination chains from cascading.</p>
+    </div>
+
+    <h3>When to Use ReAct</h3>
+    <ul style="margin: 16px 0; padding-left: 24px; line-height: 1.9;">
+      <li>Multi-step tasks where each step depends on previous results</li>
+      <li>You need to verify before continuing (database migrations, system changes, complex data pipelines)</li>
+      <li>Error recovery is critical—you want to catch issues immediately, not at the end</li>
+      <li>The task involves both planning and execution</li>
+    </ul>
+
+    <h3>The Template</h3>
+    <div class="code-label">ReAct Phase Structure</div>
+    <pre>## Phase 1: [Name]
+THINK: [What must be true before we act? What are we checking?]
+ACT: [Specific, concrete tasks]
+CHECK: [How do we verify this succeeded? What's the success criterion?]
+
+## Phase 2: [Name]
+THINK: [What did Phase 1 give us? What changed?]
+ACT: [Next concrete tasks, informed by Phase 1 results]
+CHECK: [Validation step]
+
+[Repeat as needed]</pre>
+
+    <h3>Real Example: Database Migration</h3>
+    <div class="code-label">Database Migration via ReAct</div>
+    <pre>## Phase 1: Schema Analysis
+THINK: Do we understand the current schema? Are there constraints we'll break?
+ACT:
+- Inspect current table structure
+- List all foreign keys and indexes
+- Identify nullable vs non-nullable columns
+
+CHECK: We have a complete picture of the schema. No surprises when we migrate.
+
+## Phase 2: Migration Script Generation
+THINK: Given what Phase 1 showed us, what migration script is safe?
+ACT:
+- Generate the migration using the constraints from Phase 1
+- Include rollback statements
+
+CHECK: Script is syntactically valid and includes rollback.
+
+## Phase 3: Staging Deployment
+THINK: Does this work in a realistic environment?
+ACT:
+- Run against staging database (copy of production)
+- Verify data integrity post-migration
+- Check query performance
+
+CHECK: No errors on staging. Query performance acceptable.
+
+## Phase 4: Production
+THINK: We have evidence from staging. Are we ready?
+ACT:
+- Create production backup
+- Run migration
+- Verify against production data
+
+CHECK: Migration succeeded. Data integrity confirmed. Rollback tested and works.</pre>
+
+    <div class="card tip">
+      <div class="card-label">The Insight</div>
+      <p>The CHECK step is what separates ReAct from just writing a longer prompt. You're forcing explicit validation. If the model says "check passed," you actually verify it independently. This is where the reliability comes from.</p>
+    </div>
+
+  </section>
+
+  <section class="lesson" id="tree-of-thoughts">
+    <div class="lesson-num">Pattern 2</div>
+    <h2>Tree of Thoughts: Explore Before Committing</h2>
+
+    <p>Tree of Thoughts is about generating multiple approaches to a decision, evaluating their tradeoffs, then choosing one with documented reasoning. You're not just picking the first reasonable option—you're deliberately exploring the decision space.</p>
+
+    <p>I use this when a decision has real tradeoffs. The output isn't just the choice; it's the reasoning that justifies it. That reasoning becomes reusable for future similar decisions.</p>
+
+    <div class="card insight">
+      <div class="card-label">Core Idea</div>
+      <p>Tree of Thoughts (Yao et al., 2023) formalizes decision-making as a multi-branch search. You generate candidate approaches, evaluate each against criteria, then select the best with explicit justification.</p>
+    </div>
+
+    <h3>When to Use Tree of Thoughts</h3>
+    <ul style="margin: 16px 0; padding-left: 24px; line-height: 1.9;">
+      <li>Multiple valid approaches exist with different tradeoffs</li>
+      <li>You need to document WHY you chose one over others (for future reference or stakeholders)</li>
+      <li>The decision affects downstream work or architecture</li>
+      <li>Risk tolerance matters—some options are safer than others</li>
+    </ul>
+
+    <h3>The Template</h3>
+    <div class="code-label">Tree of Thoughts Decision Structure</div>
+    <pre>## Decision: [What's being decided?]
+[Context: Why are we deciding? What's at stake?]
+
+### Option A: [Name]
+- Pros: [Benefits, what goes right]
+- Cons: [Drawbacks, what goes wrong]
+- Effort: [Implementation cost, e.g., 2 days]
+- Risk: [Low / Med / High, and why]
+
+### Option B: [Name]
+- Pros: [...]
+- Cons: [...]
+- Effort: [...]
+- Risk: [...]
+
+### Option C: [Name]
+[Same structure]
+
+### Recommendation
+Choose [X] because [explicit reasoning given constraints].
+Key tradeoff we're accepting: [What are we giving up?]</pre>
+
+    <h3>Real Example: Security Config Modernization</h3>
+    <div class="code-label">Migration Strategy via Tree of Thoughts</div>
+    <pre>## Decision: Modernize API authentication to OAuth 2.0
+
+Context: Current system uses API keys in headers. It's insecure and hard to audit.
+We need to move but must maintain backward compatibility for 90 days (Q2 migration window).
+
+### Option A: Keep Current System
+- Pros: Zero effort, zero risk, no breaking changes
+- Cons: Security risk remains, audit trail weak, tech debt grows
+- Effort: 0 days
+- Risk: Low (no change = no breakage)
+
+### Option B: Parallel Systems (Recommended)
+- Pros: Gradual migration path, clients can transition at own pace, rollback is safe
+- Cons: Two auth systems to maintain for 90 days, testing burden is higher
+- Effort: 5 days (OAuth implementation + migration logic)
+- Risk: Medium (complexity of dual-system, but reversible)
+
+### Option C: Full Cutover
+- Pros: Clean break, one auth system, audit trail complete
+- Cons: Breaking change, forces all clients to migrate immediately, 24h downtime expected
+- Effort: 3 days (faster because no parallel logic)
+- Risk: High (client outages, support burden)
+
+### Recommendation
+Choose Option B (Parallel Systems) because:
+- We have a 90-day window; gradual migration is safer
+- Client ecosystem is fragmented; not everyone can upgrade in parallel
+- Tradeoff we're accepting: 5 days of dev vs. 30 days of operational complexity (worth it)
+- Rollback path is clear if OAuth implementation has issues</pre>
+
+    <div class="card tip">
+      <div class="card-label">The Insight</div>
+      <p>You'll do this decision again. By documenting your reasoning upfront—why you rejected Option C, what tradeoff made Option B worth the effort—you save yourself from re-litigating the same choice six months from now.</p>
+    </div>
+
+  </section>
+
+  <section class="lesson" id="spec-kit">
+    <div class="lesson-num">Pattern 3</div>
+    <h2>Spec-Kit: Separation of Concerns for Complex Tasks</h2>
+
+    <p>Spec-Kit is a file structure pattern. Instead of dumping everything into one massive prompt, you split complex work into 3-4 files that build on each other. Each file has a clear job. This scales to much larger problems than a single prompt can handle.</p>
+
+    <p>I use this when context is too large or the task is repeatable. The knowledge base becomes write-once, use-forever. Every future task in that domain inherits it.</p>
+
+    <div class="card insight">
+      <div class="card-label">Core Idea</div>
+      <p>Spec-Kit is named after the specification kits used in aerospace and manufacturing. One document describes the system forever (knowledge base). Each project applies it to solve a specific instance (specification + plan). Context grows with complexity, not with each new task.</p>
+    </div>
+
+    <h3>The Three Files</h3>
+
+    <div style="margin: 24px 0;">
+      <h4 style="color: var(--green); margin-bottom: 12px;">1. knowledge-base.md (Write Once)</h4>
+      <p style="color: var(--text); margin-bottom: 12px;">
+        Domain context, architectural decisions, constraints, terminology. Answers questions like:
+      </p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>What is this system's architecture?</li>
+        <li>What constraints do we always operate under?</li>
+        <li>What terminology does this domain use?</li>
+        <li>What decisions have we already made and why?</li>
+      </ul>
+      <p style="color: var(--text);">You write this once. Every future task in this domain reads it. It pays dividends over time.</p>
+    </div>
+
+    <div style="margin: 24px 0;">
+      <h4 style="color: var(--blue); margin-bottom: 12px;">2. specification.md (Task-Specific)</h4>
+      <p style="color: var(--text); margin-bottom: 12px;">
+        This task's requirements, acceptance criteria, edge cases. It reads the knowledge base and says "given all that, here's what we need to do right now."
+      </p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>What is the goal?</li>
+        <li>What's in scope? What's out?</li>
+        <li>How do we know when we're done?</li>
+        <li>What edge cases matter?</li>
+      </ul>
+    </div>
+
+    <div style="margin: 24px 0;">
+      <h4 style="color: var(--orange); margin-bottom: 12px;">3. implementation-plan.md (Task-Specific)</h4>
+      <p style="color: var(--text); margin-bottom: 12px;">
+        Phased execution with dependencies and validation checkpoints. This is where you apply ReAct and Tree of Thoughts to the specific task.
+      </p>
+      <ul style="padding-left: 24px; margin-bottom: 16px;">
+        <li>Phase 1: [What goes first? Why?]</li>
+        <li>Phase 2: [What depends on Phase 1?]</li>
+        <li>Validation: [How do we know each phase succeeded?]</li>
+        <li>Rollback: [How do we undo if something fails?]</li>
+      </ul>
+    </div>
+
+    <h3>When to Use Spec-Kit</h3>
+    <ul style="margin: 16px 0; padding-left: 24px; line-height: 1.9;">
+      <li>Complex, multi-step work that's hard to fit in a single prompt</li>
+      <li>The task is repeatable or similar tasks will follow (migrations, architecture decisions, configurations)</li>
+      <li>You need to collaborate with others (specs serve as shared references)</li>
+      <li>High-stakes decisions where getting it right matters more than speed</li>
+      <li>Across technical and non-technical domains (works for business tasks too—interview prep, priority documents, fundraising pitch)</li>
+    </ul>
+
+    <h3>Template: knowledge-base.md</h3>
+    <div class="code-label">Reusable Domain Context</div>
+    <pre># Knowledge Base: [Domain Name]
+
+## System Architecture
+[How is this system organized? What are the main components?]
+
+## Constraints
+[What's always true? What can never change?]
+- [Constraint 1]
+- [Constraint 2]
+
+## Terminology
+| Term | Definition |
+| --- | --- |
+| [Term] | [Definition] |
+
+## Key Decisions Made
+- [Decision 1]: [Why we chose this]
+- [Decision 2]: [Why we chose this]
+
+## Common Patterns
+[How do we usually solve problems in this domain?]</pre>
+
+    <h3>Template: specification.md</h3>
+    <div class="code-label">Task-Specific Requirements</div>
+    <pre># Specification: [Task Name]
+
+## Goal
+[What are we trying to achieve?]
+
+## Context
+[Why are we doing this? What's the business reason?]
+
+## Scope
+### In Scope
+- [Requirement 1]
+- [Requirement 2]
+
+### Out of Scope
+- [What we're explicitly not doing and why]
+
+## Acceptance Criteria
+- [ ] Criterion 1
+- [ ] Criterion 2
+
+## Edge Cases
+[What could go wrong? What's unusual about this task?]</pre>
+
+    <h3>Template: implementation-plan.md</h3>
+    <div class="code-label">Phased Execution Plan</div>
+    <pre># Implementation Plan: [Task Name]
+
+## Phase 1: [Name]
+Depends on: [Nothing / Phase 0]
+Duration: [Estimate]
+
+THINK: [What do we need to verify before acting?]
+ACT: [Concrete tasks]
+CHECK: [Validation step]
+
+## Phase 2: [Name]
+Depends on: [Phase 1]
+Duration: [Estimate]
+
+THINK: [...]
+ACT: [...]
+CHECK: [...]
+
+## Rollback
+[How do we undo this if something goes wrong?]</pre>
+
+    <h3>Cross-Domain Example</h3>
+    <p>Spec-Kit works everywhere. Here's how you'd apply it to interview prep (business, not technical):</p>
+
+    <div class="code-label">Business Task: Interview Prep</div>
+    <pre>## knowledge-base.md
+### Company Context
+- Founded 2015, 800 people, Series C
+- Fundraising in Q3 targeting $50M
+- Product: Developer tools for monitoring
+
+### Common Questions We See
+- "How do you handle scale?" → Technical depth needed
+- "What's your vision?" → CEO alignment matters
+- "Why join now?" → Understanding their fundraising matters
+
+## specification.md
+### Goal
+Prepare for interviews at TechCorp for Staff Engineer role
+
+### Acceptance Criteria
+- [ ] Can answer 15 technical depth questions
+- [ ] Can articulate how my background aligns with their problems
+- [ ] Can explain why this role at this stage
+
+## implementation-plan.md
+### Phase 1: Deep Dive on Technical Stack
+- Spend 4 hours on their architecture docs
+- Run their demo, break it, understand failure modes
+
+### Phase 2: Study Their Problems
+- What are 3 things they're probably struggling with at scale?
+- How does my experience address those?
+
+### Phase 3: Interview Dry Run
+- Friend asks random interview questions
+- Get feedback on clarity and depth</pre>
+
+    <div class="card warning">
+      <div class="card-label">Important</div>
+      <p>Don't over-engineer. If the task is "rename a variable," you don't need Spec-Kit. Use it when complexity is real, when context is large, or when you're solving the same problem more than once.</p>
+    </div>
+
+  </section>
+
+  <section class="lesson" id="when-to-use">
+    <div class="lesson-num">Pattern Selection</div>
+    <h2>Choosing the Right Pattern</h2>
+
+    <p>These patterns aren't mutually exclusive. The question isn't "which one should I use?" It's "which combination solves this task cleanly?"</p>
+
+    <h3>Decision Table</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Task Type</th>
+          <th>Pattern</th>
+          <th>Why This Works</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Simple, well-understood</td>
+          <td>Foundational (Persona + Few-Shot)</td>
+          <td>Don't add complexity where it doesn't belong</td>
+        </tr>
+        <tr>
+          <td>Multi-step with dependencies</td>
+          <td>ReAct</td>
+          <td>Validation checkpoints prevent error cascades</td>
+        </tr>
+        <tr>
+          <td>Decision with real tradeoffs</td>
+          <td>Tree of Thoughts</td>
+          <td>Documented reasoning is reusable</td>
+        </tr>
+        <tr>
+          <td>Complex, high-stakes, repeatable</td>
+          <td>Spec-Kit</td>
+          <td>Separation of concerns scales to large contexts</td>
+        </tr>
+        <tr>
+          <td>Large task combining all of above</td>
+          <td>Combine them</td>
+          <td>ReAct phases + ToT decisions + Spec-Kit files</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Practical Combinations</h3>
+
+    <p><strong>Scenario 1: Database Migration</strong></p>
+    <ul style="padding-left: 24px; margin: 12px 0;">
+      <li>Use Spec-Kit: knowledge-base describes the system, specification says which tables, plan says which phases</li>
+      <li>Use ReAct: Each phase has THINK/ACT/CHECK steps</li>
+      <li>Result: Highly structured, low-risk execution</li>
+    </ul>
+
+    <p><strong>Scenario 2: Architecture Decision</strong></p>
+    <ul style="padding-left: 24px; margin: 12px 0;">
+      <li>Use Tree of Thoughts: Explore monolith vs. microservices vs. serverless</li>
+      <li>Use Spec-Kit knowledge-base: Document constraints (team size, latency requirements, budget)</li>
+      <li>Result: Justified decision that stakeholders understand</li>
+    </ul>
+
+    <p><strong>Scenario 3: Feature Implementation</strong></p>
+    <ul style="padding-left: 24px; margin: 12px 0;">
+      <li>Use Spec-Kit: knowledge-base for domain context, specification for requirements</li>
+      <li>Use ReAct: Implementation plan with phases</li>
+      <li>Result: Clear scope, execution discipline, testable outcomes</li>
+    </ul>
+
+    <div class="card warning">
+      <div class="card-label">Anti-Pattern</div>
+      <p><strong>Over-engineering simple tasks.</strong> If you're adding ReAct phases to rename a variable or using Spec-Kit for a 10-minute task, you've lost the plot. These patterns have cognitive overhead. They pay off when complexity is real.</p>
+    </div>
+
+    <div class="card tip">
+      <div class="card-label">Rule of Thumb</div>
+      <p>Start simple. If you find yourself confused about state, unsure where you are in the task, or making the same decision repeatedly, that's when you upgrade to a more complex pattern.</p>
+    </div>
+
+  </section>
+
+  <section class="lesson" id="reference">
+    <div class="lesson-num">References</div>
+    <h2>Quick Reference</h2>
+
+    <h3>Papers & Sources</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>Citation</th>
+          <th>Key Insight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ReAct</td>
+          <td>Yao et al. (2022) "ReAct: Synergizing Reasoning and Acting in Language Models"</td>
+          <td>Validation checkpoints between reasoning phases</td>
+        </tr>
+        <tr>
+          <td>Tree of Thoughts</td>
+          <td>Yao et al. (2023) "Tree of Thoughts: Deliberate Problem Solving with Language Models"</td>
+          <td>Multi-branch exploration before committing</td>
+        </tr>
+        <tr>
+          <td>Prompt Patterns</td>
+          <td>White et al. (2023) "A Prompt Pattern Catalog to Enhance Prompt Engineering with ChatGPT"</td>
+          <td>16+ catalogued patterns (foundational and advanced)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Related Resources</h3>
+    <p><a href="prompting.html">Foundational Prompting Patterns</a> covers Persona, Few-Shot, Chain-of-Thought, and Output Format. Those are your building blocks. The patterns here are what you build when the foundational ones aren't enough.</p>
+
+    <h3>When You're Stuck</h3>
+    <ul style="padding-left: 24px; margin: 16px 0;">
+      <li><strong>Task feels too large to fit in one prompt:</strong> Use Spec-Kit</li>
+      <li><strong>You keep making the same decision over again:</strong> Use Tree of Thoughts (document your reasoning)</li>
+      <li><strong>Each step depends on the previous one:</strong> Use ReAct with CHECK steps</li>
+      <li><strong>You're not sure if it worked:</strong> Add validation checkpoints</li>
+      <li><strong>You're over-engineering:</strong> Strip it back. Start simple. Upgrade when complexity demands it.</li>
+    </ul>
+
+  </section>
+
+</div>
+
+<div class="footer">
+  <p>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></p>
+  <p style="margin-top:12px"><a href="../index.html">&larr; jrlopez.dev</a> &middot; <a href="prompting.html">&larr; foundational patterns</a> &middot; <a href="guardrails-engineers.html">guardrails &rarr;</a></p>
+</div>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / height) * 100;
+  document.getElementById('progressFill').style.width = scrolled + '%';
+});
+
+// Smooth scroll with non-hash href fix
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (!href.startsWith('#')) return;
+
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+
+      // Update active nav pill
+      document.querySelectorAll('.nav-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      this.classList.add('active');
+    }
+  });
+});
+
+// Set active nav pill on scroll
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.lesson');
+  const scrollPos = window.scrollY + 100;
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionBottom = sectionTop + section.offsetHeight;
+
+    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+      const sectionId = section.getAttribute('id');
+      document.querySelectorAll('.nav-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
