@@ -18,7 +18,7 @@
 <div class="hero">
 <h1>Joey Lopez</h1>
 <div class="subtitle">Sr. Data Engineer</div>
-<p class="blurb">Builds tools and writes proofs for people who want to understand what their systems actually do. Research notes and open-source tools live here. Always happy to brainstorm. Feel free to reach out or book time on calendly.</p>
+<p class="blurb">Builds tools and writes proofs for people who want to understand what their systems actually do. Start with a research finding, follow the teaching notes I wrote to make sense of it, and grab the tools when you're ready. Always happy to brainstorm. Feel free to reach out or book time on calendly.</p>
 <div class="hero-links">
 <a href="resume.pdf" target="_blank">resume</a>
 <a href="https://github.com/josephrobertlopez" target="_blank">github</a>
@@ -41,28 +41,40 @@
 
 <div id="items">
 
-<div class="item" data-tags="paper code teaching">
-<h3><a href="teaching/guardrails-engineers.html">Your Regex Guardrails Are Provably Blind</a></h3>
-<div class="desc">Algebraic proof that regex safety filters cannot detect modular-position attacks. Published paper, bypass PoC, and an engineer's walkthrough of the math.</div>
+<div class="item" data-tags="paper code">
+<h3><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">Your Regex Guardrails Are Provably Blind</a></h3>
+<div class="desc">Algebraic proof that regex safety filters cannot detect modular-position attacks. 91 production patterns analyzed, 34 of 35 aperiodic monoids confirmed blind.</div>
 <div class="tags">
 <span class="tag" onclick="filter('paper')">paper</span>
 <span class="tag" onclick="filter('code')">code</span>
-<span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag">formal-languages</span>
 <span class="tag">syntactic-monoids</span>
 <span class="tag">2026</span>
 </div>
 <div class="item-links">
-<a href="teaching/guardrails-engineers.html">for engineers</a>
-<a href="teaching/guardrails-deep-dive.html">deep dive</a>
 <a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">pdf</a>
 <a href="https://github.com/josephrobertlopez/aperiodic-guardrails" target="_blank">repo</a>
 </div>
 </div>
 
 <div class="item" data-tags="teaching">
-<h3><a href="teaching/prompting.html">Prompt Engineering Notes</a></h3>
-<div class="desc">Patterns, templates, and a 100-question second brain framework. Foundational and advanced.</div>
+<h3><a href="teaching/guardrails-engineers.html">Why Your Safety Filters Fail (and the Math Behind It)</a></h3>
+<div class="desc">An engineer's walkthrough of the guardrails proof, plus an 8-lesson interactive deep dive into syntactic monoids. No math PhD required.</div>
+<div class="tags">
+<span class="tag" onclick="filter('teaching')">teaching</span>
+<span class="tag">formal-languages</span>
+<span class="tag">walkthrough</span>
+<span class="tag">2026</span>
+</div>
+<div class="item-links">
+<a href="teaching/guardrails-engineers.html">for engineers</a>
+<a href="teaching/guardrails-deep-dive.html">deep dive</a>
+</div>
+</div>
+
+<div class="item" data-tags="teaching">
+<h3><a href="teaching/prompting.html">What Every Prompt Pattern Actually Does</a></h3>
+<div class="desc">Foundational patterns with worked examples, plus advanced techniques: ReAct, Tree of Thoughts, and the Spec-Kit framework. A 100-question second brain included.</div>
 <div class="tags">
 <span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag">prompting</span>
@@ -75,12 +87,12 @@
 </div>
 </div>
 
-<div class="item" data-tags="code teaching">
-<h3><a href="teaching/prompt-cheatsheet.html">prompt-kit</a></h3>
-<div class="desc">Most prompt guides are lists of tricks. This is a composition methodology — cheat sheet, mermaid-as-prompts, lattice-driven development, and a spec-folder framework.</div>
+<div class="item" data-tags="teaching code">
+<h3><a href="teaching/prompt-cheatsheet.html">Prompts Are Programs, Not Sentences</a></h3>
+<div class="desc">A composition methodology: attention positioning cheat sheet, mermaid diagrams as reasoning tools, and lattice-driven development for AI workflows.</div>
 <div class="tags">
-<span class="tag" onclick="filter('code')">code</span>
 <span class="tag" onclick="filter('teaching')">teaching</span>
+<span class="tag" onclick="filter('code')">code</span>
 <span class="tag">methodology</span>
 <span class="tag">lattice</span>
 <span class="tag">mermaid</span>
@@ -90,6 +102,19 @@
 <a href="teaching/prompt-cheatsheet.html">cheat sheet</a>
 <a href="teaching/mermaid-prompts.html">diagrams as prompts</a>
 <a href="teaching/lattice-dev.html">lattice dev</a>
+</div>
+</div>
+
+<div class="item" data-tags="code">
+<h3><a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">prompt-kit</a></h3>
+<div class="desc">The spec-folder framework that implements everything above. Clone it and start building.</div>
+<div class="tags">
+<span class="tag" onclick="filter('code')">code</span>
+<span class="tag">open-source</span>
+<span class="tag">framework</span>
+<span class="tag">2026</span>
+</div>
+<div class="item-links">
 <a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">repo</a>
 </div>
 </div>
