@@ -139,8 +139,9 @@ p { margin-bottom: 1rem; }
   font-size: clamp(16px, 2.5vw, 20px);
   color: var(--text);
   max-width: 640px;
-  margin: 0 auto 30px;
+  margin: 0 auto 20px;
 }
+.hero .author { color: var(--blue); font-size: 0.95em; margin-bottom: 20px; }
 .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .hero-tag {
   padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
@@ -428,6 +429,7 @@ a:hover { text-decoration: underline; }
 <section class="hero">
   <h1>Prompt Engineering <span>Notes</span></h1>
   <p class="subtitle">Workshop notes cleaned up. Patterns, anti-patterns, and exercises from real sessions. Take what's useful.</p>
+  <p class="author">Joey Lopez</p>
   <div class="hero-tags">
     <a class="hero-tag red" href="#the-gap">the gap</a>
     <a class="hero-tag blue" href="#three-approaches">approaches</a>
