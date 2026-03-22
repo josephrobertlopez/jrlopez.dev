@@ -1,0 +1,45 @@
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0f0f1a;--surface:#14142a;--border:#1e1e35;
+--text:#888;--bright:#ccc;--white:#eee;
+--link:#58a6ff;--accent:#e94560;--tag-bg:#1a1a2e;--tag-text:#666;
+--tag-active-bg:#58a6ff;--tag-active-text:#0f0f1a;
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;max-width:40rem;margin:0 auto;padding:2.5rem 1.5rem}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+
+/* Header */
+.header h1{color:var(--white);font-size:1.4rem;font-weight:600}
+.header .role{color:#555;font-size:.85rem;margin-bottom:.6rem}
+.header .actions{font-size:.8rem;margin-bottom:2rem}
+.header .actions a{margin-right:1rem;padding:.25rem .6rem;border:1px solid var(--border);border-radius:14px;font-size:.78rem;color:var(--text);transition:border-color .2s}
+.header .actions a:hover{border-color:var(--link);color:var(--link);text-decoration:none}
+
+/* Tags filter */
+.filter{margin-bottom:1.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+.filter button{background:var(--tag-bg);color:var(--tag-text);border:1px solid var(--border);border-radius:14px;padding:.2rem .7rem;font-size:.75rem;font-family:inherit;cursor:pointer;transition:all .15s}
+.filter button:hover{border-color:var(--link);color:var(--link)}
+.filter button.active{background:var(--tag-active-bg);color:var(--tag-active-text);border-color:var(--tag-active-bg)}
+
+/* Items */
+.item{padding:1rem 0;border-bottom:1px solid var(--border)}
+.item:last-child{border-bottom:none}
+.item.hidden{display:none}
+.item h3{font-size:.92rem;font-weight:500;color:var(--bright);margin-bottom:.15rem}
+.item h3 a{color:var(--bright)}
+.item h3 a:hover{color:var(--link)}
+.item .desc{font-size:.82rem;color:var(--text);margin-bottom:.4rem}
+.item .tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.item .tag{font-size:.68rem;color:var(--tag-text);background:var(--tag-bg);padding:.1rem .45rem;border-radius:10px;cursor:pointer;transition:all .15s}
+.item .tag:hover{color:var(--link);border-color:var(--link)}
+.item .links{margin-top:.4rem;font-size:.8rem}
+.item .links a{margin-right:.8rem}
+
+/* Footer */
+.footer{margin-top:3rem;color:#2a2a3a;font-size:.65rem;text-align:center}
+
+/* Responsive */
+@media(max-width:600px){
+body{padding:1.5rem 1rem}
+.header h1{font-size:1.2rem}
+}

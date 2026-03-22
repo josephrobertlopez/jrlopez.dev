@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Engineering Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f1a;
+  --bg-card: #161625;
+  --bg-code: #1a1a2e;
+  --bg-elevated: #1e1e30;
+  --border: #2a2a3e;
+  --text: #e0e0ec;
+  --text-dim: #8888a0;
+  --text-bright: #f0f0ff;
+  --accent: #6c63ff;
+  --accent-dim: #4a44b0;
+  --accent-glow: rgba(108,99,255,0.15);
+  --green: #4ade80;
+  --yellow: #fbbf24;
+  --orange: #fb923c;
+  --red: #f87171;
+  --cyan: #22d3ee;
+  --pink: #f472b6;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV — simple anchor links, no branding */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,15,26,0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1rem;
+}
+
+nav .nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+nav .nav-inner::-webkit-scrollbar { display: none; }
+
+nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+nav a:hover { color: var(--text-bright); }
+
+/* LAYOUT */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+/* SECTIONS */
+section { margin-bottom: 4rem; }
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-bright);
+  margin-bottom: 1.5rem;
+  padding-top: 2rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 2rem 0 0.75rem;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.5rem 0 0.5rem;
+}
+
+p { margin-bottom: 1rem; }
+
+/* OPENING — understated */
+.opening {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.opening h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.opening p {
+  font-size: 1rem;
+  color: var(--text-dim);
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+/* CARDS */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.card.callout {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-glow);
+}
+
+.card.insight {
+  border-left: 3px solid var(--green);
+  background: rgba(74,222,128,0.06);
+}
+
+.card.warning {
+  border-left: 3px solid var(--orange);
+  background: rgba(251,146,60,0.06);
+}
+
+.card.try-it {
+  border-left: 3px solid var(--cyan);
+  background: rgba(34,211,238,0.06);
+}
+
+.card-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.card.callout .card-label { color: var(--accent); }
+.card.insight .card-label { color: var(--green); }
+.card.warning .card-label { color: var(--orange); }
+.card.try-it .card-label { color: var(--cyan); }
+
+/* CODE */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: var(--bg-code);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: var(--cyan);
+}
+
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1rem 0 1.5rem;
+  line-height: 1.5;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+/* COMPARISON: BEFORE/AFTER */
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 700px) {
+  .comparison { grid-template-columns: 1fr; }
+}
+
+.comparison .before, .comparison .after {
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+}
+
+.comparison .before {
+  background: rgba(248,113,113,0.06);
+  border-color: rgba(248,113,113,0.2);
+}
+
+.comparison .after {
+  background: rgba(74,222,128,0.06);
+  border-color: rgba(74,222,128,0.2);
+}
+
+.comparison .label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.comparison .before .label { color: var(--red); }
+.comparison .after .label { color: var(--green); }
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.88rem;
+}
+
+th, td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  font-weight: 600;
+  color: var(--text-bright);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+td { color: var(--text); }
+
+tr:hover td { background: rgba(108,99,255,0.04); }
+
+/* COLLAPSIBLE */
+details {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+details[open] { border-color: var(--accent-dim); }
+
+summary {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-bright);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+summary::before {
+  content: '+';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--accent-dim);
+  color: var(--text-bright);
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+details[open] summary::before {
+  content: '-';
+}
+
+summary::-webkit-details-marker { display: none; }
+
+details .details-content {
+  padding: 0 1.25rem 1.25rem;
+}
+
+/* PATTERN CARD */
+.pattern-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.25rem 0;
+}
+
+.pattern-card .pattern-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 0.25rem;
+}
+
+.pattern-card .pattern-when {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+/* TIER BADGES */
+.tier { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; vertical-align: middle; }
+.tier-1 { background: rgba(74,222,128,0.15); color: var(--green); }
+.tier-2 { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.tier-3 { background: rgba(251,146,60,0.15); color: var(--orange); }
+
+/* LISTS */
+ul, ol { margin: 0.5rem 0 1rem 1.25rem; }
+li { margin-bottom: 0.3rem; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+footer a:hover { text-decoration: underline; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .container { padding: 1rem 1rem 4rem; }
+  h2 { font-size: 1.4rem; }
+  .opening h1 { font-size: 1.3rem; }
+  .opening p { font-size: 0.92rem; }
+  pre { padding: 1rem; font-size: 0.78rem; }
+  table { font-size: 0.8rem; }
+  th, td { padding: 0.4rem 0.5rem; }
+}
+
+/* SMOOTH LINKS */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* FLOWCHART */
+.flowchart {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+
+.flowchart strong { color: var(--text-bright); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#the-gap">The gap</a>
+    <a href="#three-approaches">Approaches</a>
+    <a href="#patterns">Patterns</a>
+    <a href="#second-brain">Second brain</a>
+    <a href="#reference">Reference</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ====== OPENING ====== -->
+<div class="opening">
+  <h1>Prompt Engineering Notes</h1>
+  <p>I ran a prompt engineering workshop at work. Afterwards I cleaned up my notes. This is what survived.</p>
+  <p>I didn't invent any of this. Chain of Thought is from Wei et al., Tree of Thoughts is from Yao et al., the Persona and Template patterns are catalogued in White et al. I just organized them in the order I wish someone had shown me.</p>
+  <p>Take what's useful.</p>
+</div>
+
+<!-- ====== THE GAP ====== -->
+<section id="the-gap">
+<h2>The gap</h2>
+
+<p>The fastest way to understand prompt engineering is to feel the difference. Here's a quick exercise I use in workshops.</p>
+
+<div class="card try-it">
+  <div class="card-label">Try this</div>
+  <p><strong>Open whatever AI tool you use.</strong> Type this and save the output:</p>
+  <pre><code>Write a Python function that validates email addresses.</code></pre>
+  <p>Then try this one. Same task:</p>
+  <pre><code>You are a senior Python developer building a user registration API.
+
+Write an email validation function with these requirements:
+- Must handle edge cases: plus-addressing (user+tag@domain),
+  international domains, and subdomains
+- Return a typed result (valid/invalid) with specific error reasons
+- Include type hints and follow PEP 8
+
+Example input/output:
+  validate_email("user@example.com") -> ValidationResult(valid=True)
+  validate_email("user@") -> ValidationResult(valid=False, error="Missing domain")
+  validate_email("user+tag@sub.example.co.uk") -> ValidationResult(valid=True)
+
+Constraints:
+- Do NOT use the 're' module for the core logic
+- Must handle at least 5 explicit edge cases
+- Include docstring with usage examples</code></pre>
+</div>
+
+<p>Same AI. Same model. Same task. The second output is more specific, more tested, more usable. The difference isn't what the AI knows -- it's what you gave it to work with.</p>
+
+<p>That's basically the whole idea. Everything below -- every pattern, every template -- is just a different way of getting the right context in front of the model faster.</p>
+
+<h3>Three intuitions</h3>
+
+<p>These explain most of what happens in AI interactions:</p>
+
+<table>
+  <tr>
+    <th>Intuition</th>
+    <th>What it means</th>
+    <th>Analog</th>
+  </tr>
+  <tr>
+    <td><strong>Context is everything</strong></td>
+    <td>The model completes patterns from what you give it. More relevant context = better output.</td>
+    <td>A vague Jira ticket produces vague work.</td>
+  </tr>
+  <tr>
+    <td><strong>Structure gets rewarded</strong></td>
+    <td>Organized input produces organized output. The model was trained to respect structure.</td>
+    <td>A well-formatted code review gets better responses than a wall of text.</td>
+  </tr>
+  <tr>
+    <td><strong>You are the retrieval system</strong></td>
+    <td>Every AI interaction is: retrieve context, assemble it, generate. The question is who's doing the retrieval.</td>
+    <td>Re-explaining your project every conversation = doing retrieval by hand.</td>
+  </tr>
+</table>
+
+<p>These three ideas explain RAG, prompt engineering, context windows, and most of what enterprise AI platforms do. The terminology doesn't matter yet. The intuitions do.</p>
+
+</section>
+
+<!-- ====== THREE APPROACHES ====== -->
+<section id="three-approaches">
+<h2>Three approaches</h2>
+
+<p>Not every task needs the same level of effort. Using a four-file spec-driven workflow to fix a typo is overkill.</p>
+
+<p>I think about it as: what are the stakes?</p>
+
+<div class="flowchart">
+  <strong>Simple, one-off task?</strong><br>
+  &nbsp;&nbsp;Yes &rarr; Freestyle. Just type and send.<br>
+  &nbsp;&nbsp;No &darr;<br><br>
+  <strong>Will you repeat this? Does quality matter?</strong><br>
+  &nbsp;&nbsp;Yes &rarr; Systematic prompt. Add patterns.<br>
+  &nbsp;&nbsp;No &darr;<br><br>
+  <strong>Complex, multi-step, or high-stakes?</strong><br>
+  &nbsp;&nbsp;Yes &rarr; Spec-driven. Multiple files, structured workflow.<br>
+</div>
+
+<h3>Freestyle</h3>
+
+<p>Just talk to the AI. No structure, no patterns. This is how most people use AI most of the time, and for quick questions and throwaway tasks, it's fine.</p>
+
+<div class="card">
+  <p><strong>Use it for:</strong> Quick questions, brainstorming, anything you'd delete in an hour.</p>
+  <p><strong>Stop using it when:</strong> You find yourself re-explaining context, correcting output, or doing the same task twice.</p>
+</div>
+
+<h3>Systematic prompts</h3>
+
+<p>Apply named patterns -- persona, few-shot, chain-of-thought, output format -- to a single prompt. This is the workhorse.</p>
+
+<div class="comparison">
+  <div class="before">
+    <div class="label">Freestyle</div>
+    <pre><code>Help me review this pull request.</code></pre>
+    <p style="font-size:0.85rem; color:var(--text-dim);">Generic feedback. Misses project conventions.</p>
+  </div>
+  <div class="after">
+    <div class="label">Systematic</div>
+    <pre><code>You are a senior code reviewer
+focused on maintainability.
+
+Review this PR against these criteria:
+- Error handling completeness
+- Test coverage for edge cases
+- Naming conventions (camelCase)
+
+Flag severity: MUST FIX / SHOULD FIX / NIT
+
+Example:
+MUST FIX: Missing null check on line 42.
+  userService.getUser() can return null
+  but is used without guard.
+
+PR diff:
+[paste diff]</code></pre>
+    <p style="font-size:0.85rem; color:var(--text-dim);">Specific, actionable, consistently formatted.</p>
+  </div>
+</div>
+
+<h3>Spec-driven</h3>
+
+<p>For complex multi-step work: separate your knowledge, requirements, and execution plan into distinct files. Feed them to the AI in order.</p>
+
+<div class="card">
+  <p><strong>The three files:</strong></p>
+  <table>
+    <tr><th>File</th><th>Contains</th><th>Reusable?</th></tr>
+    <tr><td><code>knowledge-base.md</code></td><td>Domain context, architecture decisions, constraints, terminology</td><td>Yes -- project-level</td></tr>
+    <tr><td><code>specification.md</code></td><td>This feature's requirements, acceptance criteria, edge cases</td><td>No -- feature-level</td></tr>
+    <tr><td><code>implementation-plan.md</code></td><td>Phased execution, dependencies, validation checkpoints</td><td>No -- task-level</td></tr>
+  </table>
+  <p style="font-size:0.88rem;">The knowledge base is write-once, use-forever. You build it on day one and every future spec inherits it.</p>
+</div>
+
+<h3>Where these come from</h3>
+
+<p>These aren't categories I made up. They map to existing industry practices:</p>
+
+<table>
+  <tr>
+    <th>Approach</th>
+    <th>Industry equivalent</th>
+    <th>Maturity</th>
+  </tr>
+  <tr>
+    <td>Freestyle</td>
+    <td>Ad-hoc ChatGPT/Copilot usage</td>
+    <td><span class="tier tier-1">Universal</span></td>
+  </tr>
+  <tr>
+    <td>Systematic</td>
+    <td>ADRs + <code>.github/copilot-instructions.md</code></td>
+    <td><span class="tier tier-1">10+ years</span></td>
+  </tr>
+  <tr>
+    <td>Spec-driven</td>
+    <td>GitHub spec-kit, Kiro, structured file workflows</td>
+    <td><span class="tier tier-3">Experimental</span></td>
+  </tr>
+</table>
+
+<div class="card callout">
+  <div class="card-label">Honest assessment</div>
+  <p>Systematic prompts (ADRs + config files) are <strong>proven at scale</strong> across Microsoft, AWS, Google, Netflix, and Spotify. Spec-driven workflows are newer and less battle-tested. Both work. The difference is maintenance overhead vs. task complexity.</p>
+  <p>Use the simplest approach that handles your complexity. Escalate when you need to, not before.</p>
+</div>
+
+</section>
+
+<!-- ====== PATTERNS ====== -->
+<section id="patterns">
+<h2>Patterns</h2>
+
+<p>Every effective prompt is built from a small set of composable patterns. I think of them like tools in a toolbox -- a hammer isn't better than a screwdriver, but using a hammer on a screw will ruin your day.</p>
+
+<h3>Foundational patterns</h3>
+<p>These four cover roughly 80% of daily prompt engineering. I'd get comfortable with these before reaching for the advanced ones.</p>
+
+<!-- PERSONA -->
+<div class="pattern-card">
+  <div class="pattern-name">Persona <span class="tier tier-1">Proven</span></div>
+  <div class="pattern-when">I use this when I need domain expertise, consistent tone, or a specific frame of reference.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code>You are [role] with [specific expertise].
+Your focus areas include [domains].
+[Task]</code></pre>
+
+  <div class="comparison">
+    <div class="before">
+      <div class="label">Without persona</div>
+      <pre><code>Explain this database schema.</code></pre>
+    </div>
+    <div class="after">
+      <div class="label">With persona</div>
+      <pre><code>You are a database architect
+specializing in high-throughput
+transactional systems.
+
+Explain this schema, focusing on:
+- Indexing strategy
+- Query performance implications
+- Normalization tradeoffs</code></pre>
+    </div>
+  </div>
+
+  <details>
+    <summary>Why it works</summary>
+    <div class="details-content">
+      <p>The persona biases the model toward responses that people with that expertise would produce in the training data. The more specific the persona, the more targeted the activation.</p>
+      <p><strong>Source:</strong> White et al. (2023), "A Prompt Pattern Catalog" -- arXiv 2302.11382</p>
+    </div>
+  </details>
+</div>
+
+<!-- FEW-SHOT -->
+<div class="pattern-card">
+  <div class="pattern-name">Few-Shot <span class="tier tier-1">Proven</span></div>
+  <div class="pattern-when">I use this when showing is faster than explaining -- when I have a transformation or format that's hard to describe but easy to demonstrate.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code>Transform inputs using these examples:
+
+Example 1:
+  Input: [example input]
+  Output: [example output]
+
+Example 2:
+  Input: [example input]
+  Output: [example output]
+
+Now transform:
+  Input: [your actual input]</code></pre>
+
+  <div class="comparison">
+    <div class="before">
+      <div class="label">Without examples</div>
+      <pre><code>Convert these Java imports
+to the new namespace.</code></pre>
+    </div>
+    <div class="after">
+      <div class="label">With examples</div>
+      <pre><code>Convert imports using these rules:
+
+Example:
+  Before: import javax.validation.Valid;
+  After:  import jakarta.validation.Valid;
+
+Example:
+  Before: import javax.servlet.http.*;
+  After:  import jakarta.servlet.http.*;
+
+Now convert:
+  import javax.persistence.Entity;</code></pre>
+    </div>
+  </div>
+
+  <details>
+    <summary>Why it works</summary>
+    <div class="details-content">
+      <p>Two to three examples establish a pattern more reliably than a paragraph of instructions. The model extracts the transformation rule and applies it. More than three examples rarely helps -- diminishing returns set in fast.</p>
+      <p><strong>Source:</strong> Brown et al. (2020), "Language Models are Few-Shot Learners" -- the GPT-3 paper</p>
+    </div>
+  </details>
+</div>
+
+<!-- CHAIN OF THOUGHT -->
+<div class="pattern-card">
+  <div class="pattern-name">Chain-of-Thought <span class="tier tier-1">Proven</span></div>
+  <div class="pattern-when">I use this when the task requires multi-step reasoning or debugging, and I need to see (and verify) the logic.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code>Solve this step by step:
+
+1. First, analyze [aspect]
+2. Then, evaluate [aspect]
+3. Next, consider [aspect]
+4. Finally, recommend [action]
+
+Show your reasoning for each step.</code></pre>
+
+  <div class="comparison">
+    <div class="before">
+      <div class="label">Without CoT</div>
+      <pre><code>Why is this API slow?</code></pre>
+    </div>
+    <div class="after">
+      <div class="label">With CoT</div>
+      <pre><code>Debug this API latency issue
+step by step:
+
+1. Check the query execution plan
+2. Identify N+1 query patterns
+3. Evaluate connection pool config
+4. Check for missing indexes
+5. Review payload size
+
+Show reasoning for each step.
+
+Endpoint: GET /api/users
+Avg response: 2.3s
+Expected: <200ms</code></pre>
+    </div>
+  </div>
+
+  <details>
+    <summary>Why it works</summary>
+    <div class="details-content">
+      <p>Step-by-step reasoning reduces errors on complex tasks by 10-30% in benchmarks. More importantly, it makes errors visible. When you can see the reasoning chain, you can catch where it went wrong instead of getting a confidently wrong final answer.</p>
+      <p><strong>Source:</strong> Wei et al. (2022), "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models" -- arXiv 2201.11903</p>
+    </div>
+  </details>
+</div>
+
+<!-- OUTPUT FORMAT -->
+<div class="pattern-card">
+  <div class="pattern-name">Output Format (Template) <span class="tier tier-1">Proven</span></div>
+  <div class="pattern-when">I use this when I need consistent, parseable, or copy-paste-ready output -- when the format matters as much as the content.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code>Respond in this exact format:
+
+## Summary
+[2-3 sentences]
+
+## Changes Required
+- [ ] Change 1: [description]
+- [ ] Change 2: [description]
+
+## Risk Assessment
+| Risk | Severity | Mitigation |
+|------|----------|------------|
+| ...  | ...      | ...        |</code></pre>
+
+  <details>
+    <summary>Why it works</summary>
+    <div class="details-content">
+      <p>The model was trained on millions of interactions where structured requests got structured responses. When you provide a template, the output almost always mirrors it.</p>
+    </div>
+  </details>
+</div>
+
+<h3>Advanced patterns</h3>
+<p>I reach for these when the foundational patterns aren't enough -- when there are dependencies between steps, multiple valid approaches, or several concerns to orchestrate.</p>
+
+<!-- ReAct -->
+<div class="pattern-card">
+  <div class="pattern-name">ReAct <span class="tier tier-1">Research-backed</span></div>
+  <div class="pattern-when">I use this for multi-phase work where each phase depends on the previous one and I need validation checkpoints between steps.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code>## Phase 1: [Name]
+THINK: [What must be true before we act?]
+ACT:   [Specific tasks]
+CHECK: [How to verify this phase succeeded]
+
+## Phase 2: [Name]
+THINK: [What did Phase 1 give us?]
+ACT:   [Next tasks]
+CHECK: [Validation]</code></pre>
+
+  <details>
+    <summary>Example: database migration</summary>
+    <div class="details-content">
+      <pre><code>## Phase 1: Schema Backup
+THINK: Must have rollback before any DDL changes
+ACT:   pg_dump --schema-only > backup_schema.sql
+CHECK: Backup file exists and is non-empty
+
+## Phase 2: Add New Columns
+THINK: Schema backup confirmed, safe to alter
+ACT:   ALTER TABLE users ADD COLUMN email_verified BOOLEAN DEFAULT FALSE;
+CHECK: \d users shows new column, existing data intact
+
+## Phase 3: Backfill Data
+THINK: Column exists, now populate from legacy flag
+ACT:   UPDATE users SET email_verified = (status = 'verified');
+CHECK: SELECT COUNT(*) WHERE email_verified IS NULL = 0</code></pre>
+      <p><strong>Source:</strong> Yao et al. (2022), "ReAct: Synergizing Reasoning and Acting in Language Models"</p>
+    </div>
+  </details>
+</div>
+
+<!-- Tree of Thoughts -->
+<div class="pattern-card">
+  <div class="pattern-name">Tree of Thoughts <span class="tier tier-1">Research-backed</span></div>
+  <div class="pattern-when">I use this when multiple valid approaches exist and the tradeoffs depend on my specific context -- when I need to document why I chose option A over B.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code>## Decision: [What needs deciding]
+
+### Option A: [Name]
+- Pros: [benefits]
+- Cons: [drawbacks]
+- Effort: [estimate]
+- Risk: [Low/Med/High]
+
+### Option B: [Name]
+[same structure]
+
+### Option C: [Name]
+[same structure]
+
+### Recommendation
+Choose [X] because [rationale given constraints].</code></pre>
+
+  <details>
+    <summary>When not to use this</summary>
+    <div class="details-content">
+      <p>Don't force this when only one reasonable approach exists. Manufacturing fake alternatives wastes time. If the answer is obvious, just do it.</p>
+      <p><strong>Source:</strong> Yao et al. (2023), "Tree of Thoughts: Deliberate Problem Solving with Large Language Models"</p>
+    </div>
+  </details>
+</div>
+
+<!-- Meta-prompting -->
+<div class="pattern-card">
+  <div class="pattern-name">Meta-Prompting (Orchestration) <span class="tier tier-2">Production-ready</span></div>
+  <div class="pattern-when">I use this when I need to combine multiple patterns, synthesize context from several sources, or create a reproducible workflow.</div>
+
+  <p><strong>Template:</strong></p>
+  <pre><code># Task: [What we're building]
+
+## Context Synthesis
+From knowledge-base.md:
+  - Domain rules: [extracted]
+  - Constraints: [extracted]
+
+From specification.md:
+  - Requirements: [extracted]
+  - Success criteria: [extracted]
+
+## Execution
+Using ReAct phases from implementation-plan.md:
+  Phase 1: [action] -> Validate: [check]
+  Phase 2: [action] -> Validate: [check]
+
+Using Tree of Thoughts decisions:
+  Decision 1: Chose [X] because [reason]
+
+## Generate
+[Final output instructions]</code></pre>
+</div>
+
+<h3>Combining patterns</h3>
+
+<p>These are composable. I start with one and add others only when they earn their place:</p>
+
+<table>
+  <tr>
+    <th>Task complexity</th>
+    <th>Patterns I typically use</th>
+  </tr>
+  <tr>
+    <td>Simple (5-15 min)</td>
+    <td>Persona + Few-shot</td>
+  </tr>
+  <tr>
+    <td>Medium (30-60 min)</td>
+    <td>Persona + Few-shot + Output format + Chain-of-Thought</td>
+  </tr>
+  <tr>
+    <td>Complex (hours+)</td>
+    <td>All foundational + ReAct + Tree of Thoughts + Meta-prompting</td>
+  </tr>
+</table>
+
+<div class="card warning">
+  <div class="card-label">Common mistake</div>
+  <p>Over-engineering simple tasks. If you're adding ReAct phases to rename a variable, you've lost the plot. Use the simplest approach that handles your complexity.</p>
+</div>
+
+</section>
+
+<!-- ====== SECOND BRAIN ====== -->
+<section id="second-brain">
+<h2>Second brain</h2>
+
+<p>Every conversation, you re-explain your project, your role, your constraints. You're doing context retrieval by hand, every time. The fix is writing it down once.</p>
+
+<h3>Start with 10 questions</h3>
+
+<p>Don't try to capture everything. Answer these in a single file. That file is your second brain v1.</p>
+
+<details>
+  <summary>The first 10 questions</summary>
+  <div class="details-content">
+    <ol>
+      <li>What project are you working on right now?</li>
+      <li>In one sentence, what does it do and who is it for?</li>
+      <li>What's the tech stack?</li>
+      <li>What are the 3 biggest constraints you work within?</li>
+      <li>What does "done" look like for your typical work items?</li>
+      <li>What mistakes do people make repeatedly on your project?</li>
+      <li>What do you wish the AI already knew about your work?</li>
+      <li>What output format do you prefer? (bullet points, tables, prose, code?)</li>
+      <li>What should the AI <em>never</em> assume about your work?</li>
+      <li>What's the one thing you re-explain in every AI conversation?</li>
+    </ol>
+  </div>
+</details>
+
+<div class="card try-it">
+  <div class="card-label">Try this</div>
+  <p>Create a file called <code>my-context.md</code>. Answer questions 1, 2, 3, and 10. Four answers, five minutes.</p>
+  <p>Start a new AI conversation, paste that file at the top, and ask it to do something you'd normally do. Notice how much less explaining you need.</p>
+</div>
+
+<h3>The full framework: 100 questions</h3>
+
+<p>Once the first 10 click, here's the expanded version. It's organized in two tiers:</p>
+
+<table>
+  <tr>
+    <th>Tier</th>
+    <th>Goal</th>
+    <th>Questions</th>
+    <th>Time</th>
+  </tr>
+  <tr>
+    <td><strong>Tier 1: Knowledge Extraction</strong></td>
+    <td>Get what's in your head into notes</td>
+    <td>50 questions across domain, requirements, tech, patterns, people</td>
+    <td>3-4 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Tier 2: Knowledge Composition</strong></td>
+    <td>Compose those notes into a reusable AI context file</td>
+    <td>50 questions across AI usage, role, output standards, task patterns, composition</td>
+    <td>2-3 hours</td>
+  </tr>
+</table>
+
+<details>
+  <summary>Tier 1: Knowledge Extraction (50 questions)</summary>
+  <div class="details-content">
+    <h4>Section A: Domain Context</h4>
+    <ol>
+      <li>What project/product are you working on right now?</li>
+      <li>In one sentence, what does it do and who is it for?</li>
+      <li>What's the business problem it solves?</li>
+      <li>Who are the main stakeholders and what do they care about?</li>
+      <li>What's the current state vs. the desired state?</li>
+      <li>What are the 3 biggest constraints you work within?</li>
+      <li>What decisions have already been made that you can't change?</li>
+      <li>What's the history? Why does it look the way it does?</li>
+      <li>What would a new team member need to understand in their first week?</li>
+      <li>What do people outside your team consistently misunderstand about your domain?</li>
+    </ol>
+
+    <h4>Section B: Requirements and Standards</h4>
+    <ol start="11">
+      <li>What does "done" look like for typical work items?</li>
+      <li>What's the definition of quality in your context?</li>
+      <li>What are the non-negotiable requirements?</li>
+      <li>What are the "nice to haves" vs "must haves"?</li>
+      <li>What approval processes exist and who's involved?</li>
+      <li>What documentation standards do you follow?</li>
+      <li>What testing/validation is required before shipping?</li>
+      <li>What are the common acceptance criteria patterns?</li>
+      <li>What gets work items rejected or sent back?</li>
+      <li>What does your QA/review process actually check?</li>
+    </ol>
+
+    <h4>Section C: Technical Context</h4>
+    <ol start="21">
+      <li>What's the tech stack?</li>
+      <li>What integrations or dependencies exist?</li>
+      <li>What are the known technical constraints?</li>
+      <li>What's fragile or risky to change?</li>
+      <li>What environments exist?</li>
+      <li>What data is involved and where does it live?</li>
+      <li>What are the common technical gotchas?</li>
+      <li>What's the deployment/release process?</li>
+      <li>What monitoring or observability exists?</li>
+      <li>What technical debt are you carrying?</li>
+    </ol>
+
+    <h4>Section D: Patterns and Anti-Patterns</h4>
+    <ol start="31">
+      <li>What's a well-written work item in your context? (give an example)</li>
+      <li>What's a badly-written one? Why did it fail?</li>
+      <li>What patterns keep recurring?</li>
+      <li>What mistakes do people make repeatedly?</li>
+      <li>What shortcuts exist that people should know about?</li>
+      <li>What "obvious" solutions don't actually work and why?</li>
+      <li>What tribal knowledge exists that isn't documented?</li>
+      <li>What questions do new people always ask?</li>
+      <li>What do you wish someone had told you when you started?</li>
+      <li>What's the "right way" vs. what actually happens?</li>
+    </ol>
+
+    <h4>Section E: People and Process</h4>
+    <ol start="41">
+      <li>Who needs to be involved in what types of decisions?</li>
+      <li>Who has context that others lack?</li>
+      <li>What communication norms exist?</li>
+      <li>What meetings matter and what do they accomplish?</li>
+      <li>What's the escalation path when things go wrong?</li>
+      <li>Who are the bottlenecks and why?</li>
+      <li>What politics or sensitivities should people be aware of?</li>
+      <li>What's the feedback loop for completed work?</li>
+      <li>How do priorities get set and changed?</li>
+      <li>What do you personally know that your team doesn't?</li>
+    </ol>
+  </div>
+</details>
+
+<details>
+  <summary>Tier 2: Knowledge Composition (50 questions)</summary>
+  <div class="details-content">
+    <h4>Section F: Current AI Usage</h4>
+    <ol start="51">
+      <li>What AI tools do you currently use?</li>
+      <li>What do you use them for?</li>
+      <li>What works well? What outputs do you actually use?</li>
+      <li>What doesn't work? What do you always have to fix?</li>
+      <li>What context do you repeatedly explain to AI?</li>
+      <li>What do you copy-paste into prompts frequently?</li>
+      <li>What prompts do you reuse vs. write fresh?</li>
+      <li>How much back-and-forth does it take to get useful output?</li>
+      <li>What would "AI understands my context" look like?</li>
+      <li>What's the highest-value task AI could help with if it had full context?</li>
+    </ol>
+
+    <h4>Section G: Role and Identity</h4>
+    <ol start="61">
+      <li>What's your role? What are you responsible for?</li>
+      <li>What decisions do you make vs. defer?</li>
+      <li>What's your deep expertise?</li>
+      <li>What's your perspective on how things should be done?</li>
+      <li>What standards do you hold yourself to?</li>
+      <li>What tone/style do you communicate in?</li>
+      <li>What are your non-negotiables?</li>
+      <li>What do you want AI to assume about you?</li>
+      <li>What should AI never assume about you?</li>
+      <li>If AI were your assistant, what would a good one know?</li>
+    </ol>
+
+    <h4>Section H: Output Standards</h4>
+    <ol start="71">
+      <li>What does good output look like? (give an example)</li>
+      <li>What format do you prefer?</li>
+      <li>What level of detail is right?</li>
+      <li>What terminology should AI use or avoid?</li>
+      <li>What common AI outputs do you always fix?</li>
+      <li>What would make AI output copy-paste ready?</li>
+      <li>What's the review process for AI-generated content?</li>
+      <li>What gets rejected and why?</li>
+      <li>What style guides apply?</li>
+      <li>How do you measure whether AI output was useful?</li>
+    </ol>
+
+    <h4>Section I: Task Patterns</h4>
+    <ol start="81">
+      <li>What types of tasks do you repeat weekly?</li>
+      <li>For each: what's the input? What's the expected output?</li>
+      <li>What context does each task type require?</li>
+      <li>What are the common variations?</li>
+      <li>What's the workflow from request to completion?</li>
+      <li>What templates or structures do you use?</li>
+      <li>What checklists or validation steps exist?</li>
+      <li>What's the 80/20? (20% of tasks that are 80% of work)</li>
+      <li>What tasks could be automated vs. need judgment?</li>
+      <li>What's the handoff to the next step?</li>
+    </ol>
+
+    <h4>Section J: Context Composition</h4>
+    <ol start="91">
+      <li>Which Tier 1 notes are essential for AI?</li>
+      <li>Which are "always relevant" vs "sometimes relevant"?</li>
+      <li>What's the hierarchy?</li>
+      <li>What should be included by default?</li>
+      <li>What's the right chunk size?</li>
+      <li>How should notes be ordered for comprehension?</li>
+      <li>What links reveal critical related context?</li>
+      <li>What's the minimal viable context?</li>
+      <li>What's the maximal context?</li>
+      <li>How do you know when the context file is "done enough"?</li>
+    </ol>
+  </div>
+</details>
+
+<h3>The context file template</h3>
+
+<p>Once you've answered the questions, compose them into this format. This is the file you paste into every AI conversation:</p>
+
+<pre><code># [Your Name]'s Context File
+
+## Who I Am
+[Role, expertise, standards -- from Section G]
+
+## My Domain
+[Project context, constraints, stakeholders -- from Tier 1]
+
+## How I Work
+[Task patterns, workflows, output standards -- from Sections H/I]
+
+## What Good Looks Like
+[Examples, format preferences, terminology -- from Section H]
+
+## AI Instructions
+[What to assume, what to avoid, communication style -- from Section G]</code></pre>
+
+<div class="card insight">
+  <div class="card-label">How to test it</div>
+  <p>Use your context file on three real tasks. After each one, note: how much correction was needed? What context was missing? What was noise? Update the file. By the third iteration, you should need less than 20% correction -- down from 50%+ without the file.</p>
+</div>
+
+<h3>Why links matter</h3>
+
+<p>If you use a linked note system (Obsidian, Roam, Notion with links), the connections between notes become useful:</p>
+
+<table>
+  <tr>
+    <th>Tags (flat search)</th>
+    <th>Links (graph traversal)</th>
+  </tr>
+  <tr>
+    <td>"Show me notes tagged #requirements"</td>
+    <td>"Show me requirements AND everything connected to them"</td>
+  </tr>
+  <tr>
+    <td>You get what you asked for</td>
+    <td>You get what you asked for + related context you forgot</td>
+  </tr>
+  <tr>
+    <td>Good for known queries</td>
+    <td>Good for discovery</td>
+  </tr>
+</table>
+
+<p>The link structure is the advantage. When your notes eventually feed a retrieval system, links let it pull in connected context that keyword search would miss.</p>
+
+</section>
+
+<!-- ====== REFERENCE ====== -->
+<section id="reference">
+<h2>Reference</h2>
+
+<h3>Pre-prompt checklist</h3>
+
+<p>I run through this before writing any non-trivial prompt:</p>
+
+<table>
+  <tr><th>Check</th><th>Pattern</th><th>Add if...</th></tr>
+  <tr><td>Would a role help?</td><td>Persona</td><td>Task needs domain expertise</td></tr>
+  <tr><td>Can I show examples?</td><td>Few-shot</td><td>Easier to show than explain</td></tr>
+  <tr><td>Does format matter?</td><td>Output format</td><td>Need consistent/parseable output</td></tr>
+  <tr><td>Is reasoning complex?</td><td>Chain-of-Thought</td><td>Multi-step analysis or debugging</td></tr>
+  <tr><td>Multiple phases with dependencies?</td><td>ReAct</td><td>Need validation between steps</td></tr>
+  <tr><td>Real tradeoff to evaluate?</td><td>Tree of Thoughts</td><td>Multiple valid approaches</td></tr>
+</table>
+
+<h3>Copy-paste templates</h3>
+
+<details>
+  <summary>Debug code</summary>
+  <div class="details-content">
+    <pre><code>You are a senior [language] developer.
+
+Debug this error step by step:
+1. Identify the root cause
+2. Explain why it happens
+3. Suggest the fix
+4. Explain why the fix works
+
+Error message:
+[paste error]
+
+Relevant code:
+[paste code]
+
+Environment: [language version, framework, OS]</code></pre>
+  </div>
+</details>
+
+<details>
+  <summary>Code review</summary>
+  <div class="details-content">
+    <pre><code>You are a senior code reviewer focused on [maintainability/security/performance].
+
+Review this code against:
+- Error handling completeness
+- Test coverage gaps
+- Naming and style conventions
+- Security concerns
+
+Severity levels: MUST FIX / SHOULD FIX / NIT
+
+Example:
+  MUST FIX (line 42): Missing null check.
+  userService.getUser() can return null but is
+  dereferenced without guard.
+
+Code to review:
+[paste code]</code></pre>
+  </div>
+</details>
+
+<details>
+  <summary>Write tests</summary>
+  <div class="details-content">
+    <pre><code>You are a test engineer specializing in [framework].
+
+Write tests for this code following these patterns:
+
+Example test structure:
+test('should [expected behavior]', () => {
+  // Arrange: [setup]
+  // Act: [execution]
+  // Assert: [verification]
+});
+
+Requirements:
+- Cover happy path and at least 3 edge cases
+- Include error scenarios
+- Use descriptive test names
+
+Code to test:
+[paste code]</code></pre>
+  </div>
+</details>
+
+<details>
+  <summary>Architecture decision</summary>
+  <div class="details-content">
+    <pre><code>You are a solutions architect.
+
+I need to decide between [option A] and [option B]
+for [specific use case].
+
+Evaluate each option:
+
+## Option A: [name]
+- Pros: [list]
+- Cons: [list]
+- Effort: [hours/days]
+- Risk: [Low/Medium/High]
+- Maintenance burden: [description]
+
+## Option B: [name]
+[same structure]
+
+Context:
+- Team size: [N]
+- Timeline: [deadline]
+- Existing stack: [tech]
+- Scale requirements: [metrics]
+
+Recommend the best option with specific rationale
+given my constraints.</code></pre>
+  </div>
+</details>
+
+<details>
+  <summary>Migration task</summary>
+  <div class="details-content">
+    <pre><code>You are an expert [technology] migration engineer.
+
+Migrate this code using these transformation rules:
+
+Example:
+  Before: [old pattern]
+  After:  [new pattern]
+
+Example:
+  Before: [old pattern]
+  After:  [new pattern]
+
+Execute in phases:
+
+Phase 1: [what to change first]
+  Validate: [how to verify]
+
+Phase 2: [what to change next]
+  Validate: [how to verify]
+
+Constraints:
+- Preserve all existing behavior
+- Do NOT change [specific things to protect]
+- Must pass [existing tests/checks]
+
+Code to migrate:
+[paste code]</code></pre>
+  </div>
+</details>
+
+<details>
+  <summary>Spec-driven workflow (3 files)</summary>
+  <div class="details-content">
+    <p><strong>File 1: knowledge-base.md</strong></p>
+    <pre><code># Project Knowledge Base
+
+## Domain Concepts
+- [Term]: [Definition]
+- [Term]: [Definition]
+
+## Architectural Principles
+- [Pattern]: [Rationale]
+- Anti-patterns: [What to avoid]
+
+## Constraints
+- Technical: [list]
+- Regulatory: [list]
+- Organizational: [list]
+
+## Past Decisions
+- [Decision]: [Rationale] (Date: [when])</code></pre>
+
+    <p><strong>File 2: specification.md</strong></p>
+    <pre><code># Feature Specification: [Name]
+
+## Requirements
+- [ ] Requirement 1
+- [ ] Requirement 2
+
+## Acceptance Criteria
+- [ ] Criterion 1 (testable)
+- [ ] Criterion 2 (testable)
+
+## Edge Cases
+- [Case 1]: [How to handle]
+- [Case 2]: [How to handle]
+
+## Out of Scope
+- [What we're NOT doing]</code></pre>
+
+    <p><strong>File 3: implementation-plan.md</strong></p>
+    <pre><code># Implementation Plan
+
+## Phase 1: [Name]
+THINK: [What must be true before we start?]
+ACT:   [Tasks]
+CHECK: [Validation]
+Effort: [Estimate]
+
+## Phase 2: [Name]
+THINK: [What did Phase 1 give us?]
+ACT:   [Tasks]
+CHECK: [Validation]
+Depends on: Phase 1
+
+## Rollback Plan
+If any phase fails: [recovery steps]</code></pre>
+
+    <p><strong>Usage:</strong> Load files 1, 2, 3 into the AI in that order. Then say: "Execute the implementation plan, following the knowledge base constraints and specification requirements."</p>
+  </div>
+</details>
+
+<h3>Tool evaluation</h3>
+
+<p>New AI tools show up constantly. These are the questions I ask:</p>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Why it matters</th>
+  </tr>
+  <tr>
+    <td>How old is it?</td>
+    <td>Longer track record = more failure learning</td>
+  </tr>
+  <tr>
+    <td>Who uses it beyond the creators?</td>
+    <td>Multi-company adoption is a stronger signal than star counts</td>
+  </tr>
+  <tr>
+    <td>Does it work across platforms?</td>
+    <td>Vendor lock-in is expensive to undo</td>
+  </tr>
+  <tr>
+    <td>What problem does it actually solve?</td>
+    <td>Distinguish genuinely new capability from repackaging</td>
+  </tr>
+  <tr>
+    <td>What's the exit cost?</td>
+    <td>Time to learn, data portability, switching pain</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Maturity</th>
+    <th>Track Record</th>
+    <th>Action</th>
+    <th>Examples</th>
+  </tr>
+  <tr>
+    <td><span class="tier tier-1">Tier 1</span></td>
+    <td>10+ years, multi-company</td>
+    <td>Adopt</td>
+    <td>ADRs, few-shot, chain-of-thought, persona</td>
+  </tr>
+  <tr>
+    <td><span class="tier tier-2">Tier 2</span></td>
+    <td>1-3 years, growing adoption</td>
+    <td>Adopt with monitoring</td>
+    <td><code>.github/copilot-instructions.md</code>, ReAct, Cursor</td>
+  </tr>
+  <tr>
+    <td><span class="tier tier-3">Tier 3</span></td>
+    <td>Months, limited evidence</td>
+    <td>Experiment cautiously</td>
+    <td>GitHub spec-kit, Kiro, Tessl</td>
+  </tr>
+</table>
+
+<h3>Common mistakes</h3>
+
+<div class="comparison">
+  <div class="before">
+    <div class="label">Mistake</div>
+    <pre><code>Fix this code</code></pre>
+    <p style="font-size:0.82rem; color:var(--text-dim);">No context, no constraints, no format. The AI guesses at everything.</p>
+  </div>
+  <div class="after">
+    <div class="label">Fix</div>
+    <pre><code>You are a Python expert.
+This code throws a KeyError
+on line 10 when the user dict
+is missing the 'email' field.
+Explain the root cause and
+suggest a fix that handles
+missing keys gracefully.</code></pre>
+  </div>
+</div>
+
+<div class="comparison">
+  <div class="before">
+    <div class="label">Mistake</div>
+    <p style="font-size:0.85rem;">Over-specifying a persona with a paragraph of background. "You are an expert who has worked for 20 years in enterprise systems across multiple Fortune 500 companies and has deep knowledge of..."</p>
+  </div>
+  <div class="after">
+    <div class="label">Fix</div>
+    <pre><code>You are a senior database
+performance engineer.</code></pre>
+    <p style="font-size:0.82rem; color:var(--text-dim);">One line. The model doesn't need a resume.</p>
+  </div>
+</div>
+
+<div class="comparison">
+  <div class="before">
+    <div class="label">Mistake</div>
+    <p style="font-size:0.85rem;">Providing 10 few-shot examples when 2-3 would establish the pattern.</p>
+  </div>
+  <div class="after">
+    <div class="label">Fix</div>
+    <p style="font-size:0.85rem;">2-3 representative examples. Cover the main case and one edge case. Diminishing returns hit fast.</p>
+  </div>
+</div>
+
+<h3>Sources</h3>
+
+<table>
+  <tr>
+    <th>Paper</th>
+    <th>Pattern</th>
+    <th>Citation</th>
+  </tr>
+  <tr>
+    <td>Prompt Pattern Catalog</td>
+    <td>Persona, Few-shot, Template, 16+ patterns</td>
+    <td>White et al. (2023) -- arXiv 2302.11382</td>
+  </tr>
+  <tr>
+    <td>Few-Shot Learners</td>
+    <td>Few-shot prompting</td>
+    <td>Brown et al. (2020) -- arXiv 2005.14165</td>
+  </tr>
+  <tr>
+    <td>Chain-of-Thought</td>
+    <td>Step-by-step reasoning</td>
+    <td>Wei et al. (2022) -- arXiv 2201.11903</td>
+  </tr>
+  <tr>
+    <td>ReAct</td>
+    <td>Reasoning + Acting loops</td>
+    <td>Yao et al. (2022)</td>
+  </tr>
+  <tr>
+    <td>Tree of Thoughts</td>
+    <td>Multi-branch evaluation</td>
+    <td>Yao et al. (2023)</td>
+  </tr>
+  <tr>
+    <td>Architecture Decision Records</td>
+    <td>Systematic prompt organization</td>
+    <td>Nygard (2011)</td>
+  </tr>
+</table>
+
+</section>
+
+</div>
+
+<footer>
+  <p>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></p>
+</footer>
+
+</body>
+</html>
