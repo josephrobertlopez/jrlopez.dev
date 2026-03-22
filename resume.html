@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume — Joey Lopez</title>
+<meta name="description" content="Sr. Data Engineer. Published security research, agentic AI integration, 5 years building data platforms at scale.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --text-muted: #8888a0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --border: #2a2a40;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .resume-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .resume-header {
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .resume-header h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    color: var(--text-bright);
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .resume-header .title {
+    color: var(--blue);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .resume-header .contact {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .resume-header .contact a {
+    color: var(--blue);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .resume-header .contact a:hover {
+    text-decoration: underline;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+
+  .summary {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .role {
+    margin-bottom: 1.5rem;
+  }
+
+  .role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .role-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-bright);
+  }
+
+  .role-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .role-org {
+    font-size: 0.85rem;
+    color: var(--blue);
+    margin-bottom: 0.4rem;
+  }
+
+  .role ul {
+    padding-left: 1.2rem;
+    margin-top: 0.3rem;
+  }
+
+  .role li {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .role a {
+    color: var(--blue);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .role a:hover {
+    text-decoration: underline;
+  }
+
+  .pub-item {
+    margin-bottom: 1rem;
+  }
+
+  .pub-title {
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 0.3rem;
+  }
+
+  .pub-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+  }
+
+  .pub-links {
+    font-size: 13px;
+  }
+
+  .pub-links a {
+    color: var(--blue);
+    text-decoration: none;
+    margin-right: 12px;
+    transition: all 0.2s;
+  }
+
+  .pub-links a:hover {
+    text-decoration: underline;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 24px;
+    margin-bottom: 1.5rem;
+  }
+
+  .skills-grid > div {
+    margin-bottom: 0.8rem;
+  }
+
+  .skill-cat {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-bright);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .skill-list {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .print-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+  }
+
+  .print-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(233, 69, 96, 0.4);
+  }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--blue);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    :root {
+      --bg: #ffffff;
+      --bg-card: #ffffff;
+      --text: #222222;
+      --text-bright: #000000;
+      --text-muted: #555555;
+      --accent: #c0392b;
+      --blue: #2563eb;
+      --border: #dddddd;
+    }
+
+    @page {
+      margin: 0.6in;
+    }
+
+    body {
+      font-size: 11pt;
+      line-height: 1.4;
+      background: white;
+      color: #222222;
+    }
+
+    .resume-container {
+      max-width: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .resume-header {
+      border-bottom: 2px solid #c0392b;
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .resume-header h1 {
+      font-size: 28px;
+      color: #000000;
+      margin-bottom: 0.4rem;
+    }
+
+    .resume-header .title {
+      color: #2563eb;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .resume-header .contact {
+      color: #555555;
+      font-size: 0.8rem;
+    }
+
+    .resume-header .contact a {
+      color: #2563eb;
+    }
+
+    .section-title {
+      font-size: 11px;
+      color: #c0392b;
+      border-bottom-color: #c0392b;
+      margin-top: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .summary {
+      font-size: 11pt;
+      color: #222222;
+      margin-bottom: 1rem;
+    }
+
+    .role {
+      margin-bottom: 1rem;
+      page-break-inside: avoid;
+    }
+
+    .role-header {
+      margin-bottom: 0.3rem;
+    }
+
+    .role-title {
+      font-size: 1rem;
+      color: #000000;
+    }
+
+    .role-date {
+      color: #555555;
+    }
+
+    .role-org {
+      font-size: 0.85rem;
+      color: #2563eb;
+      margin-bottom: 0.3rem;
+    }
+
+    .role ul {
+      padding-left: 1rem;
+      margin-top: 0.2rem;
+    }
+
+    .role li {
+      font-size: 11pt;
+      color: #222222;
+      margin-bottom: 0.2rem;
+      line-height: 1.4;
+    }
+
+    .role a {
+      color: #2563eb;
+    }
+
+    .pub-item {
+      margin-bottom: 0.8rem;
+      page-break-inside: avoid;
+    }
+
+    .pub-title {
+      color: #000000;
+      margin-bottom: 0.2rem;
+    }
+
+    .pub-desc {
+      font-size: 11pt;
+      color: #555555;
+      margin-bottom: 0.3rem;
+    }
+
+    .pub-links {
+      font-size: 11pt;
+    }
+
+    .pub-links a {
+      color: #2563eb;
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px 16px;
+      margin-bottom: 1rem;
+    }
+
+    .skills-grid > div {
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-cat {
+      font-size: 11px;
+      color: #000000;
+      margin-bottom: 0.2rem;
+    }
+
+    .skill-list {
+      font-size: 11pt;
+      color: #555555;
+    }
+
+    .print-btn,
+    .back-link,
+    .no-print {
+      display: none;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link no-print">← jrlopez.dev</a>
+
+<div class="resume-container">
+
+  <div class="resume-header">
+    <h1>Joseph Lopez</h1>
+    <div class="title">Sr. Data Engineer</div>
+    <div class="contact">
+      Milwaukee, WI · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a> · <a href="https://jrlopez.dev">jrlopez.dev</a> · <a href="https://github.com/josephrobertlopez" target="_blank">github</a> · <a href="https://linkedin.com/in/joseph-lopez-80aa81166" target="_blank">linkedin</a>
+    </div>
+  </div>
+
+  <div class="section-title">Summary</div>
+  <div class="summary">
+    Data engineer who publishes security research and ships production AI. Published a formal proof that regex-based safety filters are algebraically blind. 5 years building data platforms at scale, now leading agentic AI integration and real-time data products at a Top 5 US Bank.
+  </div>
+
+  <div class="section-title">Publications & Research</div>
+  <div class="pub-item">
+    <div class="pub-title">Algebraic and Computational Limits of LLM Guardrails</div>
+    <div class="pub-desc">Proved regex safety filters are algebraically blind to modular-position encodings via syntactic monoid analysis. 91 production patterns analyzed, 34/35 aperiodic. Peer-reviewed.</div>
+    <div class="pub-links"><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">pdf</a> <a href="https://github.com/josephrobertlopez/aperiodic-guardrails" target="_blank">repo</a> <a href="https://jrlopez.dev/teaching/guardrails-engineers.html">teaching materials</a></div>
+  </div>
+
+  <div class="section-title">Teaching & Leadership</div>
+  <div class="role">
+    <div class="role-header">
+      <span class="role-title">Prompt Engineering Bootcamp — Designer & Instructor</span>
+    </div>
+    <ul>
+      <li>Designed and delivered 2-session bootcamp (15 attendees, 7 prompt patterns)</li>
+      <li>Open-source teaching materials: <a href="https://jrlopez.dev/teaching/prompting.html">foundational</a> + <a href="https://jrlopez.dev/teaching/prompting-advanced.html">advanced patterns</a></li>
+      <li>Published prompt composition methodology: <a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">prompt-kit</a></li>
+    </ul>
+  </div>
+
+  <div class="section-title">Experience</div>
+
+  <div class="role">
+    <div class="role-header">
+      <span class="role-title">Sr. Data Engineer — AI Engineering & Agentic Systems</span>
+      <span class="role-date">Jun 2025 – Present</span>
+    </div>
+    <div class="role-org">Accenture · Top 5 US Bank</div>
+    <ul>
+      <li>Building integration layer consuming acquired institution's personal loans product — real-time data, TSYS migration data, and interlinking GraphQL data products</li>
+      <li>Developing Speckit (spec-driven dev framework) on sanctioned exploration time — adopted account-wide, 66% acceleration</li>
+      <li>Selected as 1 of 7 Windsurf AI pilot participants (only Accenture rep) — 7 Java code gens, 8 Docker runtimes, 4 PR reviews via agentic workflows</li>
+      <li>Built agentic data product POC using LangGraph for internal API marketplace — multi-agent workflow for API discovery, schema understanding, code generation</li>
+      <li>Docker runtime workflows across 7 repos saving 14+ person-days in 2 weeks</li>
+    </ul>
+  </div>
+
+  <div class="role">
+    <div class="role-header">
+      <span class="role-title">Sr. Data Engineer / Tech Lead — Data Platform Modernization</span>
+      <span class="role-date">Aug 2021 – May 2025</span>
+    </div>
+    <div class="role-org">Accenture · Top 5 US Bank</div>
+    <ul>
+      <li>Tech Lead: Modernized ETL for 3 Databricks batch jobs handling 32 KYC datasets; built config-driven validation toolkit (3min → 30sec per dataset)</li>
+      <li>Tech Lead: Modernized shell script ETL into production-grade infrastructure — 250 dataset migrations, zero consumer disruption, velocity 1-10 to 20-25 per release</li>
+      <li>Architected Airflow + config-as-code pipeline for migrating 10,000+ TSYS datasets across enterprise post-M&A integration</li>
+      <li>Led PySpark 2→3 migration of AWS Step Function ETL pipeline; mentored junior developers</li>
+      <li>Fixed silently-passing Kafka consumer acceptance test suite; ran technical interviews for data engineering and backend roles</li>
+    </ul>
+  </div>
+
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <div><span class="skill-cat">AI/Agentic:</span> <span class="skill-list">Claude Code, Windsurf, Speckit, MCP, LangGraph, Multi-Agent Architectures</span></div>
+    <div><span class="skill-cat">Python:</span> <span class="skill-list">Pytest, Pandas, PySpark, Airflow, LangGraph, Jupyter</span></div>
+    <div><span class="skill-cat">Java:</span> <span class="skill-list">Spring Boot, JUnit, Mockito, Microservices, Cucumber, Maven</span></div>
+    <div><span class="skill-cat">Go:</span> <span class="skill-list">Lambda, EC2, API contract expansion</span></div>
+    <div><span class="skill-cat">Scala:</span> <span class="skill-list">Spark</span></div>
+    <div><span class="skill-cat">Tools:</span> <span class="skill-list">SQL, AWS, GCP, Docker, OpenAPI, Splunk, GitHub, Jira, Confluence, Tableau</span></div>
+  </div>
+
+  <div class="section-title">Education & Certifications</div>
+  <div class="role">
+    <div class="role-header">
+      <span class="role-title">B.S. Computer Science / Machine Learning — UC Irvine</span>
+      <span class="role-date">2020 · 3.48 GPA</span>
+    </div>
+    <div class="role-org">AWS Cloud Practitioner · GCP Associate Cloud Engineer</div>
+  </div>
+
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">Export PDF</button>
+
+</body>
+</html>
