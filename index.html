@@ -3,38 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joey Lopez — Your Regex Guardrails Are Provably Blind</title>
-<meta name="description" content="I published the proof: 91 of 91 tested regex safety patterns share a fatal algebraic flaw. Sr. Data Engineer, research, teaching, open-source tools.">
-<meta property="og:title" content="Joey Lopez — Your Regex Guardrails Are Provably Blind">
-<meta property="og:description" content="91 of 91 tested regex safety patterns share a fatal algebraic flaw that no regex can fix. Read the paper.">
+<title>Joey Lopez</title>
+<meta name="description" content="Data engineer interested in continuous learning. Research, teaching notes, and open-source tools.">
+<meta property="og:title" content="Joey Lopez">
+<meta property="og:description" content="Data engineer interested in continuous learning. Research, teaching notes, and open-source tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jrlopez.dev">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Joey Lopez — Your Regex Guardrails Are Provably Blind">
-<meta name="twitter:description" content="91 of 91 tested regex safety patterns share a fatal algebraic flaw that no regex can fix. Read the paper.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="hero">
-  <h1>Your regex guardrails are <span class="accent">provably blind</span></h1>
-  <div class="hook">I published the proof. 91 of 91 tested safety patterns share a fatal algebraic flaw that no regex can fix.</div>
-  <div class="credentials">Joey Lopez · Sr. Data Engineer · Milwaukee, WI</div>
-  <div class="hero-actions">
-    <a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">read the paper</a>
-    <a href="teaching/guardrails-engineers.html">engineer's guide</a>
-    <a href="https://github.com/josephrobertlopez" target="_blank">github</a>
-    <a href="https://www.linkedin.com/in/joseph-lopez-80aa81166/" target="_blank">linkedin</a>
-    <a href="resume.pdf">resume</a>
-    <a href="https://calendly.com/josephrobertlopez" target="_blank">calendly</a>
-    <a href="mailto:josephrobertlopez@gmail.com">email</a>
-  </div>
-</div>
-
 <div class="container">
 
-<div class="section-label">Work</div>
+<div class="header">
+<h1>Joey Lopez</h1>
+<div class="links">
+<a href="resume.pdf">resume</a>
+<a href="https://github.com/josephrobertlopez" target="_blank">github</a>
+<a href="https://www.linkedin.com/in/joseph-lopez-80aa81166/" target="_blank">linkedin</a>
+<a href="https://calendly.com/josephrobertlopez" target="_blank">calendly</a>
+<a href="mailto:josephrobertlopez@gmail.com">email</a>
+</div>
+<p class="blurb">Data engineer interested in continuous learning. I like understanding how things break — lately that's been AI safety tooling.</p>
+</div>
 
 <div class="filter">
 <button class="active" onclick="filter('all')">all</button>
@@ -47,7 +40,7 @@
 
 <div class="item" data-tags="paper code">
 <h3><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">Algebraic and Computational Limits of LLM Guardrails</a></h3>
-<div class="desc">Proved that regex-based safety filters are algebraically incapable of detecting modular counting attacks. First paper, peer-reviewed.</div>
+<div class="desc">Proved regex safety filters are algebraically blind to modular counting. First paper.</div>
 <div class="tags">
 <span class="tag" onclick="filter('paper')">paper</span>
 <span class="tag" onclick="filter('code')">code</span>
@@ -55,22 +48,22 @@
 <span class="tag">syntactic-monoids</span>
 <span class="tag">2026</span>
 </div>
-<div class="links">
+<div class="item-links">
 <a href="https://github.com/josephrobertlopez/aperiodic-guardrails">repo</a>
 <a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">pdf</a>
 </div>
 </div>
 
 <div class="item" data-tags="teaching">
-<h3><a href="teaching/guardrails-engineers.html">Your Regex Is Provably Blind — For Engineers</a></h3>
-<div class="desc">The paper explained without the math. SQL injection bypasses you can run today, DFA construction, defense code you can ship.</div>
+<h3><a href="teaching/guardrails-engineers.html">Your Regex Is Provably Blind</a></h3>
+<div class="desc">The guardrails paper explained for engineers. SQL injection bypasses, defense code.</div>
 <div class="tags">
 <span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag">guardrails</span>
 <span class="tag">engineers</span>
 <span class="tag">2026</span>
 </div>
-<div class="links">
+<div class="item-links">
 <a href="teaching/guardrails-engineers.html">for engineers</a>
 <a href="teaching/guardrails-deep-dive.html">deep dive</a>
 </div>
@@ -78,7 +71,7 @@
 
 <div class="item" data-tags="teaching">
 <h3><a href="teaching/prompting.html">Prompt Engineering Notes</a></h3>
-<div class="desc">Cleaned-up notes from a workshop I ran. Patterns, anti-patterns, worked examples.</div>
+<div class="desc">Cleaned-up notes from a workshop I ran. Take what's useful.</div>
 <div class="tags">
 <span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag">prompting</span>
@@ -89,7 +82,7 @@
 
 <div class="item" data-tags="code">
 <h3><a href="https://github.com/josephrobertlopez/aperiodic-guardrails" target="_blank">aperiodic-guardrails</a></h3>
-<div class="desc">Paper + proof-of-concept + monoid extractor + BDD test suite. pip install, behave, reproduce every claim.</div>
+<div class="desc">Paper + PoC + monoid extractor + BDD test suite. pip install, behave, reproduce all claims.</div>
 <div class="tags">
 <span class="tag" onclick="filter('code')">code</span>
 <span class="tag">python</span>
@@ -101,7 +94,7 @@
 
 </div>
 
-<div class="footer">Joey Lopez · 2026</div>
+<div class="footer">2026</div>
 
 </div>
 
