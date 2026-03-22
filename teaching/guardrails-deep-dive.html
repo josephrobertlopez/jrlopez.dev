@@ -82,6 +82,15 @@
   .hero h1 { font-size: 2.2em; margin-bottom: 12px; line-height: 1.2; }
   .hero .subtitle { color: var(--text-dim); font-size: 1.05em; max-width: 600px; margin: 0 auto 20px; }
   .hero .author { color: var(--blue); font-size: 0.95em; }
+  .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+  .hero-tag {
+    padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    border: 1px solid; cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .hero-tag:hover { background: rgba(255,255,255,0.08); text-decoration: none; }
+  .hero-tag.red { color: var(--accent); border-color: var(--accent); }
+  .hero-tag.blue { color: var(--blue); border-color: var(--blue); }
+  .hero-tag.green { color: var(--green); border-color: var(--green); }
 
   /* --- LESSON CARD --- */
   .lesson {
@@ -327,6 +336,11 @@
   <h1>Why LLM Guardrails Have Limits</h1>
   <p class="subtitle">An interactive walkthrough of <em>"Algebraic and Computational Limits of LLM Guardrails"</em> — four impossibility results, step by step.</p>
   <p class="author">Joey Lopez</p>
+  <div class="hero-tags">
+    <a class="hero-tag red" href="#lesson-2">Syntactic Monoids</a>
+    <a class="hero-tag blue" href="#lesson-3">Blindness Proof</a>
+    <a class="hero-tag green" href="#lesson-8">Defense Strategy</a>
+  </div>
 </div>
 
 <div class="container">

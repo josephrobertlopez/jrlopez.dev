@@ -144,8 +144,9 @@ p { margin-bottom: 1rem; }
 .hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .hero-tag {
   padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
-  border: 1px solid;
+  border: 1px solid; cursor: pointer; text-decoration: none; transition: all 0.2s;
 }
+.hero-tag:hover { background: rgba(255,255,255,0.08); text-decoration: none; }
 .hero-tag.red { color: var(--accent); border-color: var(--accent); }
 .hero-tag.blue { color: var(--blue); border-color: var(--blue); }
 .hero-tag.green { color: var(--green); border-color: var(--green); }
@@ -428,9 +429,9 @@ a:hover { text-decoration: underline; }
   <h1>Prompt Engineering <span>Notes</span></h1>
   <p class="subtitle">Workshop notes cleaned up. Patterns, anti-patterns, and exercises from real sessions. Take what's useful.</p>
   <div class="hero-tags">
-    <span class="hero-tag red">patterns</span>
-    <span class="hero-tag blue">exercises</span>
-    <span class="hero-tag green">workshop</span>
+    <a class="hero-tag red" href="#patterns">patterns</a>
+    <a class="hero-tag blue" href="#the-gap">exercises</a>
+    <a class="hero-tag green" href="#three-approaches">workshop</a>
   </div>
 </section>
 
