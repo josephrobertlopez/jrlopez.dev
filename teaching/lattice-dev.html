@@ -275,19 +275,22 @@
     <p>A lattice inverts this. Before C runs, it verifies that its input matches the contract defined by B. Before B runs, it verifies that its input matches A. Each layer is a proof, not a hope.</p>
 
     <div class="ascii-diagram">PIPELINE (hope-based):
-┌────────┐    ┌────────┐    ┌────────┐
-│  A     │───→│  B     │───→│  C     │
-└────────┘    └────────┘    └────────┘
-                                  ↓
-                         Find bug in production
 
-LATTICE (verification gates):
-┌────────┐    ✓ check    ┌────────┐    ✓ check    ┌────────┐
-│  A     │             │  B     │               │  C     │
-└────────┘    ✓ verify  └────────┘   ✓ verify   └────────┘
-              (A→B)                  (B→C)
-                         ↓
-              Prevent bad state before C</div>
+  ┌───┐       ┌───┐       ┌───┐
+  │ A │ ────→ │ B │ ────→ │ C │
+  └───┘       └───┘       └───┘
+                             ↓
+                    Bug in production
+
+
+LATTICE (verified):
+
+  ┌───┐  ✓    ┌───┐  ✓    ┌───┐
+  │ A │ ─→──→ │ B │ ─→──→ │ C │
+  └───┘ gate  └───┘ gate  └───┘
+       A→B?        B→C?
+                     ↓
+              Bad state blocked</div>
 
     <div class="card warning">
       <div class="card-label">Warning</div>
