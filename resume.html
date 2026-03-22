@@ -205,26 +205,34 @@
     line-height: 1.4;
   }
 
-  .print-btn {
+  .export-btns {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .export-btn {
     padding: 10px 20px;
-    background: var(--accent);
     color: white;
     border: none;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    z-index: 100;
     transition: all 0.2s;
+  }
+  .export-btn.pdf {
+    background: var(--accent);
     box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
   }
-
-  .print-btn:hover {
+  .export-btn.docx {
+    background: var(--blue);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+  }
+  .export-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(233, 69, 96, 0.4);
   }
 
   .back-link {
@@ -397,7 +405,7 @@
       color: #555555;
     }
 
-    .print-btn,
+    .export-btns,
     .back-link,
     .no-print {
       display: none;
@@ -579,7 +587,48 @@
 
 </div>
 
-<button class="print-btn no-print" onclick="window.print()">Export PDF</button>
+<div class="export-btns no-print">
+  <button class="export-btn pdf" onclick="window.print()">Export PDF</button>
+  <button class="export-btn docx" onclick="exportDocx()">Export DOCX</button>
+</div>
+
+<script>
+function exportDocx() {
+  const content = document.querySelector('.resume-container').innerHTML;
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><style>
+body{font-family:Calibri,sans-serif;font-size:11pt;color:#222;line-height:1.4}
+h1{font-size:22pt;margin:0}
+a{color:#2563eb}
+.title{color:#2563eb;font-size:13pt;margin:4pt 0}
+.contact{color:#555;font-size:9pt}
+.section-title{font-size:10pt;font-weight:bold;text-transform:uppercase;letter-spacing:1pt;color:#c0392b;border-bottom:1.5pt solid #c0392b;padding-bottom:2pt;margin-top:14pt;margin-bottom:6pt;display:inline-block}
+.summary{font-size:10.5pt;margin-bottom:10pt}
+.role{margin-bottom:10pt}
+.role-header{margin-bottom:2pt}
+.role-title{font-weight:bold;font-size:10.5pt}
+.role-date{font-size:9pt;color:#555;float:right}
+.role-org{font-size:9pt;color:#2563eb;margin-bottom:3pt}
+ul{margin:3pt 0 0 18pt;font-size:10pt}
+li{margin-bottom:2pt}
+.pub-title{font-weight:bold}
+.pub-desc{font-size:9.5pt;color:#555}
+.pub-links{font-size:9pt}
+.skills-grid{display:table;width:100%}
+.skills-grid>div{display:table-row}
+.skill-cat{font-weight:bold;font-size:9.5pt}
+.skill-list{font-size:9.5pt;color:#555}
+.back-link,.export-btns,.no-print{display:none}
+</style></head><body>${content}</body></html>`;
+  const blob = new Blob(['\\ufeff', html], {type: 'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Joey_Lopez_Resume.doc';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
 
 </body>
 </html>
