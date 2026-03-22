@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Why LLM Guardrails Have Limits | Interactive Guide</title>
+<meta name="description" content="Interactive deep dive into why LLM guardrails have algebraic limits. Syntactic monoids, category theory, and defense strategies.">
+<meta property="og:title" content="Why LLM Guardrails Have Limits | Joey Lopez">
+<meta property="og:description" content="Interactive deep dive into algebraic limits of LLM guardrails. Syntactic monoids, category theory, defense strategies.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/guardrails-deep-dive.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
   :root {
@@ -324,7 +331,6 @@
   <div class="lesson-header">
     <h2><span class="lesson-num">1</span> The Setup: How LLM Safety Works Today</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>When you ask ChatGPT how to do something dangerous and it refuses, that refusal comes from <strong>multiple layers of defense</strong> stacked on top of each other. Think of it like airport security: there is not one check, but many.</p>
 
@@ -397,7 +403,6 @@
   <div class="lesson-header">
     <h2><span class="lesson-num">2</span> Syntactic Monoids: The DNA of a Regex</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>Before we can prove that regex filters are blind, we need to understand their internal structure. Every regex has a hidden algebraic fingerprint called its <span class="kw">syntactic monoid</span>.</p>
 
@@ -470,7 +475,6 @@ s4 = <span style="color:#a5d6ff">"qqq"</span>
   <div class="lesson-header">
     <h2><span class="lesson-num">3</span> The Blindness Proof (Crown Jewel)</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>This is the paper's most striking result. It chains together three classical theorems from different decades to reach an inescapable conclusion.</p>
 
@@ -517,7 +521,7 @@ s4 = <span style="color:#a5d6ff">"qqq"</span>
       <div class="callout-label">Try It Yourself -- The MOD_2 Bypass</div>
       <p>Interleave a payload with filler characters. The regex sees garbage. The decoder reads every 2nd character and recovers the original.</p>
       <div class="code-block">
-        <button class="run-btn" onclick="runCode('code3')">Run</button>
+        <button class="run-btn" onclick="runCode('code3')">Show Output</button>
         <code id="code3-src"><span style="color:#ff7b72">import</span> <span style="color:#ffa657">re</span>
 
 payload = <span style="color:#a5d6ff">"bomb"</span>
@@ -570,7 +574,6 @@ Decoded: bomb
   <div class="lesson-header">
     <h2><span class="lesson-num">4</span> The Fano Bound: Information Destroyed by Abstraction</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>When a guardrail operates on <em>abstractions</em> (categories of content rather than the exact content itself), it loses information. This is not a design flaw -- it is information theory.</p>
 
@@ -591,7 +594,7 @@ Decoded: bomb
       <div class="callout-label">Try It Yourself -- Compute the Fano Error Floor</div>
       <p>Binary search for the inverse of the binary entropy function to find the irreducible error rate:</p>
       <div class="code-block">
-        <button class="run-btn" onclick="runCode('code4')">Run</button>
+        <button class="run-btn" onclick="runCode('code4')">Show Output</button>
         <code id="code4-src"><span style="color:#ff7b72">import</span> <span style="color:#ffa657">math</span>
 
 <span style="color:#ff7b72">def</span> <span style="color:#d2a8ff">h</span>(p):
@@ -643,7 +646,6 @@ can achieve less than 4.8% error rate.
   <div class="lesson-header">
     <h2><span class="lesson-num">5</span> NP-Completeness: The Interpretation Explosion</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>Even if a guardrail could somehow see through the abstraction (beating the Fano bound), it would face a <em>computational</em> wall: checking whether <strong>any</strong> concrete interpretation of an abstract program is dangerous is NP-complete.</p>
 
@@ -712,7 +714,6 @@ can achieve less than 4.8% error rate.
   <div class="lesson-header">
     <h2><span class="lesson-num">6</span> The Functor: Why Abstract Solutions Work in Reality</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>Here is the attacker's guarantee: if an LLM correctly solves an abstract reasoning problem, the solution <em>maps faithfully</em> to a real-world procedure. The proof uses <strong>category theory</strong> -- specifically, a <strong>functor</strong> between two categories.</p>
 
@@ -744,7 +745,7 @@ can achieve less than 4.8% error rate.
     <div class="callout tryit">
       <div class="callout-label">Try It Yourself -- The Functor in Action</div>
       <div class="code-block">
-        <button class="run-btn" onclick="runCode('code6')">Run</button>
+        <button class="run-btn" onclick="runCode('code6')">Show Output</button>
         <code id="code6-src"><span style="color:#8b949e"># The LLM solves this abstract grammar:</span>
 abstract_path = [<span style="color:#a5d6ff">"N1"</span>, <span style="color:#a5d6ff">"R1"</span>, <span style="color:#a5d6ff">"N2"</span>, <span style="color:#a5d6ff">"R2"</span>, <span style="color:#a5d6ff">"N3"</span>, <span style="color:#a5d6ff">"R7"</span>, <span style="color:#a5d6ff">"N17"</span>]
 
@@ -798,7 +799,6 @@ Looks like homework. Is actually a synthesis procedure.
   <div class="lesson-header">
     <h2><span class="lesson-num">7</span> Indistinguishability: Perfect Steganography</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>This is perhaps the most unsettling result. The adversarial prompt and the legitimate prompt are not just <em>similar</em>. They are <strong>the same string</strong>.</p>
 
@@ -845,7 +845,6 @@ Looks like homework. Is actually a synthesis procedure.
   <div class="lesson-header">
     <h2><span class="lesson-num">8</span> So What? Defense in Depth</h2>
   </div>
-  <div class="lesson-progress"><div class="lesson-progress-fill" style="width:100%"></div></div>
   <div class="lesson-body">
     <p>The paper's conclusion is <strong>not</strong> "guardrails are useless." It is: <em>"Inference-layer guardrails are necessary but insufficient."</em> Each impossibility theorem points to a specific defense that should be added at a different layer.</p>
 
@@ -981,5 +980,6 @@ Looks like homework. Is actually a synthesis procedure.
   }
 </script>
 
+<div style="text-align:center;padding:2rem 0 1rem;font-size:.85rem"><a href="../index.html" style="color:#58a6ff;text-decoration:none">← jrlopez.dev</a> · <a href="guardrails-engineers.html" style="color:#58a6ff;text-decoration:none">← for engineers</a></div>
 </body>
 </html>

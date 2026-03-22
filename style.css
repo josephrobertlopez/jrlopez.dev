@@ -35,6 +35,9 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 .item .links{margin-top:.4rem;font-size:.8rem}
 .item .links a{margin-right:.8rem}
 
+/* About */
+.about{font-size:.82rem;color:var(--text);margin-top:-.8rem;margin-bottom:1.8rem;max-width:32rem;line-height:1.5}
+
 /* Footer */
 .footer{margin-top:3rem;color:#2a2a3a;font-size:.65rem;text-align:center}
 
