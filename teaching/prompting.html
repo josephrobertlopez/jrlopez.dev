@@ -22,68 +22,74 @@
   --border: #2a2a40;
   --text: #c8c8d8;
   --text-dim: #8888a0;
-  --text-bright: #f0f0ff;
+  --text-bright: #e8e8f0;
   --accent: #e94560;
   --accent-dim: #b0354a;
   --accent-glow: rgba(233,69,96,0.15);
   --blue: #58a6ff;
   --green: #3fb950;
   --yellow: #d4a017;
-  --orange: #fb923c;
+  --purple: #a78bfa;
+  --orange: #f0883e;
   --red: #f87171;
   --cyan: #22d3ee;
   --pink: #f472b6;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
+  font-size: 17px;
   -webkit-font-smoothing: antialiased;
 }
 
-/* NAV — simple anchor links, no branding */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(15,15,26,0.95);
-  backdrop-filter: blur(14px);
+/* NAV */
+.nav-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,15,26,0.92);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  padding: 0.6rem 1rem;
-}
-
-nav .nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  padding: 10px 20px;
+  display: flex; align-items: center; gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
 }
-
-nav .nav-inner::-webkit-scrollbar { display: none; }
-
-nav a {
-  color: var(--text-dim);
+.nav-bar::-webkit-scrollbar { display: none; }
+.nav-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  cursor: pointer;
   text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 500;
   white-space: nowrap;
-  transition: color 0.2s;
+  transition: all 0.2s;
 }
+.nav-pill:hover, .nav-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-nav a:hover { color: var(--text-bright); }
+/* PROGRESS */
+.progress-track {
+  position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200;
+  background: var(--border);
+}
+.progress-fill {
+  height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--blue));
+  transition: width 0.2s;
+}
 
 /* LAYOUT */
 .container {
-  max-width: 860px;
+  max-width: 780px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 6rem;
+  padding: 0 20px;
 }
 
 /* SECTIONS */
@@ -114,54 +120,67 @@ h4 {
 
 p { margin-bottom: 1rem; }
 
-/* OPENING — understated */
-.opening {
-  padding: 3rem 0 2rem;
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+  padding: 80px 20px 60px;
+  text-align: center;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 3rem;
 }
-
-.opening h1 {
-  font-size: 1.6rem;
-  font-weight: 700;
+.hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
   color: var(--text-bright);
-  margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1.2;
 }
-
-.opening p {
-  font-size: 1rem;
-  color: var(--text-dim);
+.hero h1 span { color: var(--accent); }
+.hero .subtitle {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: var(--text);
   max-width: 640px;
-  line-height: 1.7;
+  margin: 0 auto 30px;
 }
+.hero-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.hero-tag {
+  padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;
+  border: 1px solid;
+}
+.hero-tag.red { color: var(--accent); border-color: var(--accent); }
+.hero-tag.blue { color: var(--blue); border-color: var(--blue); }
+.hero-tag.green { color: var(--green); border-color: var(--green); }
+
+/* SECTIONS */
+.lesson { padding: 60px 0 40px; border-bottom: 1px solid var(--border); }
+.lesson-num { font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
 
 /* CARDS */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
+  padding: 20px 24px;
+  margin: 20px 0;
+  border-left: 4px solid var(--border);
 }
 
 .card.callout {
-  border-left: 3px solid var(--accent);
+  border-left: 4px solid var(--accent);
   background: var(--accent-glow);
 }
 
 .card.insight {
-  border-left: 3px solid var(--green);
+  border-left: 4px solid var(--green);
   background: rgba(74,222,128,0.06);
 }
 
 .card.warning {
-  border-left: 3px solid var(--orange);
+  border-left: 4px solid var(--orange);
   background: rgba(251,146,60,0.06);
 }
 
 .card.try-it {
-  border-left: 3px solid var(--cyan);
+  border-left: 4px solid var(--cyan);
   background: rgba(34,211,238,0.06);
 }
 
@@ -180,7 +199,7 @@ p { margin-bottom: 1rem; }
 
 /* CODE */
 code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: 0.85em;
   background: var(--bg-code);
   padding: 0.15em 0.4em;
@@ -351,34 +370,29 @@ ul, ol { margin: 0.5rem 0 1rem 1.25rem; }
 li { margin-bottom: 0.3rem; }
 
 /* FOOTER */
-footer {
+.footer {
+  padding: 40px 20px;
   text-align: center;
-  padding: 3rem 1rem;
   border-top: 1px solid var(--border);
-  color: var(--text-dim);
-  font-size: 0.85rem;
+  color: #555;
+  font-size: 14px;
 }
-
-footer a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-footer a:hover { text-decoration: underline; }
+.footer a { color: var(--blue); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .container { padding: 1rem 1rem 4rem; }
   h2 { font-size: 1.4rem; }
-  .opening h1 { font-size: 1.3rem; }
-  .opening p { font-size: 0.92rem; }
+  .hero h1 { font-size: 1.3rem; }
+  .hero .subtitle { font-size: 0.92rem; }
   pre { padding: 1rem; font-size: 0.78rem; }
   table { font-size: 0.8rem; }
   th, td { padding: 0.4rem 0.5rem; }
 }
 
 /* SMOOTH LINKS */
-a { color: var(--accent); text-decoration: none; }
+a { color: var(--blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* FLOWCHART */
@@ -388,7 +402,7 @@ a:hover { text-decoration: underline; }
   border-radius: 8px;
   padding: 1.5rem;
   margin: 1.5rem 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: 0.82rem;
   line-height: 1.8;
   color: var(--text-dim);
@@ -399,29 +413,33 @@ a:hover { text-decoration: underline; }
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="../index.html">jrlopez.dev</a>
-    <a href="#the-gap">The gap</a>
-    <a href="#three-approaches">Approaches</a>
-    <a href="#patterns">Patterns</a>
-    <a href="#second-brain">Second brain</a>
-    <a href="#reference">Reference</a>
-  </div>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+<nav class="nav-bar">
+  <a class="nav-pill" href="../index.html">jrlopez.dev</a>
+  <a class="nav-pill" href="#the-gap">The gap</a>
+  <a class="nav-pill" href="#three-approaches">Approaches</a>
+  <a class="nav-pill" href="#patterns">Patterns</a>
+  <a class="nav-pill" href="#second-brain">Second brain</a>
+  <a class="nav-pill" href="#reference">Reference</a>
 </nav>
+
+<section class="hero">
+  <h1>Prompt Engineering <span>Notes</span></h1>
+  <p class="subtitle">Workshop notes cleaned up. Patterns, anti-patterns, and exercises from real sessions. Take what's useful.</p>
+  <div class="hero-tags">
+    <span class="hero-tag red">patterns</span>
+    <span class="hero-tag blue">exercises</span>
+    <span class="hero-tag green">workshop</span>
+  </div>
+</section>
 
 <div class="container">
 
-<!-- ====== OPENING ====== -->
-<div class="opening">
-  <h1>Prompt Engineering Notes</h1>
-  <p>I ran a prompt engineering workshop at work. Afterwards I cleaned up my notes. This is what survived.</p>
-  <p>I didn't invent any of this. Chain of Thought is from Wei et al., Tree of Thoughts is from Yao et al., the Persona and Template patterns are catalogued in White et al. I just organized them in the order I wish someone had shown me.</p>
-  <p>Take what's useful.</p>
-</div>
-
 <!-- ====== THE GAP ====== -->
-<section id="the-gap">
+<section id="the-gap" class="lesson">
+<div class="lesson-num">Section 01</div>
+<p style="color:var(--text-dim);margin-bottom:1.5rem;font-size:15px">I didn't invent any of this. Chain of Thought is from Wei et al., Tree of Thoughts is from Yao et al., the Persona and Template patterns are catalogued in White et al. I just organized them in the order I wish someone had shown me.</p>
 <h2>The gap</h2>
 
 <p>The fastest way to understand prompt engineering is to feel the difference. Here's a quick exercise I use in workshops.</p>
@@ -486,7 +504,8 @@ Constraints:
 </section>
 
 <!-- ====== THREE APPROACHES ====== -->
-<section id="three-approaches">
+<section id="three-approaches" class="lesson">
+<div class="lesson-num">Section 02</div>
 <h2>Three approaches</h2>
 
 <p>Not every task needs the same level of effort. Using a four-file spec-driven workflow to fix a typo is overkill.</p>
@@ -597,7 +616,8 @@ PR diff:
 </section>
 
 <!-- ====== PATTERNS ====== -->
-<section id="patterns">
+<section id="patterns" class="lesson">
+<div class="lesson-num">Section 03</div>
 <h2>Patterns</h2>
 
 <p>Every effective prompt is built from a small set of composable patterns. I think of them like tools in a toolbox -- a hammer isn't better than a screwdriver, but using a hammer on a screw will ruin your day.</p>
@@ -902,7 +922,8 @@ Using Tree of Thoughts decisions:
 </section>
 
 <!-- ====== SECOND BRAIN ====== -->
-<section id="second-brain">
+<section id="second-brain" class="lesson">
+<div class="lesson-num">Section 04</div>
 <h2>Second brain</h2>
 
 <p>Every conversation, you re-explain your project, your role, your constraints. You're doing context retrieval by hand, every time. The fix is writing it down once.</p>
@@ -1164,7 +1185,8 @@ Using Tree of Thoughts decisions:
 </section>
 
 <!-- ====== REFERENCE ====== -->
-<section id="reference">
+<section id="reference" class="lesson">
+<div class="lesson-num">Section 05</div>
 <h2>Reference</h2>
 
 <h3>Pre-prompt checklist</h3>
@@ -1523,10 +1545,17 @@ performance engineer.</code></pre>
 
 </div>
 
-<footer>
+<div class="footer">
   <p>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></p>
-</footer>
+  <p style="margin-top:12px"><a href="../index.html">&larr; jrlopez.dev</a> &middot; <a href="guardrails-engineers.html">guardrails paper &rarr;</a></p>
+</div>
 
-<div style="text-align:center;padding:2rem 0 1rem;font-size:.85rem"><a href="../index.html" style="color:#58a6ff;text-decoration:none">← jrlopez.dev</a> · <a href="guardrails-engineers.html" style="color:#58a6ff;text-decoration:none">guardrails paper →</a></div>
+<script>
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+});
+</script>
 </body>
 </html>
