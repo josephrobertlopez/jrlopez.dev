@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Bootcamp | Joey Lopez</title>
+    <meta name="description" content="A 90-minute hands-on workshop teaching systematic AI workflows: context is everything, structure gets rewarded, you are the retrieval system.">
+    <meta property="og:title" content="Prompt Engineering Bootcamp | Joey Lopez">
+    <meta property="og:description" content="Role-specific tracks, installed tools, and a capstone where you build your own skill.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jrlopez.dev/teaching/prompt-engineering-bootcamp.html">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+    <style>
+        /* ================================================================
+           DESIGN TOKENS — aligned to jrlopez.dev
+           ================================================================ */
+        :root {
+            --color-primary: #e94560;
+            --color-secondary: #58a6ff;
+            --color-success: #3fb950;
+            --color-warning: #d4a017;
+            --color-gray-dark: #1a1a2e;
+            --color-gray-mid: #8888a0;
+            --color-gray-light: #161625;
+            --color-white: #e8e8f0;
+            --color-bg: #0f0f1a;
+            --color-bg-card: #161625;
+            --color-border: #2a2a40;
+            --color-text: #c8c8d8;
+
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'Courier New', 'Monaco', monospace;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+        }
+
+        /* ================================================================
+           RESET & BASE STYLES
+           ================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+        }
+
+        /* ================================================================
+           TYPOGRAPHY
+           ================================================================ */
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-white);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-white);
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-white);
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* ================================================================
+           NAV BAR — matches jrlopez.dev teaching page pattern
+           ================================================================ */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 15, 26, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-bar::-webkit-scrollbar { display: none; }
+
+        .nav-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text);
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover { background: var(--color-primary); color: #fff; border-color: var(--color-primary); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+        }
+
+        /* ================================================================
+           HERO SECTION
+           ================================================================ */
+        .hero {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+            color: var(--color-white);
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            color: var(--color-white);
+            margin-bottom: var(--spacing-sm);
+            font-size: clamp(28px, 5vw, 48px);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: var(--spacing-md);
+            opacity: 0.9;
+            font-style: italic;
+            color: var(--color-text);
+        }
+
+        .hero .byline {
+            font-size: 0.95rem;
+            color: var(--color-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tag {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid;
+            text-decoration: none;
+            transition: all 0.2s;
+            color: var(--color-text);
+            border-color: var(--color-border);
+            background: var(--color-bg-card);
+        }
+
+        .hero-tag:hover {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        /* ================================================================
+           CONTAINER & SECTIONS
+           ================================================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        section {
+            padding: var(--spacing-2xl) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        section.alt-bg {
+            background: var(--color-bg-card);
+        }
+
+        /* ================================================================
+           OVERVIEW
+           ================================================================ */
+        .overview-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            max-width: 900px;
+            margin: 0 auto var(--spacing-xl);
+            text-align: center;
+        }
+
+        /* ================================================================
+           STAT CARDS
+           ================================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .stat-card {
+            background: var(--color-bg-card);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--color-secondary);
+            border-top: 1px solid var(--color-border);
+            border-right: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card.primary {
+            border-left-color: var(--color-primary);
+        }
+
+        .stat-card.success {
+            border-left-color: var(--color-success);
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-card .label {
+            font-size: 0.95rem;
+            color: var(--color-white);
+            font-weight: 500;
+        }
+
+        .stat-card .detail {
+            font-size: 0.85rem;
+            color: var(--color-gray-mid);
+            margin-top: var(--spacing-xs);
+        }
+
+        /* ================================================================
+           MATERIALS SECTION
+           ================================================================ */
+        .materials h2 {
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .materials-subsection {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .materials-subsection h3 {
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: var(--spacing-md);
+            font-weight: 700;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .material-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--color-border);
+        }
+
+        .material-card:hover {
+            border-left-color: var(--color-secondary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .material-card .icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .material-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-white);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .material-card .description {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .material-card a {
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .material-card a::after {
+            content: '→';
+            transition: transform 0.2s ease;
+        }
+
+        .material-card a:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* ================================================================
+           SESSION FLOW TIMELINE
+           ================================================================ */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-primary);
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before { display: none; }
+        }
+
+        .timeline-item {
+            background: var(--color-bg-card);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border-top: 4px solid var(--color-secondary);
+            border-left: 1px solid var(--color-border);
+            border-right: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .timeline-item.primary {
+            border-top-color: var(--color-primary);
+        }
+
+        .timeline-item.success {
+            border-top-color: var(--color-success);
+        }
+
+        .timeline-item .time {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .timeline-item .label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-white);
+        }
+
+        /* ================================================================
+           COMPARISON TABLE
+           ================================================================ */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+
+        .comparison-table thead {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .comparison-table th {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table tbody tr {
+            background: var(--color-bg-card);
+        }
+
+        .comparison-table tbody tr:nth-child(odd) {
+            background: rgba(22, 22, 37, 0.6);
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(88, 166, 255, 0.05);
+        }
+
+        .comparison-table .highlight {
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        /* ================================================================
+           FOOTER — matches jrlopez.dev pattern
+           ================================================================ */
+        .footer {
+            margin-top: var(--spacing-2xl);
+            padding: var(--spacing-lg) 0;
+            color: var(--color-gray-mid);
+            font-size: 14px;
+            text-align: center;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer a {
+            color: var(--color-gray-mid);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: var(--color-secondary);
+            text-decoration: none;
+        }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-2xl: 2.5rem;
+                --spacing-xl: 2rem;
+            }
+
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.4rem; }
+
+            .hero { padding: var(--spacing-xl) var(--spacing-md); }
+            .hero h1 { font-size: 1.8rem; }
+            .hero .subtitle { font-size: 1.1rem; }
+
+            .card-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .container { padding: var(--spacing-md); }
+            section { padding: var(--spacing-xl) 0; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            h3 { font-size: 1.1rem; }
+            .hero .subtitle { font-size: 1rem; }
+            .comparison-table th,
+            .comparison-table td {
+                padding: var(--spacing-sm);
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ================================================================
+           UTILITY
+           ================================================================ */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--color-gray-mid); }
+        .mt-lg { margin-top: var(--spacing-lg); }
+        .mt-xl { margin-top: var(--spacing-xl); }
+        .mb-lg { margin-bottom: var(--spacing-lg); }
+        .mb-xl { margin-bottom: var(--spacing-xl); }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav-bar">
+        <a href="../index.html" class="nav-pill">← home</a>
+        <a href="#overview" class="nav-pill">overview</a>
+        <a href="#materials" class="nav-pill">materials</a>
+        <a href="#flow" class="nav-pill">session flow</a>
+        <a href="#whats-new" class="nav-pill">what's new</a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Prompt Engineering Bootcamp</h1>
+            <p class="subtitle">From Patterns to Systems</p>
+            <p class="byline">Joey Lopez · Sr. Data Engineer</p>
+            <div class="hero-tags">
+                <a href="#overview" class="hero-tag">overview</a>
+                <a href="#materials" class="hero-tag">materials</a>
+                <a href="#flow" class="hero-tag">session flow</a>
+                <a href="#whats-new" class="hero-tag">what's new</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- OVERVIEW SECTION -->
+    <section id="overview">
+        <div class="container">
+            <h2>Overview</h2>
+            <p class="overview-description">
+                A redesigned 90-minute hands-on workshop that teaches systematic AI workflows through three intuitions:
+                <strong>context is everything</strong>, <strong>structure gets rewarded</strong>, and
+                <strong>you are the retrieval system</strong>. Participants leave with installed tools and the ability to create more.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="number">90</div>
+                    <div class="label">Minutes Live</div>
+                    <div class="detail">+ 15 min prerequisite</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">4</div>
+                    <div class="label">Role-Specific Tracks</div>
+                    <div class="detail">Dev, PO/PM, Delivery, Tech Lead</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="number">5</div>
+                    <div class="label">Skills Included</div>
+                    <div class="detail">4 role skills + 1 capstone</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">37.9x</div>
+                    <div class="label">ROI Measured</div>
+                    <div class="detail">From a real production project</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">66%</div>
+                    <div class="label">Faster Delivery</div>
+                    <div class="detail">Time-to-value improvement</div>
+                </div>
+                <div class="stat-card primary">
+                    <div class="number">2026</div>
+                    <div class="label">Grounded in Results</div>
+                    <div class="detail">Not academic — production outcomes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MATERIALS SECTION -->
+    <section id="materials" class="alt-bg">
+        <div class="container">
+            <h2 class="materials">Materials & Resources</h2>
+
+            <!-- For Participants -->
+            <div class="materials-subsection">
+                <h3>For Participants</h3>
+                <div class="card-grid">
+                    <div class="material-card">
+                        <div class="icon">📋</div>
+                        <h4>Common Knowledge</h4>
+                        <p class="description">15-minute self-study. Complete before the live session to align on foundational concepts.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">🎤</div>
+                        <h4>Live Session Slides</h4>
+                        <p class="description">Facilitator-led 90-minute workshop covering all patterns, demonstrations, and exercises.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">⚡</div>
+                        <h4>Quick Reference Cards</h4>
+                        <p class="description">Pattern recognition guide and decision tree for rapid lookup during practice.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp" target="_blank">View on GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Role-Specific Skills -->
+            <div class="materials-subsection">
+                <h3>Role-Specific Skills</h3>
+                <div class="card-grid">
+                    <div class="material-card">
+                        <div class="icon">👨‍💻</div>
+                        <h4>Developer Second Brain</h4>
+                        <p class="description">Workflows for code generation, architecture prompting, and debugging patterns.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp/tree/main/skills/dev-second-brain" target="_blank">View Skill</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">📊</div>
+                        <h4>PO/PM Second Brain</h4>
+                        <p class="description">Prompting patterns for requirements, user stories, roadmap synthesis, and stakeholder communication.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp/tree/main/skills/po-second-brain" target="_blank">View Skill</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">📋</div>
+                        <h4>Delivery Lead Second Brain</h4>
+                        <p class="description">Planning, risk assessment, timeline estimation, and team coordination prompts.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp/tree/main/skills/dl-second-brain" target="_blank">View Skill</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">🏗️</div>
+                        <h4>Tech Lead Second Brain</h4>
+                        <p class="description">Architecture design, technical design reviews, knowledge synthesis, and decision documentation.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp/tree/main/skills/tl-second-brain" target="_blank">View Skill</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">🔨</div>
+                        <h4>Make Skills (Capstone)</h4>
+                        <p class="description">Framework for building custom skills tailored to your role and team needs.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp/tree/main/skills/make-skills" target="_blank">View Skill</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For Facilitators -->
+            <div class="materials-subsection">
+                <h3>For Facilitators</h3>
+                <div class="card-grid">
+                    <div class="material-card">
+                        <div class="icon">📚</div>
+                        <h4>Facilitator Guide v2</h4>
+                        <p class="description">Minute-by-minute script, timing notes, failure modes, and contingency plans for delivery.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp" target="_blank">View on GitHub</a>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="icon">📖</div>
+                        <h4>Participant Materials (v1 Reference)</h4>
+                        <p class="description">Historical reference and lessons learned from v1 implementation.</p>
+                        <a href="https://github.com/josephrobertlopez/PromptEngineeringBootcamp" target="_blank">View on GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SESSION FLOW SECTION -->
+    <section id="flow">
+        <div class="container">
+            <h2>Session Flow</h2>
+            <p class="text-muted">105 total minutes: 15 min prereq + 90 min live</p>
+
+            <div class="timeline">
+                <div class="timeline-item primary">
+                    <div class="time">15 min</div>
+                    <div class="label">Prereq</div>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--color-gray-mid);">Self-study</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time">15 min</div>
+                    <div class="label">Activation</div>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--color-gray-mid);">Framing & context</p>
+                </div>
+
+                <div class="timeline-item success">
+                    <div class="time">40 min</div>
+                    <div class="label">Role Fork</div>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--color-gray-mid);">Role-specific deep dive</p>
+                </div>
+
+                <div class="timeline-item primary">
+                    <div class="time">20 min</div>
+                    <div class="label">Capstone</div>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--color-gray-mid);">Build your own skill</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time">10 min</div>
+                    <div class="label">Reveal + Close</div>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--color-gray-mid);">Synthesis & next steps</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT'S NEW SECTION -->
+    <section id="whats-new">
+        <div class="container">
+            <h2>What's New in v2</h2>
+            <p class="text-muted">Refined based on v1 success. Better structure, faster delivery, more agency.</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>v1</th>
+                        <th>v2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Duration</strong></td>
+                        <td>2 hours</td>
+                        <td><span class="highlight">90 min + 15 min prereq (105 min total)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Structure</strong></td>
+                        <td>Single track</td>
+                        <td><span class="highlight">4 role-specific tracks</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Focus</strong></td>
+                        <td>Pattern recognition</td>
+                        <td><span class="highlight">System building + pattern mastery</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exercises</strong></td>
+                        <td>Generic examples</td>
+                        <td><span class="highlight">Role-aligned, production-relevant</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Takeaway</strong></td>
+                        <td>Understand patterns</td>
+                        <td><span class="highlight">Installed tools + ability to build more</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capstone</strong></td>
+                        <td>None</td>
+                        <td><span class="highlight">Make Your Own Skills (20 min)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grounding</strong></td>
+                        <td>Academic</td>
+                        <td><span class="highlight">Real production results (66% faster delivery)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-xl">
+                <h3>Key Improvements</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem; color: var(--color-text);">✓ <strong>Faster</strong>: 90 min instead of 120 (still covers more)</li>
+                    <li style="margin-bottom: 0.75rem; color: var(--color-text);">✓ <strong>More relevant</strong>: Role-specific patterns, not one-size-fits-all</li>
+                    <li style="margin-bottom: 0.75rem; color: var(--color-text);">✓ <strong>Agency</strong>: Participants build their own skills in the capstone</li>
+                    <li style="margin-bottom: 0.75rem; color: var(--color-text);">✓ <strong>Proven ROI</strong>: Grounded in real production outcomes (66% faster, 37.9x ROI)</li>
+                    <li style="margin-bottom: 0.75rem; color: var(--color-text);">✓ <strong>Lower activation energy</strong>: Prereq removes baseline friction</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="container">
+        <div class="footer">
+            Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a> · <a href="../index.html">← home</a> · <a href="guardrails-engineers.html">guardrails →</a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll — skip non-hash hrefs to avoid blocking home nav
+        document.querySelectorAll('.nav-pill').forEach(pill => {
+            pill.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (!href || !href.startsWith('#')) return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
+</body>
+</html>
