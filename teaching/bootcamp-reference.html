@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Reference | Prompt Engineering Bootcamp</title>
+<meta name="description" content="Quick reference cards for the Prompt Engineering Bootcamp: decision matrix, pattern checklists, ReAct and Tree of Thoughts templates.">
+<meta property="og:title" content="Quick Reference | Prompt Engineering Bootcamp">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/bootcamp-reference.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+
+  .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(15,15,26,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+  .nav-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%); padding: 64px 20px 48px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: clamp(26px, 4.5vw, 44px); color: var(--text-bright); font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+  .hero .subtitle { font-size: clamp(15px, 2.2vw, 18px); color: var(--text); max-width: 580px; margin: 0 auto 14px; font-style: italic; }
+  .hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 22px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .hero-tag { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); text-decoration: none; transition: all 0.2s; }
+  .hero-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  h2 { font-size: clamp(18px, 2.5vw, 24px); color: var(--text-bright); font-weight: 700; margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); scroll-margin-top: 60px; }
+  h3 { font-size: clamp(15px, 2vw, 18px); color: var(--text-bright); font-weight: 700; margin: 28px 0 10px; }
+  h4 { font-size: 0.95rem; color: var(--blue); font-weight: 700; margin: 16px 0 8px; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 20px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text-bright); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin: 48px 0 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 32px; font-size: 0.88rem; }
+  th { background: var(--bg-card); color: var(--text-bright); font-weight: 700; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+  td { padding: 9px 14px; border: 1px solid var(--border); vertical-align: top; color: var(--text); }
+  tr:nth-child(even) td { background: rgba(22,22,37,0.4); }
+
+  pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0 24px; }
+  code { font-family: 'Courier New', Monaco, monospace; font-size: 0.85rem; color: var(--text-bright); }
+  pre code { color: var(--text); }
+  :not(pre) > code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: var(--blue); }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+  .card.green { border-left-color: var(--green); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card.red { border-left-color: var(--accent); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '○'; position: absolute; left: 0; color: var(--border); }
+
+  .rule-box { background: var(--bg-card); border: 2px solid var(--accent); border-radius: 8px; padding: 20px 24px; margin: 20px 0; }
+  .rule-box .rule-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 8px; }
+  .rule-box p { margin: 0; font-size: 1rem; color: var(--text-bright); font-weight: 600; }
+
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text); margin-top: 40px; }
+  .footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="../index.html" class="nav-pill">← home</a>
+  <a href="prompt-engineering-bootcamp.html" class="nav-pill">bootcamp</a>
+  <a href="#decision-matrix" class="nav-pill">decision matrix</a>
+  <a href="#foundational" class="nav-pill">foundational patterns</a>
+  <a href="#advanced" class="nav-pill">advanced patterns</a>
+  <a href="#forward" class="nav-pill">taking it forward</a>
+</nav>
+
+<div class="hero">
+  <h1>Quick Reference</h1>
+  <p class="subtitle">One-page reference for all frameworks, patterns, and workflows from the Prompt Engineering Bootcamp</p>
+  <p class="author">Joey Lopez · Prompt Engineering Bootcamp</p>
+  <div class="hero-tags">
+    <a href="#decision-matrix" class="hero-tag">decision matrix</a>
+    <a href="#foundational" class="hero-tag">foundational patterns</a>
+    <a href="#advanced" class="hero-tag">advanced patterns</a>
+    <a href="#forward" class="hero-tag">action plan</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label" id="decision-matrix">Card 1</div>
+  <h2>Three Approaches Decision Matrix</h2>
+
+  <table>
+    <thead>
+      <tr><th>When your task is...</th><th>Choose this approach</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Simple–Medium complexity</td><td><strong>ADRs + Config</strong></td><td><code>.github/copilot-instructions.md</code></td></tr>
+      <tr><td>Team uses multiple AI tools</td><td><strong>ADRs + Config</strong></td><td>Reference standards document</td></tr>
+      <tr><td>Complex, repeated tasks</td><td><strong>Structured Files</strong></td><td>Priority Builder (325 lines)</td></tr>
+      <tr><td>Learning prompt engineering</td><td><strong>Structured Files</strong></td><td>4-file interview workflow</td></tr>
+      <tr><td>Team committed to one IDE</td><td><strong>Tool-Assisted</strong></td><td>Windsurf workflows</td></tr>
+      <tr><td>Want automated guidance</td><td><strong>Tool-Assisted</strong></td><td>Platform-integrated prompts</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule-box">
+    <div class="rule-label">Decision Rule</div>
+    <p>Use the simplest approach that handles your complexity level.</p>
+  </div>
+
+  <div class="section-label" id="foundational">Card 2</div>
+  <h2>Foundational Patterns Checklist</h2>
+
+  <p>Before writing any prompt, check for all four patterns:</p>
+
+  <ul class="checklist">
+    <li><strong>Persona</strong> — "You are an expert [role] with [specific expertise]..."</li>
+    <li><strong>Few-shot</strong> — Provide 2–3 example input/output pairs</li>
+    <li><strong>Template</strong> — "Respond in this format: [structure]"</li>
+    <li><strong>Chain-of-Thought</strong> — "Show your reasoning step by step"</li>
+  </ul>
+
+  <p style="margin-top:16px"><strong>Quality check:</strong> Does your prompt use all 4 patterns? If not, which one would help most?</p>
+
+  <div class="section-label" id="advanced">Card 3</div>
+  <h2>Advanced Patterns Quick Guide</h2>
+
+  <h3>ReAct Pattern — multi-step tasks</h3>
+  <pre><code>THINK:   Analyze the situation — what is actually needed?
+ACT:     Take a specific, concrete action
+OBSERVE: Check results — did it work? What changed?
+THINK:   Next steps based on what you observed
+         (repeat until complete)</code></pre>
+
+  <h3>Tree of Thoughts — decision points</h3>
+  <pre><code>1. Generate 3 genuinely different approaches
+2. Evaluate pros/cons/risks of each
+3. Choose best approach with explicit rationale</code></pre>
+
+  <h3>Spec-Kit Workflow — complex tasks</h3>
+  <pre><code>knowledge-base.md      Domain expertise (reusable across tasks)
+specification.md       This task's specific requirements
+implementation-plan.md Execution strategy (ReAct + Tree of Thoughts)
+execution.md           Generated output materials</code></pre>
+
+  <div class="section-label">Card 4</div>
+  <h2>Pattern Recognition Quick Test</h2>
+
+  <p>When you see any prompt, identify:</p>
+  <ul>
+    <li>What <strong>persona</strong> is established?</li>
+    <li>What <strong>examples</strong> are provided?</li>
+    <li>What <strong>format</strong> is requested?</li>
+    <li>Is <strong>reasoning</strong> required?</li>
+  </ul>
+
+  <div class="card green">
+    <h4>Good prompt = all 4 patterns visible</h4>
+    <p style="margin:0; font-size:0.88rem">If you can't find one of the four, the prompt has a gap. Fill it before you run it.</p>
+  </div>
+
+  <div class="section-label" id="forward">Card 5</div>
+  <h2>Taking This Forward</h2>
+
+  <h3>This Week</h3>
+  <ol>
+    <li>Apply ReAct pattern to one complex work decision</li>
+    <li>Use Tree of Thoughts for your next strategic choice</li>
+    <li>Create a spec-kit workflow for a task you do repeatedly</li>
+  </ol>
+
+  <h3>Longer Term</h3>
+  <ul>
+    <li>Evaluate new AI tools using the Three Approaches framework</li>
+    <li>Build team templates using foundational patterns</li>
+    <li>Scale systematic thinking across your domain</li>
+  </ul>
+
+  <div class="rule-box">
+    <div class="rule-label">The Core Principle</div>
+    <p>Patterns beat formats. Choose your approach based on team context and task complexity.</p>
+  </div>
+
+  <div class="section-label">Card 6</div>
+  <h2>Research Backing</h2>
+
+  <ul>
+    <li><strong>White et al. (2023)</strong> — Prompt Pattern Catalog · arXiv 2302.11382<br><span style="font-size:0.85rem">Foundational patterns: Persona, Few-shot, Template, Chain-of-Thought</span></li>
+    <li style="margin-top:10px"><strong>Yao et al. (2022)</strong> — ReAct Pattern · arXiv 2210.03629<br><span style="font-size:0.85rem">Think → Act → Observe for complex reasoning</span></li>
+    <li style="margin-top:10px"><strong>Yao et al. (2023)</strong> — Tree of Thoughts · arXiv 2305.10601<br><span style="font-size:0.85rem">Generate → Evaluate → Choose for decision making</span></li>
+  </ul>
+
+</div>
+
+<div class="footer">
+  Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a><br>
+  <span style="margin-top:6px; display:block">
+    <a href="../index.html">← home</a> ·
+    <a href="prompt-engineering-bootcamp.html">bootcamp overview</a> ·
+    <a href="bootcamp-session1.html">session 1</a> ·
+    <a href="bootcamp-session2.html">session 2</a> ·
+    <a href="bootcamp-prereq.html">participant materials</a> ·
+    <a href="bootcamp-facilitator.html">facilitator guide</a>
+  </span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participant Materials | Prompt Engineering Bootcamp</title>
+<meta name="description" content="Participant materials for the Prompt Engineering Bootcamp: decision matrices, demo personas, templates, and workshop checklists.">
+<meta property="og:title" content="Participant Materials | Prompt Engineering Bootcamp">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/bootcamp-prereq.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+
+  .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(15,15,26,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+  .nav-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%); padding: 64px 20px 48px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: clamp(26px, 4.5vw, 44px); color: var(--text-bright); font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+  .hero .subtitle { font-size: clamp(15px, 2.2vw, 18px); color: var(--text); max-width: 580px; margin: 0 auto 14px; font-style: italic; }
+  .hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 22px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .hero-tag { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); text-decoration: none; transition: all 0.2s; }
+  .hero-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  h2 { font-size: clamp(18px, 2.5vw, 24px); color: var(--text-bright); font-weight: 700; margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: clamp(15px, 2vw, 18px); color: var(--text-bright); font-weight: 700; margin: 32px 0 12px; }
+  h4 { font-size: 0.95rem; color: var(--blue); font-weight: 700; margin: 20px 0 8px; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 20px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text-bright); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin: 48px 0 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 20px 0 32px; font-size: 0.88rem; }
+  th { background: var(--bg-card); color: var(--text-bright); font-weight: 700; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+  td { padding: 9px 14px; border: 1px solid var(--border); vertical-align: top; color: var(--text); }
+  tr:nth-child(even) td { background: rgba(22,22,37,0.4); }
+
+  pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0 24px; }
+  code { font-family: 'Courier New', Monaco, monospace; font-size: 0.85rem; color: var(--text-bright); }
+  pre code { color: var(--text); }
+  :not(pre) > code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: var(--blue); }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+  .card.green { border-left-color: var(--green); }
+  .card.purple { border-left-color: var(--purple); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card.red { border-left-color: var(--accent); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0 6px 24px; position: relative; border-bottom: 1px solid var(--border); }
+  .checklist li::before { content: '○'; position: absolute; left: 0; color: var(--border); font-size: 0.9em; }
+
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text); margin-top: 40px; }
+  .footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="../index.html" class="nav-pill">← home</a>
+  <a href="prompt-engineering-bootcamp.html" class="nav-pill">bootcamp</a>
+  <a href="#decision-matrix" class="nav-pill">decision matrix</a>
+  <a href="#personas" class="nav-pill">personas</a>
+  <a href="#templates" class="nav-pill">templates</a>
+  <a href="#checklist" class="nav-pill">checklist</a>
+</nav>
+
+<div class="hero">
+  <h1>Participant Materials</h1>
+  <p class="subtitle">Reference cards, demo personas, and workflow templates for the Prompt Engineering Bootcamp</p>
+  <p class="author">Joey Lopez · Prompt Engineering Bootcamp</p>
+  <div class="hero-tags">
+    <a href="#decision-matrix" class="hero-tag">decision matrix</a>
+    <a href="#personas" class="hero-tag">personas</a>
+    <a href="#templates" class="hero-tag">templates</a>
+    <a href="#research" class="hero-tag">research</a>
+    <a href="#checklist" class="hero-tag">checklist</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label" id="decision-matrix">Frameworks</div>
+  <h2>Three Approaches Decision Matrix</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>When to Use</th>
+        <th>ADRs + Config</th>
+        <th>Structured Files</th>
+        <th>Tool-Assisted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Team Size</strong></td><td>Any size</td><td>5–15 people</td><td>Committed to one tool</td></tr>
+      <tr><td><strong>Task Type</strong></td><td>Simple–Medium</td><td>Complex, repeated</td><td>IDE-integrated work</td></tr>
+      <tr><td><strong>Maturity</strong></td><td>Proven (Tier 1)</td><td>Experimental (Tier 3)</td><td>Varies (Tier 2–3)</td></tr>
+      <tr><td><strong>Maintenance</strong></td><td>Low</td><td>Medium</td><td>Low (tool manages)</td></tr>
+      <tr><td><strong>Examples</strong></td><td><code>.github/copilot-instructions.md</code></td><td>Priority Builder (325 lines)</td><td>Windsurf workflows</td></tr>
+      <tr><td><strong>Time to Setup</strong></td><td>15 minutes</td><td>1–2 hours</td><td>30 minutes</td></tr>
+      <tr><td><strong>Best For</strong></td><td>Most teams</td><td>Learning, complex tasks</td><td>Platform-specific teams</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Foundational Patterns Reference</h2>
+  <table>
+    <thead>
+      <tr><th>Pattern</th><th>Template</th><th>When to Use</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Persona</strong></td><td>"You are an expert [role] with [expertise]..."</td><td>Need specialized knowledge</td></tr>
+      <tr><td><strong>Few-shot</strong></td><td>"Example 1: Input → Output"</td><td>Want consistent format</td></tr>
+      <tr><td><strong>Template</strong></td><td>"Respond in this format: [structure]"</td><td>Need structured output</td></tr>
+      <tr><td><strong>Chain-of-Thought</strong></td><td>"Show your reasoning step by step"</td><td>Complex problem solving</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Advanced Patterns Reference</h2>
+  <table>
+    <thead>
+      <tr><th>Pattern</th><th>Structure</th><th>When to Use</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>ReAct</strong></td><td>Think → Act → Observe → Think...</td><td>Multi-step tasks with validation</td></tr>
+      <tr><td><strong>Tree of Thoughts</strong></td><td>Generate options → Evaluate → Choose</td><td>Decision points with tradeoffs</td></tr>
+      <tr><td><strong>Spec-Kit</strong></td><td>knowledge-base → specification → implementation</td><td>Complex, repeated tasks</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-label" id="personas">Practice Material</div>
+  <h2>Demo Personas for Safe Practice</h2>
+  <p>Use these fictional profiles during exercises to avoid putting real client or personal information into AI tools.</p>
+
+  <div class="card">
+    <h4>Persona A — Delivery Lead, Financial Services</h4>
+    <ul>
+      <li><strong>Experience:</strong> 8 years, manages 12-person team</li>
+      <li><strong>Current Project:</strong> Digital transformation for regional bank ($2.3M, 18 months)</li>
+      <li><strong>Accomplishments:</strong> Delivered 3 weeks early, NPS 6.5→8.2, team engagement 4.1/5.0</li>
+      <li><strong>Skills:</strong> Agile/Scrum Master, AWS Cloud Practitioner, stakeholder management</li>
+    </ul>
+    <p style="margin-top:10px; font-size:0.85rem; color:var(--blue)">Best for: Client Value Creation or Great Place to Work priority exercises</p>
+  </div>
+
+  <div class="card green">
+    <h4>Persona B — Tech Lead, Banking Automation</h4>
+    <ul>
+      <li><strong>Experience:</strong> 5 years, AI/ML specialist</li>
+      <li><strong>Current Project:</strong> Banking automation (1,500 datasets processed, 6x speed improvement)</li>
+      <li><strong>Accomplishments:</strong> 4 POC demos to Senior Managers, 1 advanced to $800K pitch</li>
+      <li><strong>Skills:</strong> Python, AI tools (Copilot, Windsurf), spec-driven development</li>
+    </ul>
+    <p style="margin-top:10px; font-size:0.85rem; color:var(--blue)">Best for: AI Enablement or Client Value Creation exercises</p>
+  </div>
+
+  <div class="card purple">
+    <h4>Persona C — Associate Manager, Digital Strategy</h4>
+    <ul>
+      <li><strong>Experience:</strong> 6 years, MBA hire, manages 5 people</li>
+      <li><strong>Current Project:</strong> Organizational redesign ($12M savings, 85% adoption rate)</li>
+      <li><strong>Accomplishments:</strong> Client satisfaction 9.1/10, innovation award, board presentation</li>
+      <li><strong>Skills:</strong> Change management, AI workforce planning, thought leadership</li>
+    </ul>
+    <p style="margin-top:10px; font-size:0.85rem; color:var(--blue)">Best for: Great Place to Work or Community exercises</p>
+  </div>
+
+  <div class="section-label">Sample Job Descriptions</div>
+  <h2>Jobs for Interview Prep Exercises</h2>
+
+  <div class="card">
+    <h4>Job A — Senior Manager, AI Strategy</h4>
+    <ul>
+      <li><strong>Company:</strong> Fortune 500 Financial Services</li>
+      <li><strong>Role:</strong> Develop enterprise AI strategy and lead client-facing transformations</li>
+      <li><strong>Requirements:</strong> 8+ years consulting, 3+ in AI/digital, $2M+ engagement leadership</li>
+      <li><strong>Team:</strong> 6 direct reports, 20+ indirect</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <h4>Job B — Principal Consultant, Banking Technology</h4>
+    <ul>
+      <li><strong>Company:</strong> Big 4 Consulting Firm</li>
+      <li><strong>Role:</strong> Lead core banking modernization and cloud-native architecture projects</li>
+      <li><strong>Requirements:</strong> 7+ years banking technology, cloud expertise, CTO/CIO relationships</li>
+      <li><strong>Team:</strong> Lead 10–15 person engagement teams</li>
+    </ul>
+  </div>
+
+  <div class="card yellow">
+    <h4>Job C — Director, Digital Transformation</h4>
+    <ul>
+      <li><strong>Company:</strong> Fortune 100 Retail Company</li>
+      <li><strong>Role:</strong> Internal transformation leader for AI-enabled operations</li>
+      <li><strong>Requirements:</strong> 10+ years transformation experience, P&L responsibility, executive presence</li>
+      <li><strong>Team:</strong> Multiple cross-functional teams (50+ people)</li>
+    </ul>
+  </div>
+
+  <div class="section-label" id="templates">Templates</div>
+  <h2>Spec-Kit Workflow Templates</h2>
+
+  <h3>knowledge-base.md</h3>
+  <pre><code># Interview Knowledge Base
+
+## STAR Method Framework
+- **Situation**: Context and background
+- **Task**: What needed to be accomplished
+- **Action**: Steps you took (focus on YOUR actions)
+- **Result**: Outcome and impact (quantified when possible)
+
+## Common Senior Manager Questions
+1. "Tell me about a time you led a complex project"
+2. "How do you handle competing stakeholder priorities?"
+3. "Describe your approach to building teams"
+4. "Give an example of driving strategic change"
+5. "What's your experience with digital/AI transformation?"
+
+## Positioning Strategy Options
+- **Technical Expert**: Emphasize deep functional skills
+- **Strategic Leader**: Focus on business impact and vision
+- **Balanced Bridge**: Demonstrate both technical depth and business acumen</code></pre>
+
+  <h3>specification.md</h3>
+  <pre><code># Interview Specification
+
+## Target Role Details
+- **Position**: [Role title]
+- **Company**: [Company name and industry]
+- **Key Requirements**: [Must-have qualifications]
+- **Team/Scope**: [Management responsibilities]
+
+## Candidate Background
+- **Current Role**: [Your position and experience]
+- **Key Projects**: [2-3 most relevant projects]
+- **Notable Achievements**: [Quantified results]
+- **Skills Gap Analysis**: [What you're missing vs what you have]
+
+## Success Criteria
+- [What good positioning looks like for this role]
+- [Key messages to convey]
+- [Questions to ask that show strategic thinking]</code></pre>
+
+  <h3>implementation-plan.md</h3>
+  <pre><code># Interview Implementation Plan
+
+## Phase 1: ReAct Analysis
+**THINK**: What positioning strategy best fits this role + my background?
+**ACT**: Map my experience to role requirements systematically
+**OBSERVE**: What gaps/strengths emerge from this analysis?
+**THINK**: How can I position gaps as learning opportunities?
+**ACT**: Develop core narrative connecting past experience → role requirements
+
+## Phase 2: Tree of Thoughts Strategy
+**Option A**: [First positioning approach]
+- Pros: [What works well]
+- Cons: [Potential weaknesses]
+- Risk Level: [High/Medium/Low]
+
+**Option B**: [Second positioning approach]
+- Pros: [What works well]
+- Cons: [Potential weaknesses]
+- Risk Level: [High/Medium/Low]
+
+**Option C**: [Third positioning approach]
+- Pros: [What works well]
+- Cons: [Potential weaknesses]
+- Risk Level: [High/Medium/Low]
+
+**Selected Strategy**: [Chosen approach with rationale]
+
+## Phase 3: Materials Generation
+- One-page positioning summary
+- 5 prepared STAR examples
+- Strategic questions to ask
+- Practice plan for delivery</code></pre>
+
+  <div class="section-label" id="research">Research</div>
+  <h2>Research References</h2>
+  <ul>
+    <li><strong>White et al. (2023)</strong> — "A Prompt Pattern Catalog to Enhance Prompt Engineering with ChatGPT" · arXiv 2302.11382<br>Foundational patterns: Persona, Few-shot, Template, Chain-of-Thought</li>
+    <li style="margin-top:10px"><strong>Yao et al. (2022)</strong> — "ReAct: Synergizing Reasoning and Acting in Language Models" · arXiv 2210.03629<br>Think → Act → Observe pattern for complex reasoning</li>
+    <li style="margin-top:10px"><strong>Yao et al. (2023)</strong> — "Tree of Thoughts: Deliberate Problem Solving with Large Language Models" · arXiv 2305.10601<br>Generate → Evaluate → Choose pattern for decision making</li>
+  </ul>
+
+  <div class="section-label" id="checklist">Completion</div>
+  <h2>Workshop Completion Checklist</h2>
+
+  <h3>Session 1 Objectives</h3>
+  <ul class="checklist">
+    <li>I can explain when to use ADRs vs Structured Files vs Tool-Assisted approaches</li>
+    <li>I can identify Persona, Few-shot, Template, Chain-of-Thought patterns in prompts</li>
+    <li>I generated realistic priorities using the Priority Builder methodology</li>
+    <li>I understand the difference between systematic and ad-hoc prompting</li>
+  </ul>
+
+  <h3>Session 2 Objectives</h3>
+  <ul class="checklist" style="margin-top:12px">
+    <li>I can execute ReAct analysis (Think → Act → Observe) for complex problems</li>
+    <li>I can use Tree of Thoughts to evaluate multiple strategies</li>
+    <li>I built complete interview preparation materials using the 4-file workflow</li>
+    <li>I see how the same patterns scale across business and technical domains</li>
+  </ul>
+
+  <h3>Action Items</h3>
+  <ul class="checklist" style="margin-top:12px">
+    <li>Apply ReAct pattern to one complex work decision this week</li>
+    <li>Create a spec-kit workflow for a task I do repeatedly</li>
+    <li>Evaluate new AI tools using the Tier Framework</li>
+    <li>Share the Three Approaches framework with my team</li>
+  </ul>
+
+</div>
+
+<div class="footer">
+  Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a><br>
+  <span style="margin-top:6px; display:block">
+    <a href="../index.html">← home</a> ·
+    <a href="prompt-engineering-bootcamp.html">bootcamp overview</a> ·
+    <a href="bootcamp-session1.html">session 1 →</a> ·
+    <a href="bootcamp-session2.html">session 2 →</a> ·
+    <a href="bootcamp-reference.html">quick reference →</a> ·
+    <a href="bootcamp-facilitator.html">facilitator guide →</a>
+  </span>
+</div>
+
+</body>
+</html>

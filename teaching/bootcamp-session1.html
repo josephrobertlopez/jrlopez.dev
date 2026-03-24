@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1: Industry Standards | Prompt Engineering Bootcamp</title>
+<meta name="description" content="Session 1: Three Approaches Framework, foundational patterns, and the Priority Builder — from ad-hoc prompting to systematic methodology.">
+<meta property="og:title" content="Session 1: Industry Standards | Prompt Engineering Bootcamp">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/bootcamp-session1.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+
+  .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(15,15,26,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+  .nav-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%); padding: 64px 20px 48px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: clamp(26px, 4.5vw, 44px); color: var(--text-bright); font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+  .hero .subtitle { font-size: clamp(15px, 2.2vw, 18px); color: var(--text); max-width: 620px; margin: 0 auto 14px; font-style: italic; }
+  .hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 22px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .hero-tag { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); text-decoration: none; transition: all 0.2s; }
+  .hero-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  h2 { font-size: clamp(18px, 2.5vw, 24px); color: var(--text-bright); font-weight: 700; margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); scroll-margin-top: 60px; }
+  h3 { font-size: clamp(15px, 2vw, 18px); color: var(--text-bright); font-weight: 700; margin: 28px 0 10px; }
+  h4 { font-size: 0.95rem; color: var(--blue); font-weight: 700; margin: 20px 0 8px; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 20px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text-bright); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin: 48px 0 8px; }
+
+  .agenda-table { width: 100%; border-collapse: collapse; margin: 20px 0 32px; font-size: 0.88rem; }
+  .agenda-table th { background: var(--bg-card); color: var(--text-bright); font-weight: 700; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+  .agenda-table td { padding: 9px 14px; border: 1px solid var(--border); vertical-align: top; color: var(--text); }
+  .agenda-table tr:nth-child(even) td { background: rgba(22,22,37,0.4); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; }
+  .badge-lecture { background: rgba(88,166,255,0.15); color: var(--blue); }
+  .badge-hands { background: rgba(233,69,96,0.15); color: var(--accent); }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+  .card.green { border-left-color: var(--green); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card.red { border-left-color: var(--accent); }
+  .card.purple { border-left-color: var(--purple); }
+
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 20px 0; }
+
+  .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+  .pattern-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+  .pattern-card .label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); margin-bottom: 6px; }
+  .pattern-card p { font-size: 0.85rem; margin: 0; }
+
+  pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0 24px; }
+  code { font-family: 'Courier New', Monaco, monospace; font-size: 0.85rem; color: var(--text-bright); }
+  pre code { color: var(--text); }
+  :not(pre) > code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: var(--blue); }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text); margin-top: 40px; }
+  .footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="../index.html" class="nav-pill">← home</a>
+  <a href="prompt-engineering-bootcamp.html" class="nav-pill">bootcamp</a>
+  <a href="#problem" class="nav-pill">the problem</a>
+  <a href="#three-approaches" class="nav-pill">three approaches</a>
+  <a href="#patterns" class="nav-pill">patterns</a>
+  <a href="#exercises" class="nav-pill">exercises</a>
+  <a href="#wrapup" class="nav-pill">wrap-up</a>
+</nav>
+
+<div class="hero">
+  <h1>Session 1</h1>
+  <p class="subtitle">Industry Standards &amp; Real-World Application — from ad-hoc prompting to systematic approaches</p>
+  <p class="author">Joey Lopez · Prompt Engineering Bootcamp · 60 minutes</p>
+  <div class="hero-tags">
+    <a href="#problem" class="hero-tag">the problem</a>
+    <a href="#three-approaches" class="hero-tag">three approaches</a>
+    <a href="#patterns" class="hero-tag">patterns</a>
+    <a href="#exercises" class="hero-tag">exercises</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">Overview</div>
+  <h2>Session Agenda</h2>
+  <table class="agenda-table">
+    <thead><tr><th>Time</th><th>Activity</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>0–5 min</td><td>Problem &amp; Solution Overview</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+      <tr><td>5–15 min</td><td>Three Approaches Framework</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+      <tr><td>15–20 min</td><td>Foundational Patterns</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+      <tr><td>20–25 min</td><td>Demo: Priority Builder</td><td><span class="badge badge-hands">Hands-on</span></td></tr>
+      <tr><td>25–45 min</td><td>Your Turn: Build Priorities</td><td><span class="badge badge-hands">Hands-on</span></td></tr>
+      <tr><td>45–55 min</td><td>Compare: Three Approaches</td><td><span class="badge badge-hands">Hands-on</span></td></tr>
+      <tr><td>55–60 min</td><td>Wrap &amp; Session 2 Preview</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-label" id="problem">The Problem</div>
+  <h2>Ad-Hoc AI Prompting Doesn't Scale</h2>
+
+  <p>Most professionals use AI tools the same way they'd use a search engine — one-off questions, generic context, inconsistent results. Here's what that looks like:</p>
+
+  <pre><code>Professional: "Hey AI, help me write my annual priorities"
+AI: [generates generic priorities]
+Professional: "These don't capture my impact... try again"
+AI: [generates different generic priorities]
+Professional: "Still missing key metrics..."</code></pre>
+
+  <p>The problems with ad-hoc prompting:</p>
+  <ul>
+    <li>Every prompt starts from scratch — no accumulated knowledge</li>
+    <li>No team knowledge captured — can't share what works</li>
+    <li>Inconsistent results across attempts and team members</li>
+    <li>Successful approaches can't be reused or improved</li>
+  </ul>
+
+  <p><strong>Key insight:</strong> Patterns matter more than format. Choose based on team needs, not dogma.</p>
+
+  <div class="section-label" id="three-approaches">Framework</div>
+  <h2>Three Valid Approaches</h2>
+
+  <p>There is no single "right" way to do systematic prompting. Three approaches have emerged in industry practice, each suited to different team contexts:</p>
+
+  <div class="tier-grid">
+    <div class="card">
+      <h4>ADRs + Config</h4>
+      <p>Architecture Decision Records plus configuration files. Example: <code>.github/copilot-instructions.md</code> that any AI tool reads automatically.</p>
+      <p style="font-size:0.82rem; color:var(--green); margin-top:8px; margin-bottom:0">Best for most teams. Low setup overhead.</p>
+    </div>
+    <div class="card green">
+      <h4>Structured Files</h4>
+      <p>Multi-file workflows: knowledge-base → specification → implementation-plan. Each file has a specific purpose and builds on the previous.</p>
+      <p style="font-size:0.82rem; color:var(--yellow); margin-top:8px; margin-bottom:0">Best for complex, repeated tasks and learning.</p>
+    </div>
+    <div class="card yellow">
+      <h4>Tool-Assisted</h4>
+      <p>Platform-native workflows like Windsurf's cascade system (290 lines). The tool manages context and sequencing automatically.</p>
+      <p style="font-size:0.82rem; color:var(--blue); margin-top:8px; margin-bottom:0">Best for teams committed to one IDE or platform.</p>
+    </div>
+  </div>
+
+  <h3>Tier Framework for Evaluation</h3>
+  <p>Use this to assess any prompt engineering approach you encounter:</p>
+
+  <div class="card green">
+    <h4>Tier 1 — Proven (10+ years)</h4>
+    <p>Architecture Decision Records, Few-shot prompting, Chain-of-Thought. Used at scale by Microsoft, AWS, Google, Netflix. These patterns have survived real production use.</p>
+  </div>
+  <div class="card yellow">
+    <h4>Tier 2 — Production Ready (1–3 years)</h4>
+    <p><code>.github/copilot-instructions.md</code>, ReAct pattern. Growing enterprise adoption. Reasonably safe to build on.</p>
+  </div>
+  <div class="card red">
+    <h4>Tier 3 — Experimental (&lt;2 years)</h4>
+    <p>Spec-kit workflows, structured prompt files, tool-specific approaches. Interesting and useful, but unproven at scale. Use deliberately.</p>
+  </div>
+
+  <div class="section-label" id="patterns">Patterns</div>
+  <h2>Four Foundational Patterns</h2>
+
+  <p>These patterns are research-backed and appear in all serious prompt engineering work. A well-constructed prompt uses all four.</p>
+
+  <div class="pattern-grid">
+    <div class="pattern-card">
+      <div class="label">Persona</div>
+      <p>"You are an expert [role] with [specific expertise]..."</p>
+      <p style="font-size:0.82rem; color:var(--blue); margin-top:8px">Establishes the lens the AI uses for all responses.</p>
+    </div>
+    <div class="pattern-card">
+      <div class="label">Few-shot</div>
+      <p>Provide 2–3 example input/output pairs before your actual request.</p>
+      <p style="font-size:0.82rem; color:var(--blue); margin-top:8px">Shows the desired format and quality level.</p>
+    </div>
+    <div class="pattern-card">
+      <div class="label">Template</div>
+      <p>"Respond in this format: [structure]"</p>
+      <p style="font-size:0.82rem; color:var(--blue); margin-top:8px">Constrains output shape for reuse and consistency.</p>
+    </div>
+    <div class="pattern-card">
+      <div class="label">Chain-of-Thought</div>
+      <p>"Show your reasoning step by step before giving the answer."</p>
+      <p style="font-size:0.82rem; color:var(--blue); margin-top:8px">Forces deliberate reasoning, catches errors earlier.</p>
+    </div>
+  </div>
+
+  <h3>The 325-Line Priority Builder</h3>
+  <p>The Priority Builder Agent prompt uses all four patterns together. It demonstrates what a production-grade prompt looks like vs a quick one-off request:</p>
+  <ul>
+    <li><strong>Persona:</strong> "You are an expert career coach specializing in professional priorities..."</li>
+    <li><strong>Few-shot:</strong> Built-in priority examples with ABCD reflections showing expected quality</li>
+    <li><strong>Template:</strong> Structured CSV output plus formatted summaries for direct submission</li>
+    <li><strong>Chain-of-Thought:</strong> The 20-question ABCD reflection framework that guides analysis</li>
+  </ul>
+  <p>The result: persona-driven specificity, structured questioning that ensures completeness, and consistent output format — versus the ad-hoc alternative that generates something generic every time.</p>
+
+  <div class="section-label" id="exercises">Exercises</div>
+  <h2>Hands-On: Build Priorities</h2>
+
+  <h3>Exercise 1 — Freestyle First (10 minutes)</h3>
+  <p>Before using any systematic approach, attempt to create one priority for a demo persona using your normal prompting style.</p>
+
+  <div class="card">
+    <h4>Choose a demo persona</h4>
+    <ul>
+      <li><strong>Option A:</strong> Delivery Lead, Financial Services (8 years, team management)</li>
+      <li><strong>Option B:</strong> Tech Lead, Banking Automation (5 years, AI/ML specialist)</li>
+      <li><strong>Option C:</strong> Associate Manager, Digital Strategy (6 years, transformation)</li>
+    </ul>
+    <p style="margin-top:10px; margin-bottom:0"><strong>Goal:</strong> 1 priority in any category with basic reflection. Use your AI tool however you normally would.</p>
+  </div>
+
+  <p>Notice what's hard: specificity, metrics, avoiding generic language that could apply to anyone.</p>
+
+  <h3>Exercise 2 — Priority Builder Template (15 minutes)</h3>
+  <p>Now use the complete Priority Builder Agent with a different persona than Exercise 1.</p>
+
+  <ol>
+    <li>Load the 325-line Priority Builder prompt into your AI tool</li>
+    <li>Choose a different persona than the freestyle round</li>
+    <li>Let the agent guide you through its 20-question process — answer as your persona</li>
+    <li>Select a version: Conservative, Balanced, or Aspirational</li>
+    <li>Export the CSV output (ready for submission format)</li>
+  </ol>
+
+  <p><strong>Success criteria:</strong> Complete ABCD reflections with specific metrics, CSV output ready.</p>
+
+  <h3>Exercise 3 — Compare Three Approaches (10 minutes)</h3>
+  <p>Same Spring Boot 2→3 migration task, three different approaches. Observe the difference in structure and maintenance overhead — not the result.</p>
+
+  <div class="compare-grid">
+    <div class="card">
+      <h4>Approach A — ADRs + Config</h4>
+      <pre style="margin:8px 0 0; font-size:0.8rem"><code>"Following .github/copilot-instructions.md,
+migrate UserController to Spring Boot 3"</code></pre>
+    </div>
+    <div class="card green">
+      <h4>Approach B — Structured Files</h4>
+      <p style="font-size:0.85rem; margin-bottom:0">Load: <code>knowledge-base.md</code> → <code>specification.md</code> → <code>implementation-plan.md</code></p>
+    </div>
+  </div>
+  <div class="card yellow">
+    <h4>Approach C — Tool-Assisted</h4>
+    <p>Windsurf cascade workflow (290-line systematic methodology with built-in validation steps).</p>
+    <p style="font-size:0.82rem; color:var(--yellow); margin-bottom:0">Same result, different maintenance overhead. Which fits your team?</p>
+  </div>
+
+  <div class="section-label" id="wrapup">Wrap-Up</div>
+  <h2>What You Accomplished</h2>
+
+  <ul>
+    <li>Learned the Three Approaches evaluation framework and when each applies</li>
+    <li>Recognized all four foundational patterns in a real 325-line production prompt</li>
+    <li>Generated priorities using a systematic approach vs freestyle</li>
+    <li>Compared structured vs unstructured methodology on the same task</li>
+  </ul>
+
+  <h3>Cross-Domain Application</h3>
+  <p>The patterns you practiced in this session work across domains:</p>
+
+  <div class="compare-grid">
+    <div class="card">
+      <h4>Business Applications</h4>
+      <ul style="font-size:0.85rem">
+        <li>Strategic planning documents</li>
+        <li>Performance reviews and goal setting</li>
+        <li>Client presentations and proposals</li>
+        <li>Training material development</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h4>Technical Applications</h4>
+      <ul style="font-size:0.85rem">
+        <li>Code migration and refactoring</li>
+        <li>Architecture documentation</li>
+        <li>Troubleshooting workflows</li>
+        <li>System design patterns</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Same systematic thinking, different domain. Session 2 demonstrates this across the full range.</p>
+
+  <div class="card">
+    <h4>Session 2 Preview</h4>
+    <ul>
+      <li><strong>ReAct pattern</strong> (Think → Act → Observe) for multi-step reasoning</li>
+      <li><strong>Tree of Thoughts</strong> for decision points with real tradeoffs</li>
+      <li><strong>Interview prep workflow</strong> — 4-file systematic approach</li>
+      <li><strong>Live technical demo</strong> — Spring Boot migration using same patterns</li>
+    </ul>
+    <p style="font-size:0.85rem; margin-top:10px; margin-bottom:0">Bring a job description you're interested in, or use the samples in the participant materials.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a><br>
+  <span style="margin-top:6px; display:block">
+    <a href="../index.html">← home</a> ·
+    <a href="prompt-engineering-bootcamp.html">bootcamp overview</a> ·
+    <a href="bootcamp-prereq.html">participant materials</a> ·
+    <a href="bootcamp-session2.html">session 2 →</a> ·
+    <a href="bootcamp-reference.html">quick reference</a> ·
+    <a href="bootcamp-facilitator.html">facilitator guide</a>
+  </span>
+</div>
+
+</body>
+</html>

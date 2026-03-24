@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 2: Advanced Patterns | Prompt Engineering Bootcamp</title>
+<meta name="description" content="Session 2: ReAct, Tree of Thoughts, and Spec-Kit workflows — orchestrated systems for complex reasoning and cross-domain application.">
+<meta property="og:title" content="Session 2: Advanced Patterns | Prompt Engineering Bootcamp">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/bootcamp-session2.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+
+  .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(15,15,26,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+  .nav-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%); padding: 64px 20px 48px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: clamp(26px, 4.5vw, 44px); color: var(--text-bright); font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+  .hero .subtitle { font-size: clamp(15px, 2.2vw, 18px); color: var(--text); max-width: 620px; margin: 0 auto 14px; font-style: italic; }
+  .hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 22px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .hero-tag { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); text-decoration: none; transition: all 0.2s; }
+  .hero-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  h2 { font-size: clamp(18px, 2.5vw, 24px); color: var(--text-bright); font-weight: 700; margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); scroll-margin-top: 60px; }
+  h3 { font-size: clamp(15px, 2vw, 18px); color: var(--text-bright); font-weight: 700; margin: 28px 0 10px; }
+  h4 { font-size: 0.95rem; color: var(--blue); font-weight: 700; margin: 20px 0 8px; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 20px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text-bright); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin: 48px 0 8px; }
+
+  .agenda-table { width: 100%; border-collapse: collapse; margin: 20px 0 32px; font-size: 0.88rem; }
+  .agenda-table th { background: var(--bg-card); color: var(--text-bright); font-weight: 700; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+  .agenda-table td { padding: 9px 14px; border: 1px solid var(--border); vertical-align: top; color: var(--text); }
+  .agenda-table tr:nth-child(even) td { background: rgba(22,22,37,0.4); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; }
+  .badge-lecture { background: rgba(88,166,255,0.15); color: var(--blue); }
+  .badge-hands { background: rgba(233,69,96,0.15); color: var(--accent); }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+  .card.green { border-left-color: var(--green); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card.red { border-left-color: var(--accent); }
+  .card.purple { border-left-color: var(--purple); }
+
+  pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0 24px; }
+  code { font-family: 'Courier New', Monaco, monospace; font-size: 0.85rem; color: var(--text-bright); }
+  pre code { color: var(--text); }
+  :not(pre) > code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: var(--blue); }
+
+  .flow-diagram { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 20px 0; font-family: 'Courier New', Monaco, monospace; font-size: 0.88rem; line-height: 1.8; }
+  .flow-arrow { color: var(--accent); }
+  .flow-label { color: var(--blue); font-weight: 700; }
+  .flow-note { color: var(--text); font-family: inherit; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  .speckit-flow { display: flex; align-items: stretch; gap: 0; margin: 20px 0; flex-wrap: wrap; }
+  .speckit-step { flex: 1; min-width: 150px; background: var(--bg-card); border: 1px solid var(--border); padding: 16px; text-align: center; position: relative; }
+  .speckit-step:not(:last-child)::after { content: '→'; position: absolute; right: -14px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 1.2rem; z-index: 1; }
+  .speckit-step .step-num { font-size: 0.75rem; color: var(--blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .speckit-step .step-name { font-size: 0.9rem; color: var(--text-bright); font-weight: 700; }
+  .speckit-step .step-desc { font-size: 0.78rem; color: var(--text); margin-top: 4px; }
+
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text); margin-top: 40px; }
+  .footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="../index.html" class="nav-pill">← home</a>
+  <a href="prompt-engineering-bootcamp.html" class="nav-pill">bootcamp</a>
+  <a href="#recap" class="nav-pill">recap</a>
+  <a href="#advanced-patterns" class="nav-pill">advanced patterns</a>
+  <a href="#speckit" class="nav-pill">spec-kit</a>
+  <a href="#exercises" class="nav-pill">exercises</a>
+  <a href="#java-demo" class="nav-pill">java demo</a>
+  <a href="#next-steps" class="nav-pill">next steps</a>
+</nav>
+
+<div class="hero">
+  <h1>Session 2</h1>
+  <p class="subtitle">Advanced Patterns &amp; Complete Workflows — from simple templates to orchestrated systems</p>
+  <p class="author">Joey Lopez · Prompt Engineering Bootcamp · 60 minutes</p>
+  <div class="hero-tags">
+    <a href="#advanced-patterns" class="hero-tag">ReAct</a>
+    <a href="#advanced-patterns" class="hero-tag">Tree of Thoughts</a>
+    <a href="#speckit" class="hero-tag">spec-kit</a>
+    <a href="#exercises" class="hero-tag">exercises</a>
+    <a href="#java-demo" class="hero-tag">java demo</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">Overview</div>
+  <h2>Session Agenda</h2>
+  <table class="agenda-table">
+    <thead><tr><th>Time</th><th>Activity</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>0–5 min</td><td>Session 1 Recap + Advanced Patterns Overview</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+      <tr><td>5–10 min</td><td>Spec-Kit Methodology</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+      <tr><td>10–15 min</td><td>ReAct + Tree of Thoughts</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+      <tr><td>15–25 min</td><td>Demo: Interview Prep Workflow</td><td><span class="badge badge-hands">Hands-on</span></td></tr>
+      <tr><td>25–40 min</td><td>Your Turn: Build Interview Materials</td><td><span class="badge badge-hands">Hands-on</span></td></tr>
+      <tr><td>40–55 min</td><td>Live Java Demo: Spring Migration</td><td><span class="badge badge-hands">Hands-on</span></td></tr>
+      <tr><td>55–60 min</td><td>Integration + Next Steps</td><td><span class="badge badge-lecture">Lecture</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-label" id="recap">Foundation</div>
+  <h2>Session 1 Recap</h2>
+
+  <p>In Session 1 you built the foundation:</p>
+  <ul>
+    <li><strong>Three Approaches Framework</strong> — ADRs vs Structured Files vs Tool-assisted</li>
+    <li><strong>Tier Evaluation</strong> — proven vs emerging vs experimental</li>
+    <li><strong>Four Foundational Patterns</strong> — Persona, Few-shot, Template, Chain-of-Thought</li>
+    <li><strong>Real application</strong> — Priority Builder with actual deliverables and CSV output</li>
+  </ul>
+
+  <p>Session 2 evolves each of those: simple patterns become orchestrated workflows, single-step tasks become multi-phase reasoning, and the same methodology scales from priorities to interviews to code.</p>
+
+  <div class="section-label" id="advanced-patterns">Patterns</div>
+  <h2>Advanced Patterns</h2>
+
+  <p>When a single prompt with four foundational patterns isn't enough for complex, multi-step tasks, two research-backed patterns handle the gap:</p>
+
+  <h3>ReAct Pattern</h3>
+  <p>From Yao et al. (2022). Designed for tasks that require validation checkpoints between steps — where you can't know the next action until you observe the result of the current one.</p>
+
+  <div class="flow-diagram">
+    <span class="flow-label">THINK</span>: Analyze the situation — what's actually being asked?<br>
+    <span class="flow-arrow">↓</span><br>
+    <span class="flow-label">ACT</span>: Take a specific, concrete action<br>
+    <span class="flow-arrow">↓</span><br>
+    <span class="flow-label">OBSERVE</span>: Check results — did it work? What changed?<br>
+    <span class="flow-arrow">↓</span><br>
+    <span class="flow-label">THINK</span>: Next steps based on what you observed<br>
+    <span class="flow-arrow">↓</span><br>
+    <span class="flow-note">Repeat until task complete</span>
+  </div>
+
+  <p><strong>When to use:</strong> Multi-step tasks where each step depends on the previous result. Code migration, gap analysis, systematic positioning strategy.</p>
+
+  <h3>Tree of Thoughts</h3>
+  <p>From Yao et al. (2023). Designed for decision points where multiple valid approaches exist and the right choice requires explicit evaluation of tradeoffs.</p>
+
+  <pre><code>1. Generate 3 genuinely different approaches to the problem
+2. Evaluate pros/cons/risks of each approach explicitly
+3. Choose the best approach with clear rationale
+4. Proceed with that choice</code></pre>
+
+  <p><strong>When to use:</strong> Any decision point with real tradeoffs. Interview positioning strategy, architecture choices, migration approach selection.</p>
+
+  <h3>When Simple Patterns Are Enough</h3>
+  <div class="two-col">
+    <div class="card green">
+      <h4>Use Foundational Patterns (Session 1)</h4>
+      <ul style="font-size:0.85rem">
+        <li>Single-step tasks</li>
+        <li>Well-understood domains</li>
+        <li>Template-driven outputs</li>
+        <li>Quick iterations needed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Use Advanced Patterns (Session 2)</h4>
+      <ul style="font-size:0.85rem">
+        <li>Multi-step reasoning required</li>
+        <li>Decision points with tradeoffs</li>
+        <li>Complex domain knowledge</li>
+        <li>Audit trail needed</li>
+        <li>Team scalability important</li>
+      </ul>
+    </div>
+  </div>
+  <p><strong>Decision rule:</strong> Use the simplest approach that handles the complexity. Don't reach for ReAct when a good Persona + Template covers it.</p>
+
+  <div class="section-label" id="speckit">Methodology</div>
+  <h2>Spec-Kit 4-File Workflow</h2>
+
+  <p>The spec-kit pattern separates concerns across files so each piece can be reused, updated independently, and understood by teammates without context from your head.</p>
+
+  <div class="speckit-flow">
+    <div class="speckit-step">
+      <div class="step-num">File 1</div>
+      <div class="step-name">knowledge-base.md</div>
+      <div class="step-desc">Domain expertise. Reusable across tasks. STAR method, positioning options, evaluation criteria.</div>
+    </div>
+    <div class="speckit-step">
+      <div class="step-num">File 2</div>
+      <div class="step-name">specification.md</div>
+      <div class="step-desc">This task's specific requirements. Role details, candidate background, gaps and strengths.</div>
+    </div>
+    <div class="speckit-step">
+      <div class="step-num">File 3</div>
+      <div class="step-name">implementation-plan.md</div>
+      <div class="step-desc">Execution strategy using ReAct + Tree of Thoughts. Reasoning documented.</div>
+    </div>
+    <div class="speckit-step">
+      <div class="step-num">File 4</div>
+      <div class="step-name">execution.md</div>
+      <div class="step-desc">Generated materials — positioning statement, STAR examples, talking points.</div>
+    </div>
+  </div>
+
+  <p><strong>Key advantage:</strong> Separation of concerns. knowledge-base.md stays reusable; specification.md is the only file that changes per task; execution.md is throwaway.</p>
+
+  <div class="section-label" id="exercises">Exercises</div>
+  <h2>Exercise: Build Interview Strategy</h2>
+
+  <h3>Phase 1 — Create specification.md (8 minutes)</h3>
+  <ol>
+    <li>Start with the provided <code>knowledge-base.md</code> (interview fundamentals, STAR method, positioning options)</li>
+    <li>Select a job from the participant materials (Senior Manager AI Strategy, Principal Consultant Banking, Director Digital Transformation)</li>
+    <li>Pick the same demo persona you used in Session 1 for continuity</li>
+    <li>Document: target role details, your persona's background, key gaps and key strengths</li>
+  </ol>
+
+  <h3>Phase 2 — Execute implementation-plan.md (7 minutes)</h3>
+
+  <div class="card">
+    <h4>ReAct Analysis</h4>
+    <pre style="margin:8px 0 0; font-size:0.82rem"><code>THINK: What is the biggest gap between my background and this role?
+ACT: Map my specific experience to each key requirement
+OBSERVE: What positioning angle emerges from this mapping?
+THINK: How do I turn gaps into learning narratives?
+ACT: Develop core connecting story: past experience → role requirements</code></pre>
+  </div>
+
+  <div class="card green">
+    <h4>Tree of Thoughts Strategy</h4>
+    <pre style="margin:8px 0 0; font-size:0.82rem"><code>Option A: Technical Expert
+  Pros: Deep credibility, clear differentiation
+  Cons: May undersell business acumen, narrow appeal
+  Risk: Medium
+
+Option B: Strategic Leader
+  Pros: Broad appeal, executive positioning
+  Cons: May lack specificity, needs strong evidence
+  Risk: Medium
+
+Option C: Balanced Bridge
+  Pros: Technical depth + business growth story
+  Cons: Harder to articulate concisely
+  Risk: Low
+
+Selected: [Your choice with rationale]</code></pre>
+  </div>
+
+  <p><strong>Success criteria:</strong> Clear positioning strategy with documented rationale, not just a chosen answer.</p>
+
+  <div class="section-label" id="java-demo">Technical Demo</div>
+  <h2>Live Java Demo: Spring Boot Migration</h2>
+
+  <p>Same patterns, technical domain. Spring Boot 2→3 migration involves three types of changes: namespace updates (<code>javax</code> → <code>jakarta</code>), annotation modernization, and security configuration updates.</p>
+
+  <p>The three approaches from Session 1 apply directly:</p>
+
+  <div class="card">
+    <h4>Approach A — ADRs + Config</h4>
+    <p style="font-size:0.85rem; margin-bottom:6px">A <code>.github/copilot-instructions.md</code> that documents migration standards. Single prompt referencing that document handles most cases.</p>
+    <pre style="margin:0; font-size:0.8rem"><code>"Following .github/copilot-instructions.md migration standards,
+migrate UserController to Spring Boot 3"</code></pre>
+  </div>
+
+  <div class="card green">
+    <h4>Approach B — Structured Files (with ReAct)</h4>
+    <p style="font-size:0.85rem; margin-bottom:6px">A spec/ folder workflow. ReAct pattern in the implementation plan:</p>
+    <pre style="margin:0; font-size:0.8rem"><code>THINK: Dependencies must be updated before annotations
+ACT: Update javax → jakarta imports first
+OBSERVE: mvn compile — success, proceed to annotations
+THINK: Security config needs modernization next
+ACT: Migrate to SecurityFilterChain pattern</code></pre>
+  </div>
+
+  <div class="card yellow">
+    <h4>Approach C — Tool-Assisted (Windsurf)</h4>
+    <p style="font-size:0.85rem; margin-bottom:0">290-line cascade workflow. Built-in validation gates at each step. Tree of Thoughts for security config decision:</p>
+    <ul style="font-size:0.82rem; margin-top:8px">
+      <li>Option A: Keep current security config (low risk, technical debt remains)</li>
+      <li>Option B: Modernize to SecurityFilterChain (balanced)</li>
+      <li>Option C: Full OAuth2 rewrite (high risk, high reward)</li>
+      <li><strong>Decision:</strong> Option B — balanced modernization</li>
+    </ul>
+  </div>
+
+  <h3>Cross-Domain Pattern Recognition</h3>
+  <p>The same cognitive patterns appear across all three domains in this workshop:</p>
+
+  <div class="card purple">
+    <h4>Universal pattern: ReAct</h4>
+    <ul style="font-size:0.85rem">
+      <li><strong>Priorities:</strong> Think what category fits → Act on metrics → Observe quality → Refine</li>
+      <li><strong>Interview:</strong> Think about gap → Act on positioning → Observe fit → Select strategy</li>
+      <li><strong>Code:</strong> Think dependencies → Act on imports → Observe compilation → Continue</li>
+    </ul>
+  </div>
+
+  <p>The domain changes. The systematic thinking doesn't.</p>
+
+  <div class="section-label" id="next-steps">Toolkit</div>
+  <h2>What You Now Have</h2>
+
+  <div class="two-col">
+    <div class="card">
+      <h4>Evaluation Framework</h4>
+      <ul style="font-size:0.85rem">
+        <li>Three Approaches — ADRs vs Structured vs Tool-assisted</li>
+        <li>Tier Assessment — proven vs emerging vs experimental</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h4>Pattern Library</h4>
+      <ul style="font-size:0.85rem">
+        <li><strong>Foundational:</strong> Persona, Few-shot, Template, Chain-of-Thought</li>
+        <li><strong>Advanced:</strong> ReAct, Tree of Thoughts, Spec-Kit</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>This Week</h3>
+  <ol>
+    <li>Apply ReAct pattern to one complex work decision</li>
+    <li>Use Tree of Thoughts for your next strategic choice — write out the three options explicitly</li>
+    <li>Create a spec-kit workflow for one task you do repeatedly</li>
+  </ol>
+
+  <h3>Longer Term</h3>
+  <ul>
+    <li>Evaluate new AI tools using the Three Approaches and Tier frameworks before adopting</li>
+    <li>Build team templates using proven foundational patterns — document what works</li>
+    <li>Apply systematic thinking across your domain — same patterns, different problems</li>
+  </ul>
+
+  <div class="card">
+    <h4>Research Papers</h4>
+    <ul style="font-size:0.85rem">
+      <li>White et al. (2023) — Prompt Pattern Catalog · arXiv 2302.11382</li>
+      <li>Yao et al. (2022) — ReAct Pattern · arXiv 2210.03629</li>
+      <li>Yao et al. (2023) — Tree of Thoughts · arXiv 2305.10601</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a><br>
+  <span style="margin-top:6px; display:block">
+    <a href="../index.html">← home</a> ·
+    <a href="prompt-engineering-bootcamp.html">bootcamp overview</a> ·
+    <a href="bootcamp-session1.html">← session 1</a> ·
+    <a href="bootcamp-prereq.html">participant materials</a> ·
+    <a href="bootcamp-reference.html">quick reference</a> ·
+    <a href="bootcamp-facilitator.html">facilitator guide</a>
+  </span>
+</div>
+
+</body>
+</html>

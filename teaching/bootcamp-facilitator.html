@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facilitator Guide | Prompt Engineering Bootcamp</title>
+<meta name="description" content="Minute-by-minute facilitator guide for the Prompt Engineering Bootcamp: setup, timing, file usage, and coaching notes for both sessions.">
+<meta property="og:title" content="Facilitator Guide | Prompt Engineering Bootcamp">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/teaching/bootcamp-facilitator.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #1a1a2e;
+    --border: #2a2a40;
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; }
+
+  .nav-bar { position: sticky; top: 0; z-index: 100; background: rgba(15,15,26,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--bg-card); border: 1px solid var(--border); text-decoration: none; white-space: nowrap; transition: all 0.2s; }
+  .nav-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%); padding: 64px 20px 48px; text-align: center; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: clamp(26px, 4.5vw, 44px); color: var(--text-bright); font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+  .hero .subtitle { font-size: clamp(15px, 2.2vw, 18px); color: var(--text); max-width: 580px; margin: 0 auto 14px; font-style: italic; }
+  .hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 22px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .hero-tag { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); text-decoration: none; transition: all 0.2s; }
+  .hero-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  h2 { font-size: clamp(18px, 2.5vw, 24px); color: var(--text-bright); font-weight: 700; margin: 48px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); scroll-margin-top: 60px; }
+  h3 { font-size: clamp(15px, 2vw, 18px); color: var(--text-bright); font-weight: 700; margin: 28px 0 10px; }
+  h4 { font-size: 0.95rem; color: var(--blue); font-weight: 700; margin: 16px 0 6px; }
+  p { margin-bottom: 14px; }
+  ul, ol { padding-left: 20px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--text-bright); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--blue); margin: 48px 0 8px; }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+  .card.green { border-left-color: var(--green); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card.red { border-left-color: var(--accent); }
+  .card.purple { border-left-color: var(--purple); }
+
+  .timing-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin: 20px 0; overflow: hidden; }
+  .timing-header { background: rgba(88,166,255,0.1); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: baseline; gap: 12px; }
+  .timing-header .time { font-size: 0.85rem; font-weight: 700; color: var(--blue); font-family: 'Courier New', Monaco, monospace; white-space: nowrap; }
+  .timing-header .title { font-weight: 700; color: var(--text-bright); font-size: 0.95rem; }
+  .timing-body { padding: 16px 20px; }
+  .timing-body h4 { color: var(--yellow); margin-top: 0; }
+  .timing-body p { font-size: 0.88rem; margin-bottom: 10px; }
+  .timing-body ul { font-size: 0.88rem; }
+
+  .script-block { background: var(--bg-code); border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin: 10px 0; font-family: 'Courier New', Monaco, monospace; font-size: 0.82rem; color: var(--text); white-space: pre-wrap; line-height: 1.6; }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 7px 0 7px 28px; position: relative; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--blue); }
+
+  .success-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+  .success-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .success-item h4 { color: var(--green); margin-top: 0; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  .success-item ul { font-size: 0.82rem; padding-left: 16px; margin: 0; }
+
+  pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 16px 0 24px; }
+  code { font-family: 'Courier New', Monaco, monospace; font-size: 0.85rem; color: var(--text-bright); }
+  pre code { color: var(--text); }
+  :not(pre) > code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; color: var(--blue); }
+
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text); margin-top: 40px; }
+  .footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="../index.html" class="nav-pill">← home</a>
+  <a href="prompt-engineering-bootcamp.html" class="nav-pill">bootcamp</a>
+  <a href="#session1-setup" class="nav-pill">S1 setup</a>
+  <a href="#session1-flow" class="nav-pill">S1 flow</a>
+  <a href="#session2-setup" class="nav-pill">S2 setup</a>
+  <a href="#session2-flow" class="nav-pill">S2 flow</a>
+  <a href="#success-metrics" class="nav-pill">success metrics</a>
+</nav>
+
+<div class="hero">
+  <h1>Facilitator Guide</h1>
+  <p class="subtitle">Minute-by-minute timing, file usage, and coaching notes for professional workshop delivery</p>
+  <p class="author">Joey Lopez · Prompt Engineering Bootcamp · Internal use</p>
+  <div class="hero-tags">
+    <a href="#session1-setup" class="hero-tag">session 1 setup</a>
+    <a href="#session1-flow" class="hero-tag">session 1 flow</a>
+    <a href="#session2-setup" class="hero-tag">session 2 setup</a>
+    <a href="#session2-flow" class="hero-tag">session 2 flow</a>
+    <a href="#success-metrics" class="hero-tag">success metrics</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label" id="session1-setup">Session 1</div>
+  <h2>Pre-Session 1 Setup (15 minutes before start)</h2>
+
+  <ul class="checklist">
+    <li>Demo persona descriptions open and ready to share screen (3 personas visible)</li>
+    <li>Priority Builder Agent prompt (325 lines) copied to clipboard for AI tool demo</li>
+    <li>Session 1 slides opened and tested (diagrams displaying correctly)</li>
+    <li>AI tool open — ChatGPT or Claude with a fresh session</li>
+    <li>Quick reference cards available for participants (print or digital)</li>
+  </ul>
+
+  <div class="section-label" id="session1-flow">Session 1 — Minute by Minute</div>
+  <h2>Session 1: Industry Standards (60 minutes)</h2>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">0–5 min</span>
+      <span class="title">Problem &amp; Solution Overview</span>
+    </div>
+    <div class="timing-body">
+      <h4>Materials</h4>
+      <p>None — pure presentation. Energy check.</p>
+      <div class="script-block">0:00 — Welcome, energy check, agenda overview
+0:02 — "How many use AI tools daily?" (show of hands)
+0:03 — Show problem slide: "Let's see if this sounds familiar..."
+0:04 — Build energy: "Today you'll learn systematic approaches"
+0:05 — Transition: "First, let me show you three valid approaches"</div>
+      <p><strong>Goal:</strong> High energy, validate pain points. Don't solve the problem yet.</p>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">5–15 min</span>
+      <span class="title">Three Approaches Framework</span>
+    </div>
+    <div class="timing-body">
+      <h4>Materials</h4>
+      <p>Three Approaches diagram on screen.</p>
+      <div class="script-block">5:00 — Show Three Approaches diagram
+5:01 — Green path: "Most teams start here — ADRs + Config"
+5:03 — Orange path: "Learning teams benefit from Structured"
+5:05 — Yellow path: "Platform-committed teams use Tool-Assisted"
+5:07 — Hands: "Who uses multiple AI tools?" → Point to green
+5:09 — Hands: "Who wants to learn systematic prompting?" → Point to orange
+5:11 — Hands: "Who's committed to one IDE like Cursor/Windsurf?" → Yellow
+5:13 — Key insight: "All valid — choose based on team context"
+5:15 — Transition: "Before we try this, let's see the foundational patterns"</div>
+      <p><strong>Interaction:</strong> Point, trace paths, ask team context questions. Don't rush.</p>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">15–20 min</span>
+      <span class="title">Foundational Patterns</span>
+    </div>
+    <div class="timing-body">
+      <h4>Materials</h4>
+      <p>Foundational Patterns diagram. Preview priority-builder prompt (mention it uses all 4 patterns).</p>
+      <div class="script-block">15:00 — Show Foundational Patterns diagram
+15:01 — Trace flow: "Persona establishes expertise..."
+15:02 — "Few-shot shows desired format..."
+15:03 — "Template structures the output..."
+15:04 — "Chain-of-Thought reveals reasoning..."
+15:05 — Quick interaction: "Where have you seen these before?"
+16:00 — "In 5 minutes, you'll see all 4 patterns in a 325-line system"
+17:30 — Transition slide to hands-on</div>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">20–25 min</span>
+      <span class="title">Demo: Priority Builder</span>
+    </div>
+    <div class="timing-body">
+      <h4>Critical File Sequence</h4>
+      <ol style="font-size:0.88rem">
+        <li>Open demo personas on screen — show "Option B: Tech Lead"</li>
+        <li>Switch to AI tool with Priority Builder prompt pasted</li>
+        <li>Point out pattern locations: "Lines 1–4 are Persona, lines 200–220 Few-shot..."</li>
+        <li>Start 20 Questions — let AI ask 3–4 questions</li>
+        <li>Answer as Tech Lead persona: "AI/ML specialist, banking automation..."</li>
+        <li>Generate output — show CSV + formatted versions</li>
+      </ol>
+      <div class="script-block">20:00 — "I'll demo using a safe practice persona"
+20:30 — OPEN persona descriptions on screen
+21:00 — Point to Tech Lead: "5 years, AI/ML specialist, current projects..."
+22:00 — "Now watch all 4 patterns in action"
+22:15 — SWITCH to AI tool with prompt loaded
+23:00 — Start 20 Questions, answer as Tech Lead
+24:00 — Generate output: show CSV + formatted versions
+24:30 — "Notice systematic vs ad-hoc difference"
+25:00 — Transition: "Your turn — start with freestyle"</div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Participants see clear persona usage</li>
+        <li>AI generates realistic CSV output</li>
+        <li>All 4 patterns demonstrated and named</li>
+        <li>Systematic vs ad-hoc contrast is obvious</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">25–35 min</span>
+      <span class="title">Exercise: Freestyle First</span>
+    </div>
+    <div class="timing-body">
+      <h4>Materials</h4>
+      <p>Demo persona descriptions on screen for participant reference.</p>
+      <div class="script-block">25:00 — "Choose a DIFFERENT persona from the demo"
+25:30 — Show personas on screen again
+26:00 — "Create 1 priority using your normal prompting approach"
+26:30 — Circulate, observe struggles
+27:00 — Coach lightly: "What metrics could you include?"
+29:00 — Watch for pain points: vague results, generic language
+30:00 — "2 more minutes"
+32:00 — Quick debrief: "How many got output you'd submit to a manager?"
+33:00 — "Most struggled with specificity — let's try systematic approach"
+35:00 — Transition: "Now use Priority Builder methodology"</div>
+      <div class="card red" style="margin-top:12px">
+        <h4>Coaching note</h4>
+        <p style="margin:0; font-size:0.88rem">Don't help too much during freestyle. Let them feel the pain. Take mental notes of specific struggles for the debrief — the contrast will land harder.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">35–50 min</span>
+      <span class="title">Exercise: Priority Builder Template</span>
+    </div>
+    <div class="timing-body">
+      <h4>Critical File Sequence</h4>
+      <ol style="font-size:0.88rem">
+        <li>Participants copy/paste Priority Builder prompt into their AI tool</li>
+        <li>Switch to different persona than freestyle round</li>
+        <li>Guide through 20 Questions process</li>
+      </ol>
+      <div class="script-block">35:00 — "Everyone load the Priority Builder prompt"
+35:30 — Verify: "Can you see the full 325-line prompt?"
+36:00 — "Pick DIFFERENT persona from freestyle round"
+36:30 — Walk around: ensure prompt loaded correctly (common paste issues)
+37:00 — "Let the AI ask you questions — answer as your persona"
+37:30 — Coach: "Be specific about projects and metrics"
+40:00 — Watch for systematic vs ad-hoc differences emerging
+42:00 — "Generate your priority — pick Conservative, Balanced, or Aspirational"
+44:00 — "Anyone getting CSV output? That's ready for submission"
+46:00 — Celebrate: "Show of hands who got specific metrics"
+48:00 — Quick sharing: "What's one metric you wouldn't have thought of?"
+50:00 — Transition: "Let's compare the three approaches"</div>
+      <p><strong>Heavy coaching required here.</strong> Ensure prompts load, guide specific persona-based answers, celebrate systematic outputs vs earlier freestyle struggles.</p>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">50–55 min</span>
+      <span class="title">Compare: Three Approaches</span>
+    </div>
+    <div class="timing-body">
+      <div class="script-block">50:00 — "Same Spring migration, 3 different approaches"
+50:30 — Show ADRs approach: simple prompt referencing standards doc
+51:00 — Show Structured approach: multi-file systematic workflow
+52:00 — Show Tool-Assisted: Windsurf 290-line cascade
+53:00 — "Notice: same result, different maintenance overhead"
+54:00 — Quick poll: "Which fits your team's style?"
+55:00 — Transition to insights</div>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">55–60 min</span>
+      <span class="title">Insights &amp; Session 2 Preview</span>
+    </div>
+    <div class="timing-body">
+      <div class="script-block">55:00 — "What did you observe? Freestyle vs Priority Builder?"
+55:30 — Capture insights: "Systematic = specific, ad-hoc = generic"
+56:00 — "For Session 2: same patterns for interview prep"
+56:30 — Preview job descriptions: "4 realistic senior roles available"
+57:00 — "Bring: chosen job + same persona for continuity"
+58:00 — Session 2 preview: "ReAct + Tree of Thoughts in action"
+59:00 — "Questions before 5-minute break?"
+60:00 — End Session 1</div>
+    </div>
+  </div>
+
+  <div class="section-label" id="session2-setup">Session 2</div>
+  <h2>Pre-Session 2 Setup</h2>
+
+  <ul class="checklist">
+    <li>Job descriptions (4 options) open and visible</li>
+    <li>Demo persona descriptions — same personas from Session 1</li>
+    <li>Interview prep 4-file workflow templates ready</li>
+    <li>Spring migration files loaded for live Java demo</li>
+    <li>Session 2 slides tested</li>
+  </ul>
+
+  <div class="section-label" id="session2-flow">Session 2 — Minute by Minute</div>
+  <h2>Session 2: Advanced Patterns (60 minutes)</h2>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">0–5 min</span>
+      <span class="title">Recap + Advanced Patterns Overview</span>
+    </div>
+    <div class="timing-body">
+      <div class="script-block">0:00 — "Session 1 quick wins — who got CSV output?"
+0:30 — "Today: same patterns for complex reasoning"
+1:00 — Energy check: "Ready to level up?"
+2:00 — "Advanced patterns: ReAct + Tree of Thoughts + live Java demo"
+3:00 — "Goal: systematic methodology across ALL domains"
+5:00 — Ready for advanced patterns</div>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">5–15 min</span>
+      <span class="title">Spec-Kit + ReAct + Tree of Thoughts</span>
+    </div>
+    <div class="timing-body">
+      <div class="script-block">5:00  — Show Spec-Kit diagram
+5:30  — Point to knowledge-base: "Reusable domain expertise"
+6:00  — Point to specification: "This task's specific requirements"
+7:00  — Point to implementation-plan: "Where ReAct + Tree of Thoughts live"
+8:00  — "Key advantage: separation of concerns"
+10:00 — Show ReAct + Tree diagram
+10:30 — Trace ReAct flow: "Think → Act → Observe"
+11:00 — Show Tree of Thoughts: "Generate → Evaluate → Choose"
+12:30 — Interactive: "How would you analyze job requirements?"
+15:00 — Transition: hands-on time</div>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">15–25 min</span>
+      <span class="title">Demo: Interview Prep Workflow</span>
+    </div>
+    <div class="timing-body">
+      <h4>Critical File Sequence</h4>
+      <ol style="font-size:0.88rem">
+        <li>Open job descriptions — show "Senior Manager AI Strategy" role</li>
+        <li>Use same Tech Lead persona from Session 1</li>
+        <li>Load interview prep 4-file workflow live</li>
+      </ol>
+      <div class="script-block">15:00 — "Interview prep using same Tech Lead persona from priorities"
+15:30 — OPEN job descriptions, show Senior Manager AI Strategy role
+16:00 — "Notice: 8+ years experience, $5M budget, C-level presentations"
+16:30 — "Our Tech Lead: 5 years, AI specialist, no big budget experience"
+17:00 — "Watch systematic gap analysis"
+18:00 — Live spec creation: role details + background analysis
+19:00 — Execute ReAct: "Think: Gap in budget management experience"
+19:30 — "Act: Position as technical depth with business impact"
+20:00 — "Observe: Need evidence of strategic thinking"
+20:30 — Tree of Thoughts: 3 strategies: Technical Expert, Strategic Leader, Bridge
+21:30 — Choose strategy: "Bridge Role — technical depth + business growth"
+22:00 — Generate materials: positioning statement + STAR examples
+23:00 — "Notice: systematic vs random interview prep"
+25:00 — Transition to exercise</div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Clear job analysis demonstrated</li>
+        <li>ReAct pattern execution visible and named</li>
+        <li>Tree of Thoughts evaluation shown with explicit tradeoffs</li>
+        <li>Systematic positioning strategy emerges visibly</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">25–40 min</span>
+      <span class="title">Exercise: Build Interview Strategy</span>
+    </div>
+    <div class="timing-body">
+      <h4>File Coordination</h4>
+      <p>Participants pick a different job than the demo. Use the same persona from Session 1 priorities.</p>
+      <div class="script-block">25:00 — "Everyone open job descriptions"
+25:30 — "Pick DIFFERENT job than AI Strategy demo"
+26:00 — "Options: Banking Consultant, Retail Director"
+26:30 — "Use SAME persona from Session 1 for continuity"
+27:00 — "Phase 1: Create specification.md"
+27:30 — Coach: "Document job requirements vs your persona background"
+28:00 — "What's the biggest gap?"
+30:00 — "Phase 2: ReAct analysis"
+30:30 — Guide: "THINK about positioning options"
+31:00 — "ACT: Map specific experience to requirements"
+31:30 — "OBSERVE: What positioning emerges?"
+32:00 — "Tree of Thoughts: generate 3 positioning strategies"
+33:00 — Coach: "What are pros/cons of each?"
+34:00 — "Which has lowest risk?"
+35:00 — "Generate positioning statement + 2 STAR examples"
+38:00 — Celebrate: "Who has clear positioning strategy?"
+40:00 — Transition: "Same patterns in technical work"</div>
+      <div class="card red" style="margin-top:12px">
+        <h4>Intensive coaching required</h4>
+        <ul style="font-size:0.88rem; margin:0">
+          <li>Guide explicit ReAct structure — many participants skip steps</li>
+          <li>Force specific evidence for positioning claims, not assertions</li>
+          <li>Help evaluate tradeoffs between strategies explicitly</li>
+          <li>Ensure STAR examples are specific, not generic</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">40–55 min</span>
+      <span class="title">Live Java Demo: Spring Migration</span>
+    </div>
+    <div class="timing-body">
+      <h4>Materials</h4>
+      <p>Screen share Spring migration repository. Cross-Domain Patterns diagram.</p>
+      <div class="script-block">40:00 — "Same systematic patterns for technical work"
+40:30 — Show Cross-Domain diagram: "Universal patterns across domains"
+41:00 — SCREEN SHARE Spring migration files
+41:30 — "Three approaches to same migration challenge"
+42:00 — Show ADRs approach: .github/copilot-instructions.md
+42:30 — "Simple prompt: 'Follow migration standards, update UserController'"
+43:00 — Show Structured approach: spec/ folder workflow
+44:30 — Execute live: Load files in AI tool, generate migrated code
+46:00 — Point out ReAct: "Think dependencies → Act on imports → Observe compile"
+47:00 — Show Tool-Assisted: Windsurf 290-line cascade
+48:00 — "Built-in systematic validation at each step"
+49:30 — "Same patterns: priorities → interviews → code"
+51:00 — "ReAct works everywhere: Think → Act → Observe"
+53:00 — Interactive: "Where else could you apply these patterns?"
+55:00 — Transition to wrap-up</div>
+      <ul class="checklist" style="margin-top:12px">
+        <li>Clear pattern recognition across domains visible</li>
+        <li>Live code generation working in real time</li>
+        <li>"Aha moment" — universal patterns click for participants</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="timing-block">
+    <div class="timing-header">
+      <span class="time">55–60 min</span>
+      <span class="title">Integration + Next Steps</span>
+    </div>
+    <div class="timing-body">
+      <div class="script-block">55:00 — "What patterns did you recognize across domains?"
+55:30 — Capture: "Same ReAct, different applications"
+56:00 — "This week: apply ReAct to one work decision"
+56:30 — "Use Tree of Thoughts for next strategic choice"
+57:30 — Show quick reference cards: "Take this for ongoing use"
+58:00 — "Goal achieved: systematic vs ad-hoc methodology"
+58:30 — "Questions? Discussion? Applications?"
+60:00 — End workshop</div>
+    </div>
+  </div>
+
+  <div class="section-label" id="success-metrics">Evaluation</div>
+  <h2>Workshop Success Metrics</h2>
+
+  <div class="success-grid">
+    <div class="success-item">
+      <h4>Session 1</h4>
+      <ul>
+        <li>80%+ generate CSV-ready priorities</li>
+        <li>Clear systematic vs ad-hoc recognition</li>
+        <li>Proper persona usage throughout</li>
+        <li>Understanding of Three Approaches decision framework</li>
+      </ul>
+    </div>
+    <div class="success-item">
+      <h4>Session 2</h4>
+      <ul>
+        <li>ReAct analysis executed properly (steps named)</li>
+        <li>Tree of Thoughts with explicit tradeoff rationale</li>
+        <li>Pattern recognition across business + technical domains</li>
+        <li>Confidence applying methodology to their own work</li>
+      </ul>
+    </div>
+    <div class="success-item">
+      <h4>Overall</h4>
+      <ul>
+        <li>Real deliverables created (priorities + interview materials)</li>
+        <li>Systematic methodology internalized</li>
+        <li>Cross-domain pattern recognition achieved</li>
+        <li>Concrete action plans for ongoing application</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a><br>
+  <span style="margin-top:6px; display:block">
+    <a href="../index.html">← home</a> ·
+    <a href="prompt-engineering-bootcamp.html">bootcamp overview</a> ·
+    <a href="bootcamp-session1.html">session 1</a> ·
+    <a href="bootcamp-session2.html">session 2</a> ·
+    <a href="bootcamp-prereq.html">participant materials</a> ·
+    <a href="bootcamp-reference.html">quick reference</a>
+  </span>
+</div>
+
+</body>
+</html>
