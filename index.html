@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Joey Lopez</title>
-<meta name="description" content="Sr. Data Engineer. Builds tools and writes proofs. Research notes, open-source tools, and teaching materials.">
+<meta name="description" content="Sr. Data Engineer. Published security research. Builds agentic AI systems — for enterprise and for fun.">
 <meta property="og:title" content="Joey Lopez">
-<meta property="og:description" content="Sr. Data Engineer. Builds tools and writes proofs. Research notes, open-source tools, and teaching materials.">
+<meta property="og:description" content="Sr. Data Engineer. Published security research. Builds agentic AI systems — for enterprise and for fun.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jrlopez.dev">
 <meta name="twitter:card" content="summary">
@@ -17,8 +17,14 @@
 
 <div class="hero">
 <h1>Joey Lopez</h1>
-<div class="subtitle">Sr. Data Engineer</div>
-<p class="blurb">I ask the questions, AI does the heavy lifting. Research notes and open-source tools live here. Always happy to brainstorm — reach out or book time on calendly.</p>
+<div class="subtitle">Sr. Data Engineer · AI Researcher · Occasional Proof Writer</div>
+<p class="blurb">I build data systems at enterprise scale and AI agents in my spare time. Published a formal proof that regex safety filters are algebraically blind. Currently building LUCA — an agent with geometric coherence, metacognition, and a paper in progress.</p>
+<div class="hero-stats">
+<div class="stat"><span class="stat-num">10,000+</span><span class="stat-label">datasets migrated</span></div>
+<div class="stat"><span class="stat-num">250</span><span class="stat-label">zero-disruption migrations</span></div>
+<div class="stat"><span class="stat-num">+26pp</span><span class="stat-label">self-debug lift (LUCA)</span></div>
+<div class="stat"><span class="stat-num">62 hrs</span><span class="stat-label">manual work automated</span></div>
+</div>
 <div class="hero-links">
 <a href="resume.html" target="_blank">resume</a>
 <a href="https://github.com/josephrobertlopez" target="_blank">github</a>
@@ -34,6 +40,7 @@
 
 <div class="filter">
 <button class="active" onclick="filter('all')">all</button>
+<button onclick="filter('research')">research</button>
 <button onclick="filter('paper')">paper</button>
 <button onclick="filter('teaching')">teaching</button>
 <button onclick="filter('code')">code</button>
@@ -41,9 +48,25 @@
 
 <div id="items">
 
+<div class="item" data-tags="research code">
+<h3><a href="https://github.com/josephrobertlopez/luca-framework" target="_blank">LUCA — Long-term Understanding and Cognitive Architecture</a></h3>
+<div class="desc">Agentic AI with geometric coherence (Clifford algebra), active inference, and metacognition. +26pp self-debug lift. +43pp dependency tracing. Paper in progress on cognitive runtime composition.</div>
+<div class="tags">
+<span class="tag" onclick="filter('research')">research</span>
+<span class="tag" onclick="filter('code')">code</span>
+<span class="tag">active-inference</span>
+<span class="tag">cognitive-architecture</span>
+<span class="tag">2026</span>
+</div>
+<div class="item-links">
+<a href="https://github.com/josephrobertlopez/luca-framework" target="_blank">repo</a>
+<a href="paper-consolidated.pdf" target="_blank">paper draft</a>
+</div>
+</div>
+
 <div class="item" data-tags="paper code">
-<h3><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf">Your Regex Guardrails Are Provably Blind</a></h3>
-<div class="desc">Regex safety filters have a fatal algebraic blind spot. Paper and proof-of-concept.</div>
+<h3><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">Your Regex Guardrails Are Provably Blind</a></h3>
+<div class="desc">Formal proof that regex safety filters have a fatal algebraic blind spot — 34/35 production patterns are aperiodic, making modular-position bypasses undetectable. 91 patterns analyzed.</div>
 <div class="tags">
 <span class="tag" onclick="filter('paper')">paper</span>
 <span class="tag" onclick="filter('code')">code</span>
@@ -59,7 +82,7 @@
 
 <div class="item" data-tags="teaching">
 <h3><a href="teaching/guardrails-engineers.html">Why Your Safety Filters Fail (and the Math Behind It)</a></h3>
-<div class="desc">The guardrails paper explained without the math. SQL injection bypasses, defense code.</div>
+<div class="desc">The guardrails paper for engineers — no PhD required. SQL injection bypasses, working defense code, and why the fix isn't more regex.</div>
 <div class="tags">
 <span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag">formal-languages</span>
@@ -74,7 +97,7 @@
 
 <div class="item" data-tags="teaching">
 <h3><a href="teaching/prompting.html">What Every Prompt Pattern Actually Does</a></h3>
-<div class="desc">Patterns, templates, and a second brain framework. Foundational and advanced.</div>
+<div class="desc">Patterns, templates, and a second brain framework. Foundational and advanced — because prompting is programming.</div>
 <div class="tags">
 <span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag">prompting</span>
@@ -89,7 +112,7 @@
 
 <div class="item" data-tags="teaching code">
 <h3><a href="teaching/prompt-cheatsheet.html">Prompts Are Programs, Not Sentences</a></h3>
-<div class="desc">Composition cheat sheet, diagrams as reasoning tools, and lattice-driven development.</div>
+<div class="desc">Composition cheat sheet, mermaid diagrams as reasoning tools, and lattice-driven development — the method behind how I build.</div>
 <div class="tags">
 <span class="tag" onclick="filter('teaching')">teaching</span>
 <span class="tag" onclick="filter('code')">code</span>
@@ -107,7 +130,7 @@
 
 <div class="item" data-tags="code">
 <h3><a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">prompt-kit</a></h3>
-<div class="desc">Templates and tools. Clone it, use it.</div>
+<div class="desc">The prompt templates and tooling I actually use. Clone it, adapt it, make it yours.</div>
 <div class="tags">
 <span class="tag" onclick="filter('code')">code</span>
 <span class="tag">open-source</span>
@@ -121,7 +144,7 @@
 
 </div>
 
-<div class="footer">Human + AI · Joey Lopez · 2026</div>
+<div class="footer">Joey Lopez · 2026 · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a></div>
 
 </div>
 

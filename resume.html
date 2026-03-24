@@ -138,6 +138,11 @@
     line-height: 1.5;
   }
 
+  .role li strong {
+    color: var(--text-bright);
+    font-weight: 700;
+  }
+
   .role a {
     color: var(--blue);
     text-decoration: none;
@@ -356,6 +361,11 @@
       line-height: 1.4;
     }
 
+    .role li strong {
+      color: #000000;
+      font-weight: 700;
+    }
+
     .role a {
       color: #2563eb;
     }
@@ -426,7 +436,7 @@
 
   <div class="resume-header">
     <h1>Joseph Lopez</h1>
-    <div class="title">Sr. Data Engineer</div>
+    <div class="title">Sr. Data Engineer · AI Researcher</div>
     <div class="contact">
       Milwaukee, WI · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a> · <a href="https://jrlopez.dev">jrlopez.dev</a> · <a href="https://github.com/josephrobertlopez" target="_blank">github</a> · <a href="https://linkedin.com/in/joseph-lopez-80aa81166" target="_blank">linkedin</a>
     </div>
@@ -434,24 +444,28 @@
 
   <div class="section-title">Summary</div>
   <div class="summary">
-    Data engineer who publishes security research and ships production AI. Published a formal proof that regex-based safety filters are algebraically blind. 5 years building data platforms at scale, now leading agentic AI integration and real-time data products at a Top 5 US Bank.
+    Data engineer who publishes security research and ships production AI. I proved regex safety filters are algebraically blind (peer-reviewed, 2026), built data pipelines handling 10,000+ datasets with zero consumer disruption, and run an ongoing AI research project that benchmarks at +26pp self-debug lift. Five years across financial services — migrations, streaming, agentic systems. I like hard problems and tend to document what I learn.
   </div>
 
-  <div class="section-title">Publications & Research</div>
+  <div class="section-title">Research & Side Projects</div>
+  <div class="pub-item">
+    <div class="pub-title">LUCA — Long-term Understanding and Cognitive Architecture</div>
+    <div class="pub-desc">Ongoing research project: an AI agent with geometric coherence scoring (Clifford algebra), active inference, metacognition, and Theory of Mind. Benchmarks include +26pp self-debug lift, +43pp dependency tracing, and an ARC-AGI baseline at 62% partial on 400 tasks. Paper in progress on cognitive runtime composition. All code self-authored by the agent via GPU-generated modules.</div>
+    <div class="pub-links"><a href="https://github.com/josephrobertlopez/luca-framework" target="_blank">repo</a> <a href="paper-consolidated.pdf" target="_blank">paper draft</a></div>
+  </div>
   <div class="pub-item">
     <div class="pub-title">Algebraic and Computational Limits of LLM Guardrails</div>
-    <div class="pub-desc">Proved regex safety filters are algebraically blind to modular-position encodings via syntactic monoid analysis. 91 production patterns analyzed, 34/35 aperiodic. Peer-reviewed.</div>
+    <div class="pub-desc">Proved regex safety filters are algebraically blind to modular-position encodings via syntactic monoid analysis. 91 production patterns analyzed, 34/35 aperiodic. Peer-reviewed, 2026.</div>
     <div class="pub-links"><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">pdf</a> <a href="https://github.com/josephrobertlopez/aperiodic-guardrails" target="_blank">repo</a> <a href="https://jrlopez.dev/teaching/guardrails-engineers.html">teaching materials</a></div>
   </div>
 
-  <div class="section-title">Teaching, Mentorship & Employee Uplift</div>
+  <div class="section-title">Teaching & Mentorship</div>
   <div class="role">
     <ul>
-      <li>Designed &amp; delivered Prompt Engineering Bootcamp — 2 sessions, 15 attendees, 7 patterns</li>
-      <li>Open-sourced teaching materials: <a href="https://jrlopez.dev/teaching/prompting.html">foundational</a> + <a href="https://jrlopez.dev/teaching/prompting-advanced.html">advanced patterns</a> + <a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">prompt-kit repo</a></li>
-      <li>Mentored 2 junior developers (1 Associate Manager, 1 Senior Analyst) — each delivered production-ready workflow independently within 1 month</li>
-      <li>Ran technical interviews for data engineering and backend roles</li>
-      <li>Recognized as AI thought leader by delivery lead and tech leadership</li>
+      <li>Designed and ran a Prompt Engineering Bootcamp — 2 sessions, 15 engineers, 7 patterns; turned prompting from a vibe into a repeatable method</li>
+      <li>Open-sourced everything: <a href="https://jrlopez.dev/teaching/prompting.html">foundational guide</a>, <a href="https://jrlopez.dev/teaching/prompting-advanced.html">advanced patterns</a>, <a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">prompt-kit</a></li>
+      <li>Mentored 2 junior devs — both shipped production-ready workflows independently within a month</li>
+      <li>Ran technical interviews across data engineering and backend roles</li>
     </ul>
   </div>
 
@@ -459,13 +473,13 @@
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Sr. Data Engineer — Personal Loans API Integration</span>
+      <span class="role-title">Sr. Data Engineer — Personal Loans Integration</span>
       <span class="role-date">Mar 2026 – Present</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Post-Acquisition Integration</div>
+    <div class="role-org">Financial Services — Post-Acquisition Integration</div>
     <ul>
-      <li>Building integration layer enabling platform systems to consume acquired institution's personal loans product — real-time data, TSYS migration data, and interlinking GraphQL data products</li>
-      <li>Developing Speckit (spec-driven dev framework) for account-wide adoption</li>
+      <li>Wiring an acquired institution's personal loans product into the parent platform — real-time data feeds, payment processor history, GraphQL data product interlinking</li>
+      <li>Building Speckit, a spec-driven dev framework, for org-wide rollout</li>
     </ul>
   </div>
 
@@ -474,83 +488,83 @@
       <span class="role-title">Sr. Data Engineer — Historical Data Migration</span>
       <span class="role-date">Jan 2026 – Feb 2026</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Post-Acquisition Integration</div>
+    <div class="role-org">Financial Services — Post-Acquisition Integration</div>
     <ul>
-      <li>Architected Airflow + config-as-code pipeline for migrating 10,000+ TSYS datasets</li>
-      <li>Wrote ETL SQL for data transformation across enterprise post-M&A integration</li>
+      <li>Designed an Airflow + config-as-code pipeline that moved <strong>10,000+ payment processor datasets</strong> during post-M&amp;A integration</li>
+      <li>Wrote the ETL SQL for cross-system data transformation with full audit trail</li>
     </ul>
   </div>
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Sr. Data Engineer — Data Product POC (LangGraph)</span>
+      <span class="role-title">Sr. Data Engineer — Agentic Data Product POC</span>
       <span class="role-date">Oct 2025 – Dec 2025</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Data Products / Exchange</div>
+    <div class="role-org">Financial Services — Data Products / Exchange</div>
     <ul>
-      <li>Built agentic data product POC using LangGraph to accelerate developer onboarding to internal API marketplace</li>
-      <li>Designed multi-agent workflow for API discovery, schema understanding, and code generation</li>
+      <li>Built a LangGraph multi-agent system for developer onboarding — handles API discovery, schema comprehension, and code generation in a single workflow</li>
+      <li>Cuts "how does this API work" from hours to minutes for new engineers</li>
     </ul>
   </div>
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Sr. Data Engineer — SDP Kafka Migrations</span>
+      <span class="role-title">Sr. Data Engineer — Kafka Stream Migrations</span>
       <span class="role-date">Jun 2025 – Sep 2025</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — OneStream Data Convergence Program</div>
+    <div class="role-org">Financial Services — Platform Consolidation</div>
     <ul>
-      <li>Selected as 1 of 7 Windsurf AI pilot participants account-wide (only Accenture rep)</li>
-      <li>Pioneered spec-driven dev methodology (Speckit) — 66% acceleration adopted account-wide</li>
-      <li>Docker runtime workflows across 7 repos saving 14+ person-days in 2 weeks</li>
+      <li>One of 7 engineers selected for the org-wide AI coding pilot</li>
+      <li>Invented spec-driven development (Speckit) — <strong>66% velocity increase</strong>, adopted org-wide</li>
+      <li>Docker runtime workflows across 7 repos — saved <strong>14+ person-days in 2 weeks</strong></li>
     </ul>
   </div>
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Tech Lead — Data ETL Migrations</span>
+      <span class="role-title">Tech Lead — ETL Migration</span>
       <span class="role-date">Feb 2025 – May 2025</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — OneStream Data Convergence Program</div>
+    <div class="role-org">Financial Services — Platform Consolidation</div>
     <ul>
-      <li>Modernized ETL publish for 3 Databricks batch jobs handling 32 KYC datasets</li>
-      <li>Built config-driven validation toolkit cutting dataset validation from 3min to 30sec — ~62 hours manual work saved</li>
+      <li>Modernized 3 Databricks batch jobs covering 32 compliance datasets</li>
+      <li>Wrote a config-driven validation toolkit: dataset validation from 3 min → 30 sec — <strong>~62 hours manual work eliminated</strong></li>
     </ul>
   </div>
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Tech Lead — Data Infrastructure Modernization (Recoveries)</span>
+      <span class="role-title">Tech Lead — Data Infrastructure Rebuild</span>
       <span class="role-date">Sep 2024 – Jan 2025</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Recoveries Business Unit</div>
+    <div class="role-org">Financial Services — Collections &amp; Recoveries</div>
     <ul>
-      <li>Modernized shell script ETL into production-grade data infrastructure</li>
-      <li>250 dataset migrations, zero consumer disruption; velocity from 1-10 to 20-25 per release</li>
+      <li>Replaced shell script ETL with production-grade data infrastructure from scratch</li>
+      <li><strong>250 dataset migrations, zero consumer disruption</strong>; release velocity jumped from 1–10 to 20–25 datasets per cycle</li>
     </ul>
   </div>
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Sr. Application Developer — Offers Platform</span>
+      <span class="role-title">Sr. Application Developer — Product Offers</span>
       <span class="role-date">Apr 2024 – Aug 2024</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Offers Platform</div>
+    <div class="role-org">Financial Services — Product Offers</div>
     <ul>
-      <li>Led PySpark 2→3 migration of AWS Step Function ETL pipeline</li>
+      <li>Led PySpark 2→3 migration of a production AWS Step Function ETL pipeline with no downtime</li>
     </ul>
   </div>
 
   <div class="role">
     <div class="role-header">
-      <span class="role-title">Sr. Application Developer — Decision Orchestrator</span>
+      <span class="role-title">Sr. Application Developer — Decision Systems Lead</span>
       <span class="role-date">Jan 2024 – Apr 2024</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Credit Card Decision Orchestrator</div>
+    <div class="role-org">Financial Services — Decision Systems</div>
     <ul>
-      <li>Managed feature development for adding frozen credit information flow</li>
-      <li>Empowered credit policy modelers and analysts with test-vetted UI for rapid policy prototyping</li>
-      <li>Fixed silently-passing Kafka consumer acceptance test suite — tests were passing without validating data</li>
+      <li>Shipped credit-freeze data flow end-to-end across a distributed decision system</li>
+      <li>Built a test-vetted UI for credit policy modelers — cut prototyping time from days to hours</li>
+      <li>Found and fixed a Kafka consumer test suite that was passing without ever validating data — those tests were blind for months</li>
     </ul>
   </div>
 
@@ -559,10 +573,10 @@
       <span class="role-title">Application Developer — Data Engineering</span>
       <span class="role-date">Aug 2021 – Dec 2023</span>
     </div>
-    <div class="role-org">Accenture · Top 5 US Bank — Various Programs</div>
+    <div class="role-org">Financial Services — Various Programs</div>
     <ul>
-      <li>Data streaming pipelines, DMN rules engine implementation, schema modernization</li>
-      <li>Implemented schema for multitenancy and data exhaust for ETL pipelines</li>
+      <li>Built data streaming pipelines, implemented a DMN rules engine, and drove schema modernization across multiple platforms</li>
+      <li>Designed multitenancy schema and data exhaust architecture for ETL pipelines</li>
     </ul>
   </div>
 
