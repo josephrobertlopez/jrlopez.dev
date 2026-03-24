@@ -1284,6 +1284,23 @@ Skill C: "Design test strategy"
       }
     });
   });
+
+  // Handle hash navigation (e.g., bootcamp-skills.html#tab-dev)
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#tab-')) {
+    const tab = hash.replace('#tab-', '');
+    const btn = document.querySelector(`[data-tab="${tab}"]`);
+    const panel = document.getElementById('tab-' + tab);
+    if (btn && panel) {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      panel.classList.add('active');
+      setTimeout(() => {
+        document.querySelector('.tab-bar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }
 </script>
 
 </body>
