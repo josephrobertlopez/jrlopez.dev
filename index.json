@@ -1,0 +1,336 @@
+{
+  "schema": "jrlopez-atom-index/1.0",
+  "name": "Joey Lopez",
+  "description": "A pastebin of useful things — prompt templates, teaching materials, security research, workshop kits.",
+  "base_url": "https://jrlopez.dev/",
+  "updated": "2026-03-25",
+  "total": 24,
+  "tags": [
+    "code",
+    "diagrams",
+    "methodology",
+    "paper",
+    "prompting",
+    "reference",
+    "security",
+    "skills",
+    "teaching",
+    "template",
+    "theory",
+    "workshop"
+  ],
+  "atoms": [
+    {
+      "id": 1,
+      "title": "Your Regex Guardrails Are Provably Blind",
+      "desc": "Formal proof that regex safety filters have a fatal algebraic blind spot.",
+      "html_url": "https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf",
+      "md_url": null,
+      "tags": [
+        "paper",
+        "security",
+        "theory"
+      ],
+      "date": "2025-11-15"
+    },
+    {
+      "id": 2,
+      "title": "Guardrails for Engineers",
+      "desc": "The paper for engineers — no PhD required.",
+      "html_url": "p/guardrails-engineers.html",
+      "md_url": null,
+      "tags": [
+        "security",
+        "reference",
+        "teaching"
+      ],
+      "date": "2025-12-01"
+    },
+    {
+      "id": 3,
+      "title": "Guardrails Deep Dive",
+      "desc": "Interactive walkthrough of the proof.",
+      "html_url": "p/guardrails-deep-dive.html",
+      "md_url": null,
+      "tags": [
+        "security",
+        "prompting",
+        "teaching",
+        "theory"
+      ],
+      "date": "2025-12-10"
+    },
+    {
+      "id": 4,
+      "title": "Prompt Patterns (Foundational)",
+      "desc": "Zero-shot, few-shot, chain-of-thought, persona, template.",
+      "html_url": "p/prompting.html",
+      "md_url": null,
+      "tags": [
+        "prompting",
+        "reference",
+        "teaching",
+        "template"
+      ],
+      "date": "2025-10-20"
+    },
+    {
+      "id": 5,
+      "title": "Prompt Patterns (Advanced)",
+      "desc": "ReAct, Tree of Thoughts, self-consistency, constitutional AI.",
+      "html_url": "p/prompting-advanced.html",
+      "md_url": null,
+      "tags": [
+        "prompting",
+        "reference",
+        "teaching"
+      ],
+      "date": "2025-11-05"
+    },
+    {
+      "id": 6,
+      "title": "AI Learning Hub",
+      "desc": "Guided path: why AI → tools → patterns → pick your track.",
+      "html_url": "p/ai-learning-hub.html",
+      "md_url": null,
+      "tags": [
+        "prompting",
+        "workshop",
+        "teaching"
+      ],
+      "date": "2026-03-22"
+    },
+    {
+      "id": 7,
+      "title": "Bootcamp Skills",
+      "desc": "5 role-specific skills — Swagger-style with copy buttons.",
+      "html_url": "p/bootcamp-skills.html",
+      "md_url": null,
+      "tags": [
+        "skills",
+        "workshop",
+        "teaching",
+        "template"
+      ],
+      "date": "2026-02-15"
+    },
+    {
+      "id": 8,
+      "title": "Bootcamp Prereq",
+      "desc": "15-minute self-study before the live session.",
+      "html_url": "p/bootcamp-prereq.html",
+      "md_url": null,
+      "tags": [
+        "workshop",
+        "reference",
+        "teaching"
+      ],
+      "date": "2026-01-10"
+    },
+    {
+      "id": 9,
+      "title": "Session 1 — Patterns",
+      "desc": "Three Approaches, foundational patterns, priority builder.",
+      "html_url": "p/bootcamp-session1.html",
+      "md_url": null,
+      "tags": [
+        "workshop",
+        "prompting",
+        "teaching"
+      ],
+      "date": "2026-01-15"
+    },
+    {
+      "id": 10,
+      "title": "Session 2 — Advanced",
+      "desc": "ReAct, Tree of Thoughts, spec-kit, interview prep.",
+      "html_url": "p/bootcamp-session2.html",
+      "md_url": null,
+      "tags": [
+        "workshop",
+        "prompting",
+        "teaching"
+      ],
+      "date": "2026-01-22"
+    },
+    {
+      "id": 11,
+      "title": "Quick Reference Cards",
+      "desc": "6-card one-pager of all frameworks.",
+      "html_url": "p/bootcamp-reference.html",
+      "md_url": null,
+      "tags": [
+        "reference",
+        "prompting",
+        "template"
+      ],
+      "date": "2026-01-20"
+    },
+    {
+      "id": 12,
+      "title": "Facilitator Guide",
+      "desc": "Minute-by-minute script for running the workshop.",
+      "html_url": "p/bootcamp-facilitator.html",
+      "md_url": null,
+      "tags": [
+        "workshop",
+        "teaching"
+      ],
+      "date": "2026-01-18"
+    },
+    {
+      "id": 13,
+      "title": "Prompts Are Programs",
+      "desc": "Composition cheat sheet. Load/Chain/Compose operators.",
+      "html_url": "p/prompt-cheatsheet.html",
+      "md_url": null,
+      "tags": [
+        "methodology",
+        "reference",
+        "template"
+      ],
+      "date": "2025-11-20"
+    },
+    {
+      "id": 14,
+      "title": "Diagrams as Prompts",
+      "desc": "Mermaid diagrams as structured reasoning inputs.",
+      "html_url": "p/mermaid-prompts.html",
+      "md_url": null,
+      "tags": [
+        "diagrams",
+        "methodology",
+        "theory"
+      ],
+      "date": "2026-02-10"
+    },
+    {
+      "id": 15,
+      "title": "Lattice-Driven Development",
+      "desc": "Dependency-ordered dev. Build L1 before L2.",
+      "html_url": "p/lattice-dev.html",
+      "md_url": null,
+      "tags": [
+        "methodology",
+        "code",
+        "theory"
+      ],
+      "date": "2026-03-08"
+    },
+    {
+      "id": 16,
+      "title": "prompt-kit",
+      "desc": "The prompt templates I actually use. Clone and adapt.",
+      "html_url": "https://github.com/josephrobertlopez/prompt-kit",
+      "md_url": null,
+      "tags": [
+        "code",
+        "prompting",
+        "template"
+      ],
+      "date": "2025-12-15"
+    },
+    {
+      "id": 17,
+      "title": "Dev Second Brain",
+      "desc": "ReAct-driven code migrations, refactoring, debugging.",
+      "html_url": "p/bootcamp-skills.html#tab-dev",
+      "md_url": "p/skills-dev-second-brain.md",
+      "tags": [
+        "skills",
+        "code",
+        "template"
+      ],
+      "date": "2026-03-20"
+    },
+    {
+      "id": 18,
+      "title": "PO/PM Second Brain",
+      "desc": "User stories, backlogs, roadmaps, exec reports.",
+      "html_url": "p/bootcamp-skills.html#tab-po",
+      "md_url": "p/skills-po-second-brain.md",
+      "tags": [
+        "skills",
+        "prompting",
+        "template"
+      ],
+      "date": "2026-03-20"
+    },
+    {
+      "id": 19,
+      "title": "DL Second Brain",
+      "desc": "Priorities, risk matrices, status reports, onboarding.",
+      "html_url": "p/bootcamp-skills.html#tab-dl",
+      "md_url": "p/skills-dl-second-brain.md",
+      "tags": [
+        "skills",
+        "workshop",
+        "template"
+      ],
+      "date": "2026-03-20"
+    },
+    {
+      "id": 20,
+      "title": "TL Second Brain",
+      "desc": "ADRs, metaprompts, spike plans, .cursorrules.",
+      "html_url": "p/bootcamp-skills.html#tab-tl",
+      "md_url": "p/skills-tl-second-brain.md",
+      "tags": [
+        "skills",
+        "code",
+        "template"
+      ],
+      "date": "2026-03-20"
+    },
+    {
+      "id": 21,
+      "title": "Make Skills (Capstone)",
+      "desc": "Build your own skill from any repeated task.",
+      "html_url": "p/bootcamp-skills.html#tab-make",
+      "md_url": "p/skills-make-skills.md",
+      "tags": [
+        "skills",
+        "methodology",
+        "teaching",
+        "template"
+      ],
+      "date": "2026-03-20"
+    },
+    {
+      "id": 22,
+      "title": "Resume",
+      "desc": "Sr. Data Engineer — 5 years financial services.",
+      "html_url": "resume.html",
+      "md_url": null,
+      "tags": [
+        "reference"
+      ],
+      "date": "2026-03-24"
+    },
+    {
+      "id": 23,
+      "title": "Aperiodic Guardrails Repo",
+      "desc": "Source code + 91 pattern analysis dataset.",
+      "html_url": "https://github.com/josephrobertlopez/aperiodic-guardrails",
+      "md_url": null,
+      "tags": [
+        "code",
+        "security"
+      ],
+      "date": "2025-11-15"
+    },
+    {
+      "id": 24,
+      "title": "Prompt Engineering Bootcamp",
+      "desc": "90-minute hands-on workshop — systematic AI workflows, role-specific tracks, capstone skill build.",
+      "html_url": "p/prompt-engineering-bootcamp.html",
+      "md_url": "p/prompt-engineering-bootcamp.md",
+      "tags": [
+        "workshop",
+        "prompting",
+        "teaching"
+      ],
+      "date": "2026-01-10"
+    }
+  ]
+}
