@@ -81,4 +81,4 @@ Foundational patterns: Persona, Few-shot, Template, Chain-of-Thought
 Think → Act → Observe for complex reasoning
  - **Yao et al. (2023) **— Tree of Thoughts · arXiv 2305.10601
 Generate → Evaluate → Choose for decision making Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [facilitator guide ]()
+[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [facilitator guide ]()[.md ]()

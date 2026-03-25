@@ -721,4 +721,4 @@ One line. The model doesn't need a resume. Mistake Providing 10 few-shot example
 | Architecture Decision Records  || Systematic prompt organization  || Nygard (2011)  |
 
 Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [advanced patterns → ]()· [guardrails → ]()
+[← jrlopez.dev ]()· [advanced patterns → ]()· [guardrails → ]()[.md ]()

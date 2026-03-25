@@ -3,27 +3,43 @@
 
 ## Code
 
+- [Dev Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-dev): ReAct-driven code migrations, refactoring, debugging.
+
+- [TL Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-tl): ADRs, metaprompts, spike plans, .cursorrules.
+
 - [prompt-kit](https://github.com/josephrobertlopez/prompt-kit): The prompt templates I actually use. Clone and adapt.
 
 - [Aperiodic Guardrails Repo](https://github.com/josephrobertlopez/aperiodic-guardrails): Source code + 91 pattern analysis dataset.
 
-## Diagrams
-
-- [Diagrams as Prompts](https://jrlopez.dev/p/mermaid-prompts.html): Mermaid diagrams as structured reasoning inputs.
-
 ## Methodology
+
+- [Make Skills (Capstone)](https://jrlopez.dev/p/bootcamp-skills.html#tab-make): Build your own skill from any repeated task.
 
 - [Lattice-Driven Development](https://jrlopez.dev/p/lattice-dev.html): Dependency-ordered dev. Build L1 before L2.
 
+- [Diagrams as Prompts](https://jrlopez.dev/p/mermaid-prompts.html): Mermaid diagrams as structured reasoning inputs.
+
 - [Prompts Are Programs](https://jrlopez.dev/p/prompt-cheatsheet.html): Composition cheat sheet. Load/Chain/Compose operators.
-
-## Paper
-
-- [Your Regex Guardrails Are Provably Blind](https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf): Formal proof that regex safety filters have a fatal algebraic blind spot.
 
 ## Prompting
 
 - [AI Learning Hub](https://jrlopez.dev/p/ai-learning-hub.html): Guided path: why AI → tools → patterns → pick your track.
+
+- [PO/PM Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-po): User stories, backlogs, roadmaps, exec reports.
+
+- [DL Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-dl): Priorities, risk matrices, status reports, onboarding.
+
+- [Bootcamp Skills](https://jrlopez.dev/p/bootcamp-skills.html): 5 role-specific skills — Swagger-style with copy buttons.
+
+- [Session 2 — Advanced](https://jrlopez.dev/p/bootcamp-session2.html): ReAct, Tree of Thoughts, spec-kit, interview prep.
+
+- [Facilitator Guide](https://jrlopez.dev/p/bootcamp-facilitator.html): Minute-by-minute script for running the workshop.
+
+- [Session 1 — Patterns](https://jrlopez.dev/p/bootcamp-session1.html): Three Approaches, foundational patterns, priority builder.
+
+- [Bootcamp Prereq](https://jrlopez.dev/p/bootcamp-prereq.html): 15-minute self-study before the live session.
+
+- [Prompt Engineering Bootcamp](https://jrlopez.dev/p/prompt-engineering-bootcamp.html): 90-minute hands-on workshop — systematic AI workflows, role-specific tracks, capstone skill build.
 
 - [Prompt Patterns (Advanced)](https://jrlopez.dev/p/prompting-advanced.html): ReAct, Tree of Thoughts, self-consistency, constitutional AI.
 
@@ -41,31 +57,7 @@
 
 - [Guardrails for Engineers](https://jrlopez.dev/p/guardrails-engineers.html): The paper for engineers — no PhD required.
 
-## Skills
-
-- [Dev Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-dev): ReAct-driven code migrations, refactoring, debugging.
-
-- [PO/PM Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-po): User stories, backlogs, roadmaps, exec reports.
-
-- [DL Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-dl): Priorities, risk matrices, status reports, onboarding.
-
-- [TL Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-tl): ADRs, metaprompts, spike plans, .cursorrules.
-
-- [Make Skills (Capstone)](https://jrlopez.dev/p/bootcamp-skills.html#tab-make): Build your own skill from any repeated task.
-
-- [Bootcamp Skills](https://jrlopez.dev/p/bootcamp-skills.html): 5 role-specific skills — Swagger-style with copy buttons.
-
-## Workshop
-
-- [Session 2 — Advanced](https://jrlopez.dev/p/bootcamp-session2.html): ReAct, Tree of Thoughts, spec-kit, interview prep.
-
-- [Facilitator Guide](https://jrlopez.dev/p/bootcamp-facilitator.html): Minute-by-minute script for running the workshop.
-
-- [Session 1 — Patterns](https://jrlopez.dev/p/bootcamp-session1.html): Three Approaches, foundational patterns, priority builder.
-
-- [Bootcamp Prereq](https://jrlopez.dev/p/bootcamp-prereq.html): 15-minute self-study before the live session.
-
-- [Prompt Engineering Bootcamp](https://jrlopez.dev/p/prompt-engineering-bootcamp.html): 90-minute hands-on workshop — systematic AI workflows, role-specific tracks, capstone skill build.
+- [Your Regex Guardrails Are Provably Blind](https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf): Formal proof that regex safety filters have a fatal algebraic blind spot.
 
 ## Contact
 

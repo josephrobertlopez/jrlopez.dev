@@ -6,18 +6,14 @@
   "updated": "2026-03-25",
   "total": 24,
   "tags": [
-    "code",
-    "diagrams",
-    "methodology",
-    "paper",
     "prompting",
-    "reference",
     "security",
-    "skills",
+    "methodology",
+    "code",
     "teaching",
     "template",
     "theory",
-    "workshop"
+    "reference"
   ],
   "atoms": [
     {
@@ -27,7 +23,6 @@
       "html_url": "https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf",
       "md_url": null,
       "tags": [
-        "paper",
         "security",
         "theory"
       ],
@@ -95,7 +90,6 @@
       "md_url": null,
       "tags": [
         "prompting",
-        "workshop",
         "teaching"
       ],
       "date": "2026-03-22"
@@ -107,8 +101,7 @@
       "html_url": "p/bootcamp-skills.html",
       "md_url": null,
       "tags": [
-        "skills",
-        "workshop",
+        "prompting",
         "teaching",
         "template"
       ],
@@ -121,9 +114,9 @@
       "html_url": "p/bootcamp-prereq.html",
       "md_url": null,
       "tags": [
-        "workshop",
-        "reference",
-        "teaching"
+        "prompting",
+        "teaching",
+        "reference"
       ],
       "date": "2026-01-10"
     },
@@ -134,7 +127,6 @@
       "html_url": "p/bootcamp-session1.html",
       "md_url": null,
       "tags": [
-        "workshop",
         "prompting",
         "teaching"
       ],
@@ -147,7 +139,6 @@
       "html_url": "p/bootcamp-session2.html",
       "md_url": null,
       "tags": [
-        "workshop",
         "prompting",
         "teaching"
       ],
@@ -173,7 +164,7 @@
       "html_url": "p/bootcamp-facilitator.html",
       "md_url": null,
       "tags": [
-        "workshop",
+        "prompting",
         "teaching"
       ],
       "date": "2026-01-18"
@@ -186,8 +177,9 @@
       "md_url": null,
       "tags": [
         "methodology",
-        "reference",
-        "template"
+        "prompting",
+        "template",
+        "reference"
       ],
       "date": "2025-11-20"
     },
@@ -198,7 +190,6 @@
       "html_url": "p/mermaid-prompts.html",
       "md_url": null,
       "tags": [
-        "diagrams",
         "methodology",
         "theory"
       ],
@@ -237,7 +228,6 @@
       "html_url": "p/bootcamp-skills.html#tab-dev",
       "md_url": "p/skills-dev-second-brain.md",
       "tags": [
-        "skills",
         "code",
         "template"
       ],
@@ -250,7 +240,6 @@
       "html_url": "p/bootcamp-skills.html#tab-po",
       "md_url": "p/skills-po-second-brain.md",
       "tags": [
-        "skills",
         "prompting",
         "template"
       ],
@@ -263,8 +252,7 @@
       "html_url": "p/bootcamp-skills.html#tab-dl",
       "md_url": "p/skills-dl-second-brain.md",
       "tags": [
-        "skills",
-        "workshop",
+        "prompting",
         "template"
       ],
       "date": "2026-03-20"
@@ -276,7 +264,6 @@
       "html_url": "p/bootcamp-skills.html#tab-tl",
       "md_url": "p/skills-tl-second-brain.md",
       "tags": [
-        "skills",
         "code",
         "template"
       ],
@@ -289,7 +276,6 @@
       "html_url": "p/bootcamp-skills.html#tab-make",
       "md_url": "p/skills-make-skills.md",
       "tags": [
-        "skills",
         "methodology",
         "teaching",
         "template"
@@ -326,7 +312,6 @@
       "html_url": "p/prompt-engineering-bootcamp.html",
       "md_url": "p/prompt-engineering-bootcamp.md",
       "tags": [
-        "workshop",
         "prompting",
         "teaching"
       ],

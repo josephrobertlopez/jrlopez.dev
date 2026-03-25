@@ -3,7 +3,7 @@ title: "Facilitator Guide"
 description: "Minute-by-minute script for running the workshop."
 author: "Joey Lopez"
 date: "2026-01-18"
-tags: ["workshop", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 12
 source_html: "bootcamp-facilitator.html"
 url: "https://jrlopez.dev/p/bootcamp-facilitator.html"
@@ -204,4 +204,4 @@ generated: true
  - Systematic methodology internalized
  - Cross-domain pattern recognition achieved
  - Concrete action plans for ongoing application Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [quick reference ]()
+[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [quick reference ]()[.md ]()

@@ -181,4 +181,4 @@ print("  Do NOT rely on this as a security boundary.")
 The Bottom Line Content-layer guardrails are **filters, not firewalls **. They catch the easy stuff. They will always miss some hard stuff, and the miss rate has a mathematical floor. Defense in depth is not a best practice — it is a provable necessity. Move your critical security decisions to the execution layer, where you can observe what the system actually does rather than trying to predict it from what was asked. **Read the full paper and explore the tools: **
 [github.com/josephrobertlopez/aperiodic-guardrails ]()
 Paper: "Algebraic and Computational Limits of LLM Guardrails" Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [deep dive → ]()· [prompting notes → ]()
+[← jrlopez.dev ]()· [deep dive → ]()· [prompting notes → ]()[.md ]()

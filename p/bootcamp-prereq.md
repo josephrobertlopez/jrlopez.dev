@@ -3,7 +3,7 @@ title: "Bootcamp Prereq"
 description: "15-minute self-study before the live session."
 author: "Joey Lopez"
 date: "2026-01-10"
-tags: ["workshop", "reference", "teaching"]
+tags: ["prompting", "teaching", "reference"]
 atom_id: 8
 source_html: "bootcamp-prereq.html"
 url: "https://jrlopez.dev/p/bootcamp-prereq.html"
@@ -190,4 +190,4 @@ Generate → Evaluate → Choose pattern for decision making Completion
  - Create a spec-kit workflow for a task I do repeatedly
  - Evaluate new AI tools using the Tier Framework
  - Share the Three Approaches framework with my team Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [session 1 → ]()· [session 2 → ]()· [quick reference → ]()· [facilitator guide → ]()
+[← home ]()· [bootcamp overview ]()· [session 1 → ]()· [session 2 → ]()· [quick reference → ]()· [facilitator guide → ]()[.md ]()

@@ -3,7 +3,7 @@ title: "Prompts Are Programs"
 description: "Composition cheat sheet. Load/Chain/Compose operators."
 author: "Joey Lopez"
 date: "2025-11-20"
-tags: ["methodology", "reference", "template"]
+tags: ["methodology", "prompting", "template", "reference"]
 atom_id: 13
 source_html: "prompt-cheatsheet.html"
 url: "https://jrlopez.dev/p/prompt-cheatsheet.html"
@@ -307,4 +307,4 @@ Section 09
 | Load KNOWLEDGE + SPEC + PLAN together  || Surgical load: pick one or two per step  || Irrelevant files waste context window  |
 
 Try It Pick your last 3 prompts. Check each against this table. Did you make any of these mistakes? Rewrite one to fix it. Share the before/after with a colleague. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← guardrails ]()· [foundational patterns → ]()
+[← jrlopez.dev ]()· [← guardrails ]()· [foundational patterns → ]()[.md ]()

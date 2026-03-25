@@ -3,7 +3,7 @@ title: "Session 1 — Patterns"
 description: "Three Approaches, foundational patterns, priority builder."
 author: "Joey Lopez"
 date: "2026-01-15"
-tags: ["workshop", "prompting", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 9
 source_html: "bootcamp-session1.html"
 url: "https://jrlopez.dev/p/bootcamp-session1.html"
@@ -101,4 +101,4 @@ migrate UserController to Spring Boot 3"
  - **Tree of Thoughts **for decision points with real tradeoffs
  - **Interview prep workflow **— 4-file systematic approach
  - **Live technical demo **— Spring Boot migration using same patterns Bring a job description you're interested in, or use the samples in the participant materials. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [participant materials ]()· [session 2 → ]()· [quick reference ]()· [facilitator guide ]()
+[← home ]()· [bootcamp overview ]()· [participant materials ]()· [session 2 → ]()· [quick reference ]()· [facilitator guide ]()[.md ]()

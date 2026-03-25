@@ -312,4 +312,4 @@ Important Don't over-engineer. If the task is "rename a variable," you don't nee
  - **Each step depends on the previous one: **Use ReAct with CHECK steps
  - **You're not sure if it worked: **Add validation checkpoints
  - **You're over-engineering: **Strip it back. Start simple. Upgrade when complexity demands it. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← foundational patterns ]()· [guardrails → ]()
+[← jrlopez.dev ]()· [← foundational patterns ]()· [guardrails → ]()[.md ]()
