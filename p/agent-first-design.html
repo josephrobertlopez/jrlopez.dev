@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent-First Website Design | Joey Lopez</title>
+<meta name="description" content="Your website has two audiences now. One of them doesn't have eyes. Here's how to serve both without a framework.">
+<meta property="og:title" content="Agent-First Website Design | Joey Lopez">
+<meta property="og:description" content="Your website has two audiences now. One of them doesn't have eyes.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/p/agent-first-design.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "Agent-First Website Design | Joey Lopez",
+  "description": "Your website has two audiences now. One of them doesn't have eyes. Here's how to serve both without a framework.",
+  "author": {"@type": "Person", "name": "Joey Lopez", "url": "https://jrlopez.dev"},
+  "datePublished": "2026-03-25",
+  "keywords": ["methodology", "code", "theory"],
+  "url": "https://jrlopez.dev/p/agent-first-design.html"
+}
+</script>
+<link rel="alternate" type="text/markdown" href="agent-first-design.md">
+<meta name="keywords" content="methodology, code, theory">
+<meta property="article:published_time" content="2026-03-25">
+<meta property="article:author" content="Joey Lopez">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f1a;
+  --bg-card: #161625;
+  --bg-code: #1a1a2e;
+  --border: #2a2a40;
+  --text: #c8c8d8;
+  --text-bright: #e8e8f0;
+  --text-muted: #8888a0;
+  --accent: #e94560;
+  --blue: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d4a017;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+nav { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 14px; }
+nav a:hover { color: var(--blue); }
+
+article { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; }
+
+h1 { font-size: 28px; color: var(--text-bright); font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+.subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 32px; }
+
+h2 { font-size: 20px; color: var(--text-bright); font-weight: 700; margin: 36px 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+h3 { font-size: 16px; color: var(--text-bright); font-weight: 700; margin: 24px 0 8px; }
+
+p { margin-bottom: 16px; }
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+code { font-family: 'SF Mono', ui-monospace, monospace; font-size: 14px; background: var(--bg-code); padding: 2px 6px; border-radius: 4px; color: var(--green); }
+
+pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: 'SF Mono', ui-monospace, monospace; font-size: 13px; color: var(--text); overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-bright); font-weight: 700; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+
+blockquote { border-left: 3px solid var(--accent); padding: 8px 16px; margin: 16px 0; color: var(--text-muted); font-style: italic; }
+
+ul, ol { padding-left: 24px; margin-bottom: 16px; }
+li { margin-bottom: 6px; }
+
+.callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 16px; margin: 20px 0; font-size: 15px; }
+.callout-title { font-weight: 700; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+
+.date { font-size: 13px; color: var(--text-muted); font-family: 'SF Mono', ui-monospace, monospace; }
+
+footer { padding: 24px 20px; color: var(--text-muted); font-size: 13px; text-align: center; border-top: 1px solid var(--border); }
+
+.md-export{position:fixed;bottom:20px;right:20px;z-index:100;padding:8px 18px;background:#8ed050;color:#0f0f1a;border:none;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'SF Mono',ui-monospace,monospace;box-shadow:0 4px 12px rgba(142,208,80,.3);transition:all .2s;text-decoration:none;display:inline-block}
+.md-export:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(142,208,80,.4)}
+@media print{.md-export{display:none}}
+</style>
+</head>
+<body>
+
+<nav><a href="../index.html">← jrlopez.dev</a></nav>
+
+<article>
+<h1>Agent-First Website Design</h1>
+<p class="subtitle">Your website has two audiences now. One of them doesn't have eyes.</p>
+<p class="date">March 2026</p>
+
+<p>Every website built before 2024 was designed for one reader: a human with a browser. That assumption is now wrong. AI agents — coding assistants, research tools, search augmenters — are hitting your pages, and they're getting HTML soup when they need structured text.</p>
+
+<p>This isn't a future problem. GPTBot went from 5% to 30% of crawler traffic between May 2024 and May 2025. Over 560,000 sites now have AI-specific entries in their robots.txt. The agents are already here. The question is whether your site is legible to them.</p>
+
+<h2>The Standards Landscape</h2>
+
+<p>Six competing standards have emerged in 18 months. None has won. Here's the field:</p>
+
+<table>
+<tr><th>Standard</th><th>What it does</th><th>Adoption</th></tr>
+<tr><td><code>llms.txt</code></td><td>Markdown site index at root, proposed by Jeremy Howard (fast.ai)</td><td>~10K-844K sites (contested)</td></tr>
+<tr><td><code>AGENTS.md</code></td><td>Project guidance for coding agents, donated to Linux Foundation</td><td>60,000+ repos</td></tr>
+<tr><td>Agent Web Protocol</td><td>JSON at <code>/.well-known/agent.json</code> declaring site capabilities</td><td>Early</td></tr>
+<tr><td>Content negotiation</td><td><code>Accept: text/markdown</code> → server returns markdown</td><td>Cloudflare + Vercel</td></tr>
+<tr><td>IETF aipref</td><td>Formal extension to robots.txt for AI usage preferences</td><td>Draft RFC</td></tr>
+<tr><td>Content Signals</td><td>Cloudflare's <code>ai-train</code>/<code>ai-input</code>/<code>search</code> in robots.txt</td><td>Cloudflare sites</td></tr>
+</table>
+
+<div class="callout">
+<div class="callout-title">The uncomfortable truth</div>
+No LLM provider has confirmed their crawlers actually read <code>llms.txt</code>. Cloudflare's data showed <strong>zero visits</strong> from GPTBot, ClaudeBot, or PerplexityBot to llms.txt pages from August to October 2025. The supply side is building for demand that hasn't materialized in a standardized way.
+</div>
+
+<h2>What Actually Works (March 2026)</h2>
+
+<p>If you strip away the standards politics, three things demonstrably help agents consume your content:</p>
+
+<h3>1. Content Negotiation</h3>
+
+<p>The most technically mature approach. An agent sends <code>Accept: text/markdown</code>, your server returns clean markdown instead of HTML. Same URL, same content, different format.</p>
+
+<p>Cloudflare shipped this at the edge in February 2026 — HTML-to-markdown conversion with zero origin changes. Token reduction: <strong>~80%</strong> (16K tokens in HTML down to 3K in markdown). Vercel built it as Next.js middleware with 99.6% payload reduction.</p>
+
+<p>If you're on Cloudflare, flip a switch. If you're on static hosting (GitHub Pages, Netlify), you can't do server-side negotiation. The fallback: serve companion <code>.md</code> files alongside your HTML and link them via <code>&lt;link rel="alternate" type="text/markdown"&gt;</code>.</p>
+
+<h3>2. Structured Discovery Files</h3>
+
+<p>Put these at your root:</p>
+
+<pre>/robots.txt       — Who can crawl, AI-specific directives
+/llms.txt         — Curated site summary for LLMs (Markdown)
+/sitemap.xml      — Page discovery with dates
+/index.json       — Structured catalog (your schema)</pre>
+
+<p>Even if no crawler reads <code>llms.txt</code> today, it's cheap insurance. The file takes 30 minutes to write and it establishes a machine-readable entry point. When agents do start reading it — and they will, because the alternative is scraping — yours will be there.</p>
+
+<h3>3. Self-Describing Pages</h3>
+
+<p>Every page should carry enough metadata that an agent can understand it without external context:</p>
+
+<ul>
+<li><strong>JSON-LD structured data</strong> — <code>schema.org/TechArticle</code> with title, description, author, date, keywords</li>
+<li><strong><code>&lt;article&gt;</code> semantic wrapper</strong> — enables Readability.js / Jina Reader extraction</li>
+<li><strong><code>&lt;link rel="alternate"&gt;</code></strong> — points to the <code>.md</code> companion</li>
+<li><strong>YAML frontmatter in .md files</strong> — title, date, tags, source URL</li>
+</ul>
+
+<p>An agent hitting any page on your site should be able to determine what it is, who wrote it, when, and what topics it covers — without fetching a separate index.</p>
+
+<h2>The Dual-Format Pattern</h2>
+
+<p>The architecture I landed on for this site:</p>
+
+<pre>index.json          ← single source of truth (atom catalog)
+index.html          ← fetches index.json, renders for humans
+p/topic.html        ← rich interactive page (hand-authored)
+p/topic.md          ← companion markdown (auto-generated by forge.py)
+llms.txt            ← curated index for LLMs
+llms-full.txt       ← concatenated content from all .md files
+sitemap.xml         ← rebuilt from index.json
+robots.txt          ← AI crawler permissions</pre>
+
+<p>The HTML pages are the source of truth — rich, styled, interactive. The <code>.md</code> files are generated derivatives. A build script (<code>forge.py</code>, ~300 lines, Python stdlib only) extracts content from HTML and generates everything else. A pre-commit hook runs the build + 13 BDD validation scenarios before every commit.</p>
+
+<p>The key insight: <strong>your HTML is the product. The agent layer wraps it, never rewrites it.</strong> Don't adopt a static site generator to retrofit markdown-source onto working pages. Don't maintain two copies by hand. Generate the agent-readable format from the human-readable format, automatically.</p>
+
+<h2>The Robots.txt Problem</h2>
+
+<p>AI crawlers are fragmenting. Both OpenAI and Anthropic now operate three bots each:</p>
+
+<table>
+<tr><th>Provider</th><th>Training</th><th>Search</th><th>User-initiated</th></tr>
+<tr><td>OpenAI</td><td>GPTBot</td><td>OAI-SearchBot</td><td>ChatGPT-User</td></tr>
+<tr><td>Anthropic</td><td>ClaudeBot</td><td>Claude-SearchBot</td><td>Claude-User</td></tr>
+</table>
+
+<p>This lets you block training while allowing search and agentic use. But it also means your robots.txt is getting complex, and compliance is unverifiable — Perplexity was caught using undeclared crawlers with generic user-agent strings to bypass blocking directives.</p>
+
+<p>The IETF's <code>aipref</code> working group (chartered January 2025) is building a formal extension to the Robots Exclusion Protocol with three usage categories: <code>ai-train</code>, <code>ai-input</code> (RAG/agentic), and <code>search</code>. Cloudflare's Content Signals is the draft implementation. Neither is enforceable — they're preference declarations, not access control.</p>
+
+<h2>What's Coming</h2>
+
+<p>Predictions, ordered by confidence:</p>
+
+<ol>
+<li><strong>Content negotiation wins.</strong> <code>Accept: text/markdown</code> uses existing HTTP infrastructure, requires no new file formats, and Cloudflare's edge conversion removes the adoption barrier. This will be the default way agents read the web.</li>
+<li><strong>IETF aipref becomes the new robots.txt.</strong> The three-signal model (train/input/search) will be an RFC within 18 months. Cloudflare's Content Signals is the implementation.</li>
+<li><strong>llms.txt becomes niche.</strong> Useful for documentation sites, but eclipsed by content negotiation which works on every page.</li>
+<li><strong>The trust problem gets worse.</strong> Without cryptographic agent identity, publishers will block aggressively, pushing agents toward browser automation — the opposite of the cooperative vision.</li>
+</ol>
+
+<h2>Implementation Checklist</h2>
+
+<p>If you're building or maintaining a website today, do these in order:</p>
+
+<ol>
+<li><strong>Wrap content in <code>&lt;article&gt;</code> tags</strong> — one-line edit per page, enables reader-mode extraction</li>
+<li><strong>Add JSON-LD structured data</strong> — <code>schema.org/Article</code> with title, description, date, author</li>
+<li><strong>Write a <code>robots.txt</code></strong> with AI crawler directives — allow what you're comfortable with</li>
+<li><strong>Write a <code>llms.txt</code></strong> — curated markdown summary of your site's content</li>
+<li><strong>Generate <code>.md</code> companions</strong> for your HTML pages — link via <code>&lt;link rel="alternate"&gt;</code></li>
+<li><strong>If on Cloudflare:</strong> enable Markdown for Agents (one toggle)</li>
+<li><strong>If self-hosting:</strong> build a script to generate agent-readable formats from your HTML</li>
+</ol>
+
+<p>Total effort for a 20-page static site: one afternoon. This site is the reference implementation — <a href="../llms.txt">llms.txt</a>, <a href="../index.json">index.json</a>, and every page has a <a href="agent-first-design.md">.md companion</a>.</p>
+
+<h2>Sources</h2>
+
+<ul>
+<li><a href="https://llmstxt.org/" target="_blank">llmstxt.org</a> — The /llms.txt spec (Jeremy Howard, fast.ai)</li>
+<li><a href="https://blog.cloudflare.com/markdown-for-agents/" target="_blank">Cloudflare: Markdown for Agents</a> — Edge-level content negotiation (Feb 2026)</li>
+<li><a href="https://www.checklyhq.com/blog/state-of-ai-agent-content-negotation/" target="_blank">Checkly: State of AI Agent Content Negotiation</a> — Which agents actually negotiate</li>
+<li><a href="https://vercel.com/blog/making-agent-friendly-pages-with-content-negotiation" target="_blank">Vercel: Agent-Friendly Pages</a> — Middleware implementation</li>
+<li><a href="https://datatracker.ietf.org/wg/aipref/about/" target="_blank">IETF aipref Working Group</a> — Formal robots.txt extension</li>
+<li><a href="https://contentsignals.org/" target="_blank">Content Signals</a> — Cloudflare's ai-train/ai-input/search spec</li>
+<li><a href="https://www.agentwebprotocol.org/" target="_blank">Agent Web Protocol</a> — Action-discovery standard</li>
+<li><a href="https://blog.cloudflare.com/from-googlebot-to-gptbot-whos-crawling-your-site-in-2025/" target="_blank">Cloudflare: Who's Crawling Your Site</a> — GPTBot 5%→30% traffic surge</li>
+<li><a href="https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation" target="_blank">Linux Foundation: AAIF + AGENTS.md</a></li>
+</ul>
+
+</article>
+
+<footer>Joey Lopez · 2026</footer>
+
+<a class="md-export" href="agent-first-design.md">.md</a>
+</body>
+</html>

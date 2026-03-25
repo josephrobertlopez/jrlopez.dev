@@ -13,6 +13,8 @@
 
 ## Methodology
 
+- [Agent-First Website Design](https://jrlopez.dev/p/agent-first-design.html): Your website has two audiences now. One of them doesn't have eyes. Standards, patterns, implementation.
+
 - [Make Skills (Capstone)](https://jrlopez.dev/p/bootcamp-skills.html#tab-make): Build your own skill from any repeated task.
 
 - [Lattice-Driven Development](https://jrlopez.dev/p/lattice-dev.html): Dependency-ordered dev. Build L1 before L2.
@@ -46,6 +48,8 @@
 - [Prompt Patterns (Foundational)](https://jrlopez.dev/p/prompting.html): Zero-shot, few-shot, chain-of-thought, persona, template.
 
 ## Reference
+
+- [About](https://jrlopez.dev/p/about.html): CHSPE → community college → UC Irvine → data engineering → formal proofs via AI agents.
 
 - [Resume](https://jrlopez.dev/p/resume.html): Sr. Data Engineer — 5 years financial services.
 
