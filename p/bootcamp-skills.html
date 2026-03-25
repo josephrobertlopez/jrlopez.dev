@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bootcamp Skills Reference | Joey Lopez</title>
+<meta name="description" content="Five role-specific AI workflow skills: Developer, PO/PM, Delivery Lead, Tech Lead, and Make-Skills capstone. Interactive reference with copyable prompts and templates.">
+<meta property="og:title" content="Bootcamp Skills Reference | Joey Lopez">
+<meta property="og:description" content="Interrogation-driven AI workflows for Dev, PO/PM, Delivery Lead, Tech Lead, and building your own skills.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/p/bootcamp-skills.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Bootcamp Skills Reference | Joey Lopez",
+  "description": "Five role-specific AI workflow skills: Developer, PO/PM, Delivery Lead, Tech Lead, and Make-Skills capstone. Interactive reference with copyable prompts and templates.",
+  "author": {"@type": "Person", "name": "Joey Lopez", "url": "https://jrlopez.dev"},
+  "datePublished": "2026-02-15",
+  "keywords": ["skills", "workshop", "teaching", "template"],
+  "url": "https://jrlopez.dev/p/bootcamp-skills.html"
+}
+</script>
+<link rel="alternate" type="text/markdown" href="bootcamp-skills.md">
+<meta name="keywords" content="skills, workshop, teaching, template">
+<meta property="article:published_time" content="2026-02-15">
+<meta property="article:author" content="Joey Lopez">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f1a;
+    --bg-card: #161625;
+    --bg-code: #0a0a14;
+    --bg-details: #13131f;
+    --border: #2a2a40;
+    --border-soft: rgba(42,42,64,0.6);
+    --text: #c8c8d8;
+    --text-bright: #e8e8f0;
+    --text-dim: #888899;
+    --accent: #e94560;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d4a017;
+    --purple: #a78bfa;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* ── NAV ─────────────────────────────────── */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,15,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ── HERO ────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+    padding: 64px 20px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: clamp(26px, 4.5vw, 44px);
+    color: var(--text-bright);
+    font-weight: 800;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .hero .subtitle {
+    font-size: clamp(15px, 2.2vw, 18px);
+    color: var(--text);
+    max-width: 580px;
+    margin: 0 auto 14px;
+    font-style: italic;
+  }
+  .hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 22px; }
+  .hero-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .hero-tag {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .hero-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ── TABS ────────────────────────────────── */
+  .tabs-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--border);
+    margin-top: 40px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text-bright); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; padding: 40px 0 80px; }
+  .tab-panel.active { display: block; }
+
+  /* ── YAML FRONTMATTER BLOCK ─────────────── */
+  .yaml-block {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 32px;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+    position: relative;
+  }
+  .yaml-block .yaml-key { color: var(--purple); }
+  .yaml-block .yaml-val { color: var(--green); }
+  .yaml-block .yaml-sep { color: var(--border); }
+  .yaml-block .yaml-label {
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--purple);
+    opacity: 0.6;
+  }
+
+  /* ── SKILL HEADER ────────────────────────── */
+  .skill-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-header h2 {
+    font-size: clamp(22px, 3vw, 30px);
+    color: var(--text-bright);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .skill-header .tagline {
+    font-size: 1rem;
+    color: var(--text);
+    max-width: 680px;
+  }
+  .skill-header .three-intuitions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .intuition-pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    color: var(--blue);
+  }
+
+  /* ── DOWNLOAD BUTTON ─────────────────────── */
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(88,166,255,0.08);
+    border: 1px solid rgba(88,166,255,0.25);
+    color: var(--blue);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 14px;
+  }
+  .download-btn:hover { background: rgba(88,166,255,0.16); border-color: var(--blue); }
+
+  /* ── SCENARIO CARDS ──────────────────────── */
+  .scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .scenario-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .scenario-card.green { border-left-color: var(--green); }
+  .scenario-card.purple { border-left-color: var(--purple); }
+  .scenario-card.yellow { border-left-color: var(--yellow); }
+  .scenario-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+  .scenario-card .trigger {
+    font-size: 0.82rem;
+    color: var(--blue);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .scenario-card p {
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── SECTION LABELS ──────────────────────── */
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--blue);
+    margin: 36px 0 14px;
+  }
+
+  /* ── COLLAPSIBLE SECTIONS (DETAILS) ─────── */
+  details.skill-section {
+    background: var(--bg-details);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  details.skill-section summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    user-select: none;
+    list-style: none;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid transparent;
+    transition: background 0.2s;
+  }
+  details.skill-section summary::-webkit-details-marker { display: none; }
+  details.skill-section summary:hover { background: rgba(255,255,255,0.04); }
+  details.skill-section[open] summary {
+    border-bottom-color: var(--border);
+    color: var(--accent);
+  }
+  details.skill-section summary .arrow {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+  }
+  details.skill-section[open] summary .arrow { transform: rotate(90deg); }
+  details.skill-section summary .section-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+    margin-left: 10px;
+  }
+  details.skill-section .section-body {
+    padding: 20px 24px;
+  }
+
+  /* ── INTERROGATION BLOCKS ────────────────── */
+  .interrogation-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .interrogation-block h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .q-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 8px;
+  }
+  .q-list li {
+    font-size: 0.88rem;
+    color: var(--text);
+    padding: 6px 0 6px 16px;
+    border-left: 2px solid var(--border);
+    line-height: 1.4;
+  }
+  .q-list li strong {
+    color: var(--text-bright);
+    font-size: 0.82rem;
+    display: block;
+  }
+
+  /* ── CODE BLOCKS + COPY BUTTON ──────────── */
+  .copyable {
+    position: relative;
+    margin: 16px 0;
+  }
+  .copyable pre,
+  .prompt-block pre {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    padding-right: 72px;
+    overflow-x: auto;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(42,42,64,0.9);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    z-index: 2;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .copy-btn:hover { background: var(--bg-card); color: var(--text-bright); border-color: var(--blue); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+  code {
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 0.85em;
+    color: var(--green);
+    background: rgba(63,185,80,0.08);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+
+  /* ── PROMPT TEMPLATE BLOCKS ──────────────── */
+  .prompt-block {
+    position: relative;
+    margin: 20px 0;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    overflow: hidden;
+  }
+  .prompt-block-header {
+    background: rgba(233,69,96,0.10);
+    border-bottom: 1px solid rgba(233,69,96,0.2);
+    padding: 7px 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .prompt-block pre {
+    border-left: none;
+    border-radius: 0 0 8px 0;
+    margin: 0;
+    border-top: none;
+  }
+
+  /* ── OUTPUT TEMPLATE BLOCKS ──────────────── */
+  .template-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .template-header {
+    background: rgba(88,166,255,0.08);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .template-body { padding: 20px; }
+  .template-body .copyable { margin: 0; }
+  .template-body .copyable pre { margin: 0; }
+
+  /* ── REACT STEPS ─────────────────────────── */
+  .react-block { margin: 20px 0; }
+  .react-step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .react-step .step-label {
+    flex-shrink: 0;
+    width: 90px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .react-step .step-label.think { background: rgba(233,69,96,0.15); color: var(--accent); }
+  .react-step .step-label.act   { background: rgba(88,166,255,0.15); color: var(--blue); }
+  .react-step .step-label.obs   { background: rgba(63,185,80,0.15); color: var(--green); }
+  .react-step .step-body { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+
+  /* ── TABLES ──────────────────────────────── */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.88rem;
+  }
+  .ref-table th {
+    background: rgba(233,69,96,0.10);
+    color: var(--text-bright);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+  }
+  .ref-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:nth-child(even) td { background: rgba(22,22,37,0.4); }
+  .ref-table .good { color: var(--green); font-weight: 600; }
+  .ref-table .use-skill { color: var(--accent); font-weight: 600; }
+
+  /* ── CHECKLIST ───────────────────────────── */
+  .checklist { list-style: none; padding: 0; margin: 12px 0; }
+  .checklist li {
+    padding: 5px 0 5px 24px;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--border); }
+
+  /* ── CALLOUT ─────────────────────────────── */
+  .callout {
+    background: rgba(63,185,80,0.07);
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 24px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .callout strong { color: var(--green); }
+  .callout.blue { background: rgba(88,166,255,0.07); border-color: rgba(88,166,255,0.25); }
+  .callout.blue strong { color: var(--blue); }
+  .callout.accent { background: rgba(233,69,96,0.07); border-color: rgba(233,69,96,0.25); }
+  .callout.accent strong { color: var(--accent); }
+
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+  /* ── FOOTER ──────────────────────────────── */
+  .footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 20px;
+    border-top: 1px solid var(--border);
+    color: #666680;
+    font-size: 14px;
+    text-align: center;
+  }
+  .footer a { color: #666680; text-decoration: none; transition: color 0.2s; }
+  .footer a:hover { color: var(--blue); }
+
+  @media (max-width: 640px) {
+    .scenarios-grid { grid-template-columns: 1fr; }
+    .q-list { grid-template-columns: 1fr; }
+    .tab-btn { padding: 10px 14px; font-size: 13px; }
+    .skill-header .three-intuitions { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="../index.html" class="nav-pill">← home</a>
+  <a href="prompt-engineering-bootcamp.html" class="nav-pill">bootcamp</a>
+  <a href="#dev" class="nav-pill" data-tab="dev">developer</a>
+  <a href="#po" class="nav-pill" data-tab="po">PO/PM</a>
+  <a href="#dl" class="nav-pill" data-tab="dl">delivery</a>
+  <a href="#tl" class="nav-pill" data-tab="tl">tech lead</a>
+  <a href="#make" class="nav-pill" data-tab="make">make skills</a>
+</nav>
+<article>
+<section class="hero">
+  <h1>Bootcamp Skills Reference</h1>
+  <p class="subtitle">Five role-specific AI workflow guides. Pick your track, run the interrogation, get structured output.</p>
+  <p class="author">Joey Lopez &middot; Sr. Data Engineer</p>
+  <div class="hero-tags">
+    <a href="#dev" class="hero-tag" data-tab="dev">developer</a>
+    <a href="#po" class="hero-tag" data-tab="po">PO/PM</a>
+    <a href="#dl" class="hero-tag" data-tab="dl">delivery lead</a>
+    <a href="#tl" class="hero-tag" data-tab="tl">tech lead</a>
+    <a href="#make" class="hero-tag" data-tab="make">make skills</a>
+  </div>
+</section>
+
+<div class="tabs-wrapper">
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" data-tab="dev" role="tab">Developer</button>
+    <button class="tab-btn" data-tab="po" role="tab">PO / PM</button>
+    <button class="tab-btn" data-tab="dl" role="tab">Delivery Lead</button>
+    <button class="tab-btn" data-tab="tl" role="tab">Tech Lead</button>
+    <button class="tab-btn" data-tab="make" role="tab">Make Skills</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TAB: DEVELOPER
+  ═══════════════════════════════════════════════════════ -->
+  <div class="tab-panel active" id="tab-dev" role="tabpanel">
+
+    <div class="yaml-block">
+      <span class="yaml-label">skill spec</span>
+      <span class="yaml-sep">---</span><br>
+      <span class="yaml-key">name</span>: <span class="yaml-val">dev-second-brain</span><br>
+      <span class="yaml-key">version</span>: <span class="yaml-val">1.0</span><br>
+      <span class="yaml-key">description</span>: <span class="yaml-val">Interrogation-driven code assistance — migrations, refactoring, features, debugging</span><br>
+      <span class="yaml-key">patterns</span>: <span class="yaml-val">[ReAct, spec-kit, structured-output]</span><br>
+      <span class="yaml-sep">---</span>
+    </div>
+
+    <div class="skill-header">
+      <h2>Developer Second Brain</h2>
+      <p class="tagline">Gathers rich context about your codebase before suggesting changes. Uses ReAct (THINK&rarr;ACT&rarr;OBSERVE) to produce plans, diffs, and tests — not loose prose.</p>
+      <div class="three-intuitions">
+        <span class="intuition-pill">Context is everything</span>
+        <span class="intuition-pill">Structure gets rewarded</span>
+        <span class="intuition-pill">You are the retrieval system</span>
+      </div>
+      <button class="download-btn" onclick="downloadSkill('dev')">&#8681; Download SKILL.md</button>
+    </div>
+
+    <p class="section-label">When to use each scenario</p>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>A &mdash; Code Migration</h4>
+        <p class="trigger">"I need to migrate from Framework A to B"</p>
+        <p>Migration plan, code diffs, test strategy, rollback plan.</p>
+      </div>
+      <div class="scenario-card green">
+        <h4>B &mdash; Refactoring</h4>
+        <p class="trigger">"I need to refactor this component"</p>
+        <p>Refactoring goals, dependency map, extraction plan, test approach.</p>
+      </div>
+      <div class="scenario-card purple">
+        <h4>C &mdash; Feature Implementation</h4>
+        <p class="trigger">"Build a new feature following our patterns"</p>
+        <p>Feature spec, code stubs with TODOs, test outline, integration points.</p>
+      </div>
+      <div class="scenario-card yellow">
+        <h4>D &mdash; Systematic Debugging</h4>
+        <p class="trigger">"Track down root cause of production issue"</p>
+        <p>Hypothesis, investigation steps, diagnostic queries, solution options.</p>
+      </div>
+    </div>
+
+    <!-- Interrogation -->
+    <details class="skill-section" open>
+      <summary>
+        <span>Interrogation Framework <span class="section-tag">15 questions &middot; 4 phases</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="interrogation-block">
+          <h4>Phase 1 &mdash; Current State (Q1&ndash;5)</h4>
+          <ul class="q-list">
+            <li><strong>Language &amp; Framework</strong> What language/framework + version? (e.g., Python 3.11 + Django 4.2)</li>
+            <li><strong>Architecture Pattern</strong> Monolith, microservices, event-driven, layered?</li>
+            <li><strong>Current Problem</strong> What specifically needs to change? (one sentence)</li>
+            <li><strong>Scope</strong> One file, one module, or multiple services?</li>
+            <li><strong>Team Size</strong> How many developers? What is your role?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 2 &mdash; Target State (Q6&ndash;8)</h4>
+          <ul class="q-list">
+            <li><strong>Success Criteria</strong> How will you know it is working? Metrics, tests, deployment success?</li>
+            <li><strong>Constraints</strong> No downtime, budget limits, timeline?</li>
+            <li><strong>Dependencies</strong> What other systems does this touch?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 3 &mdash; Implementation Context (Q9&ndash;12)</h4>
+          <ul class="q-list">
+            <li><strong>Test Coverage</strong> Existing tests? Unit, integration, e2e?</li>
+            <li><strong>Team Conventions</strong> Naming convention, error handling pattern, logging standard?</li>
+            <li><strong>Review Process</strong> Automated checks, approval gates?</li>
+            <li><strong>Rollback Plan</strong> Safety net if something goes wrong?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 4 &mdash; Knowledge (Q13&ndash;15)</h4>
+          <ul class="q-list">
+            <li><strong>Similar Changes</strong> Have you done something like this before?</li>
+            <li><strong>Tribal Knowledge</strong> What does every developer wish they knew about this codebase?</li>
+            <li><strong>Decision Log</strong> Are there decisions that limit how you can change this?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Prompt: kick off interrogation -->
+    <details class="skill-section">
+      <summary>
+        <span>Starter Prompt Templates <span class="section-tag">copy and paste</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario A (Migration)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Developer Second Brain using the ReAct pattern (THINK→ACT→OBSERVE).
+I need to migrate [OLD FRAMEWORK/VERSION] to [NEW FRAMEWORK/VERSION].
+
+Before generating any plan, ask me the following questions one phase at a time:
+Phase 1: Language/framework, architecture, scope, team size, current pain point
+Phase 2: Success criteria, constraints, dependencies
+Phase 3: Test coverage, team conventions, rollback plan
+Phase 4: Prior similar changes, tribal knowledge, decision constraints
+
+After I answer all phases, produce:
+1. Implementation plan with THINK/ACT/OBSERVE annotations
+2. Code diffs (before/after) for the critical path
+3. Test strategy matrix (component | test type | approach | coverage)
+4. Pre-deployment checklist</pre>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario C (Feature Implementation)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Developer Second Brain.
+I need to implement [FEATURE NAME] following our existing team conventions.
+
+Interrogate me through 4 phases before generating anything:
+Phase 1: Language/framework, architecture pattern, current module structure, scope
+Phase 2: Success criteria, constraints, dependencies
+Phase 3: Test pattern, naming conventions, error handling style, code review process
+Phase 4: Tribal knowledge, any architectural constraints
+
+Then produce:
+- Code stubs with clear TODO annotations (following our exact conventions)
+- Test file skeleton (matching our test pattern)
+- Integration checklist
+- Pre-merge checklist</pre>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario D (Debugging)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Developer Second Brain using systematic debugging (ReAct).
+I have a production issue: [DESCRIBE SYMPTOM]
+
+Before generating hypotheses, ask me:
+1. What is the exact error or unexpected behavior?
+2. When did it start? After what change?
+3. What have you already tried?
+4. What do the logs show?
+5. Which components or services are involved?
+
+Then generate:
+THINK: Top 3 hypotheses ranked by probability
+ACT: Investigation steps for each hypothesis (specific commands/queries)
+OBSERVE: What to look for — how to confirm or rule out each hypothesis</pre>
+        </div>
+      </div>
+    </details>
+
+    <!-- Output Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Output Templates <span class="section-tag">ReAct plan &middot; test matrix &middot; checklist</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+
+        <div class="template-block">
+          <div class="template-header">
+            Implementation Plan (ReAct Format)
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Migration Plan: [Component] from [Old] to [New]
+
+### Phase 1: Preparation
+**THINK**: What needs to be true before we start?
+- [ ] Dependencies installed
+- [ ] Tests passing
+- [ ] Backup created
+
+**ACT**: Run these commands:
+```bash
+# setup steps
+```
+
+**OBSERVE**: Verify with:
+```bash
+# verification commands
+```
+
+### Phase 2: Core Change
+**THINK**: What is changing and why?
+- Breaking change X affects Y consumers
+- New API requires Z configuration
+
+**ACT**: Apply these changes:
+```diff
+- old_code()
++ new_code()
+```
+
+**OBSERVE**: Test coverage:
+- [ ] Unit test for new_code()
+- [ ] Integration test for X→Y flow
+- [ ] No regression in unchanged code
+
+### Phase 3: Verification
+**THINK**: How do we know this is safe?
+**ACT**: Run full test suite
+**OBSERVE**: Success criteria met</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Test Strategy Matrix
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>| Component    | Test Type   | Approach                        | Coverage                  |
+|--------------|-------------|---------------------------------|---------------------------|
+| [Component]  | Unit        | Mock async response             | Function returns correctly |
+| [Service]    | Integration | Real async client               | Full workflow with I/O     |
+| [API Handler]| E2E         | Load test                       | 100 concurrent requests   |
+| [Rollback]   | Regression  | Before/after comparison         | No breaking changes       |</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Pre-Deployment Checklist
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Pre-Deployment Checklist
+
+### Code Quality
+- [ ] Tests pass (unit + integration + e2e)
+- [ ] Code review approved
+- [ ] No new warnings in linter/type checker
+- [ ] No security issues in dependency scan
+- [ ] Documentation updated
+
+### Performance & Stability
+- [ ] Load test shows no degradation
+- [ ] Error handling covers edge cases
+- [ ] Logging added for debugging
+- [ ] Monitoring/alerting updated
+
+### Rollback Safety
+- [ ] Rollback plan documented
+- [ ] Migration is reversible (if database changes)
+- [ ] Feature flag allows instant disable
+- [ ] Previous version can run in parallel if needed</pre>
+            </div>
+          </div>
+        </div>
+
+        <p class="section-label">ReAct Pattern Reference</p>
+        <div class="react-block">
+          <div class="react-step">
+            <span class="step-label think">THINK</span>
+            <span class="step-body">What is the constraint here? Analyze the problem space, map dependencies, identify what could break.</span>
+          </div>
+          <div class="react-step">
+            <span class="step-label act">ACT</span>
+            <span class="step-body">Apply the code change. Show the concrete diff or implementation stub.</span>
+          </div>
+          <div class="react-step">
+            <span class="step-label obs">OBSERVE</span>
+            <span class="step-body">How do we verify? List the test commands, metrics, and success criteria.</span>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- When to use vs IDE -->
+    <details class="skill-section">
+      <summary>
+        <span>When to use this skill vs. your IDE</span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <table class="ref-table">
+          <thead><tr><th>Task</th><th>Use IDE</th><th>Use This Skill</th></tr></thead>
+          <tbody>
+            <tr><td>Syntax autocomplete</td><td class="good">IDE</td><td></td></tr>
+            <tr><td>Quick bug fix</td><td class="good">IDE</td><td></td></tr>
+            <tr><td>Migrate framework</td><td></td><td class="use-skill">This skill</td></tr>
+            <tr><td>Refactor large component</td><td></td><td class="use-skill">This skill</td></tr>
+            <tr><td>New feature matching patterns</td><td></td><td class="use-skill">This skill</td></tr>
+            <tr><td>Root cause debugging</td><td></td><td class="use-skill">This skill</td></tr>
+            <tr><td>Architecture code review</td><td></td><td class="use-skill">This skill</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+  </div><!-- /tab-dev -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       TAB: PO/PM
+  ═══════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-po" role="tabpanel">
+
+    <div class="yaml-block">
+      <span class="yaml-label">skill spec</span>
+      <span class="yaml-sep">---</span><br>
+      <span class="yaml-key">name</span>: <span class="yaml-val">po-second-brain</span><br>
+      <span class="yaml-key">version</span>: <span class="yaml-val">1.0</span><br>
+      <span class="yaml-key">description</span>: <span class="yaml-val">Requirements capture, sprint planning, stakeholder communication, roadmap prioritization</span><br>
+      <span class="yaml-key">patterns</span>: <span class="yaml-val">[spec-kit, Given/When/Then, value-effort-risk scoring]</span><br>
+      <span class="yaml-sep">---</span>
+    </div>
+
+    <div class="skill-header">
+      <h2>PO / PM Second Brain</h2>
+      <p class="tagline">Gathers context about stakeholders, constraints, and success criteria before generating requirements, sprint backlogs, or roadmaps — never guesses.</p>
+      <div class="three-intuitions">
+        <span class="intuition-pill">Context is everything</span>
+        <span class="intuition-pill">Structure gets rewarded</span>
+        <span class="intuition-pill">You are the retrieval system</span>
+      </div>
+      <button class="download-btn" onclick="downloadSkill('po')">&#8681; Download SKILL.md</button>
+    </div>
+
+    <p class="section-label">When to use each scenario</p>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>A &mdash; Requirements Capture</h4>
+        <p class="trigger">"We need to document requirements for our new feature"</p>
+        <p>User stories with Given/When/Then, priority ranking, dependency mapping, edge cases.</p>
+      </div>
+      <div class="scenario-card green">
+        <h4>B &mdash; Sprint Planning</h4>
+        <p class="trigger">"Help me plan the next 2-week sprint"</p>
+        <p>Sprint backlog with estimates, capacity check, dependency graph, burn-down projections.</p>
+      </div>
+      <div class="scenario-card purple">
+        <h4>C &mdash; Stakeholder Communication</h4>
+        <p class="trigger">"I need a status report for exec leadership"</p>
+        <p>Executive summary, progress metrics, risks with mitigation, asks with clear impact statements.</p>
+      </div>
+      <div class="scenario-card yellow">
+        <h4>D &mdash; Roadmap Planning</h4>
+        <p class="trigger">"We have 15 features to prioritize for Q2&ndash;Q3"</p>
+        <p>Ranked roadmap with rationale, resource allocation, timeline projections, risk adjustments.</p>
+      </div>
+    </div>
+
+    <!-- Interrogation -->
+    <details class="skill-section" open>
+      <summary>
+        <span>Interrogation Framework <span class="section-tag">23 questions &middot; 5 phases</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="interrogation-block">
+          <h4>Phase 1 &mdash; Business Context (Q1&ndash;6)</h4>
+          <ul class="q-list">
+            <li><strong>Company / Product</strong> What are we building? SaaS, internal tool, mobile app?</li>
+            <li><strong>Business Goal</strong> North star metric — revenue, retention, cost savings, efficiency?</li>
+            <li><strong>Current State</strong> How is this done today? Manual, competitor, legacy?</li>
+            <li><strong>Success Definition</strong> Metrics, adoption, feedback that signals success?</li>
+            <li><strong>Stakeholders</strong> Executive sponsor, users, customers, team leads?</li>
+            <li><strong>Timeline</strong> Hard deadline, flexible, market window?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 2 &mdash; Scope &amp; Requirements (Q7&ndash;12)</h4>
+          <ul class="q-list">
+            <li><strong>Scope Statement</strong> What is in scope, what is out? MVP vs. future?</li>
+            <li><strong>Primary Users</strong> Customer, internal, both?</li>
+            <li><strong>Key Workflows</strong> 3&ndash;4 critical user flows?</li>
+            <li><strong>Constraints</strong> Non-negotiable technology, budget, compliance?</li>
+            <li><strong>Dependencies</strong> Other projects or systems this depends on?</li>
+            <li><strong>Known Unknowns</strong> Risks or uncertainties?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 3 &mdash; Team &amp; Capacity (Q13&ndash;16)</h4>
+          <ul class="q-list">
+            <li><strong>Team Size</strong> Developers, designers, QA?</li>
+            <li><strong>Team Experience</strong> Domain familiarity?</li>
+            <li><strong>Existing Patterns</strong> Tech stack, design patterns?</li>
+            <li><strong>Velocity</strong> Story points per sprint?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 4 &mdash; Acceptance &amp; Validation (Q17&ndash;20)</h4>
+          <ul class="q-list">
+            <li><strong>Acceptance Criteria Style</strong> Given/When/Then, checklist, other?</li>
+            <li><strong>Definition of Done</strong> Code review, tests, deployment, user validation?</li>
+            <li><strong>Validation Approach</strong> Demo, metrics, user testing?</li>
+            <li><strong>Rollback Plan</strong> Safety net if something does not work?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 5 &mdash; Knowledge &amp; Decisions (Q21&ndash;23)</h4>
+          <ul class="q-list">
+            <li><strong>Decision Constraints</strong> Platform choices, compliance that limit options?</li>
+            <li><strong>Tribal Knowledge</strong> What does every PM wish they knew about this project?</li>
+            <li><strong>Competitive Intel</strong> How do competitors handle this?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Prompt Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Starter Prompt Templates <span class="section-tag">copy and paste</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario A (Requirements Capture)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a PO/PM Second Brain using the spec-kit methodology (Knowledge → Specification → Plan → Execution).
+
+I need to capture requirements for [FEATURE/PROJECT NAME].
+
+Interrogate me through 5 phases before generating anything:
+Phase 1: Business goal, current state, success definition, stakeholders, timeline
+Phase 2: Scope (in/out), primary users, critical workflows, constraints, dependencies
+Phase 3: Team size, experience, velocity
+Phase 4: Acceptance criteria format, definition of done, validation approach
+Phase 5: Decision constraints, tribal knowledge
+
+Then generate:
+- 3-5 user stories in Given/When/Then format
+- Edge cases for each story
+- Dependency map
+- Priority ranking with rationale</pre>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario D (Roadmap Prioritization)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a PO/PM Second Brain.
+I have [N] features to prioritize for [TIME HORIZON].
+
+Ask me these questions before scoring:
+1. What is the primary business goal for this period?
+2. What is the team's capacity (story points per sprint, sprints available)?
+3. What are the hard constraints (compliance, dependencies, deadlines)?
+4. What does "high value" mean for this business? (Revenue, retention, cost savings?)
+5. What are the top 3 risks we want to avoid?
+
+Then produce a ranked roadmap using:
+  Priority Score = (Value × 3 + Revenue Impact) - (Effort × 2 + Risk × 1.5)
+  Tier 1: Launch now | Tier 2: Plan for next quarter | Tier 3: Defer
+
+Format: table with Rank, Feature, Value, Effort, Risk, Impact, Owner, Status, Rationale</pre>
+        </div>
+      </div>
+    </details>
+
+    <!-- Output Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Output Templates <span class="section-tag">user story &middot; sprint backlog &middot; stakeholder report</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+
+        <div class="template-block">
+          <div class="template-header">
+            User Story with Acceptance Criteria
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## User Story: [Feature Title]
+
+**Story ID**: PROJ-123
+**Sprint**: Q2 Sprint 2
+**Priority**: High
+**Estimate**: 8 points
+
+### Description
+As a [user type], I want to [action], so that [benefit].
+
+### Acceptance Criteria
+
+Given [context]
+When [action]
+Then [expected outcome]
+
+Given [context]
+When [action]
+Then [expected outcome]
+
+### Edge Cases
+- What if [edge case A]? → [handling]
+- What if [edge case B]? → [handling]
+
+### Dependencies
+- Requires [system/story] (tracked in PROJ-XXX)
+
+### Success Criteria
+- [ ] [Metric 1]
+- [ ] [Metric 2]</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Stakeholder Status Report
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Q[N] Progress Report
+**Period**: [Date range]
+**Overall Status**: GREEN / YELLOW / RED
+
+## Executive Summary
+**The Ask**: [One ask with clear impact and cost]
+
+## Progress Snapshot
+
+### Completed
+- [Story/feature] — [outcome metric]
+
+### In Progress
+- [Story/feature] — [% complete, on track / at risk]
+
+## Metrics
+| Metric            | Target | Current | Status |
+|-------------------|--------|---------|--------|
+| [Metric 1]        | [val]  | [val]   | GREEN  |
+| [Metric 2]        | [val]  | [val]   | YELLOW |
+
+## Risk Register
+| Risk           | Impact | Status  | Owner | Mitigation |
+|----------------|--------|---------|-------|-----------|
+| [Risk 1]       | High   | Active  | [name]| [plan]   |
+
+## What We Need From You
+| Ask               | Impact                    | Timeline         |
+|-------------------|---------------------------|------------------|
+| [Decision needed] | [What slips if delayed]   | [Date]           |</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Prioritized Roadmap
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Q[N]-Q[N+1] Product Roadmap
+
+### Prioritization Formula
+Priority Score = (Value × 3 + Revenue Impact) - (Effort × 2 + Risk × 1.5)
+
+### Tier 1: Launch Now
+| Rank | Feature | Value | Effort | Risk | Impact | Owner | Status |
+|------|---------|-------|--------|------|--------|-------|--------|
+| 1    | [name]  | 5     | 3      | 1    | [why]  | [who] | [%]    |
+
+### Tier 2: Plan Next Quarter
+| Rank | Feature | Value | Effort | Risk | Impact | Owner | Status |
+|------|---------|-------|--------|------|--------|-------|--------|
+| 5    | [name]  | 4     | 4      | 2    | [why]  | [who] | backlog|
+
+### Tier 3: Defer
+| Rank | Feature | Reason for Deferral |
+|------|---------|---------------------|
+| 9    | [name]  | Low demand, high complexity |</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+  </div><!-- /tab-po -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       TAB: DELIVERY LEAD
+  ═══════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-dl" role="tabpanel">
+
+    <div class="yaml-block">
+      <span class="yaml-label">skill spec</span>
+      <span class="yaml-sep">---</span><br>
+      <span class="yaml-key">name</span>: <span class="yaml-val">dl-second-brain</span><br>
+      <span class="yaml-key">version</span>: <span class="yaml-val">1.0</span><br>
+      <span class="yaml-key">description</span>: <span class="yaml-val">Priority building, team scaling, client status reporting, delivery risk assessment</span><br>
+      <span class="yaml-key">patterns</span>: <span class="yaml-val">[ABCD-priorities, RAG-status, risk-matrix, onboarding-plan]</span><br>
+      <span class="yaml-sep">---</span>
+    </div>
+
+    <div class="skill-header">
+      <h2>Delivery Lead Second Brain</h2>
+      <p class="tagline">Gathers rich context about team, client, project, and business before generating strategies. Output is matrices, CSV exports, and checklists — not narratives.</p>
+      <div class="three-intuitions">
+        <span class="intuition-pill">Context is everything</span>
+        <span class="intuition-pill">Structure gets rewarded</span>
+        <span class="intuition-pill">You are the retrieval system</span>
+      </div>
+      <button class="download-btn" onclick="downloadSkill('dl')">&#8681; Download SKILL.md</button>
+    </div>
+
+    <p class="section-label">When to use each scenario</p>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>A &mdash; Priority Building</h4>
+        <p class="trigger">"I need to build priorities for Q1 and Q2"</p>
+        <p>3&ndash;5 priorities in CSV format with ABCD reflections, metrics, resource mapping.</p>
+      </div>
+      <div class="scenario-card green">
+        <h4>B &mdash; Team Scaling</h4>
+        <p class="trigger">"I am onboarding 3 new engineers"</p>
+        <p>Phased onboarding plan, ADR template, knowledge-base structure.</p>
+      </div>
+      <div class="scenario-card purple">
+        <h4>C &mdash; Client Status Reporting</h4>
+        <p class="trigger">"I need to report to steering committee"</p>
+        <p>RAG status summary, milestone tracker, risk escalation, client asks, next-week plan.</p>
+      </div>
+      <div class="scenario-card yellow">
+        <h4>D &mdash; Risk Assessment</h4>
+        <p class="trigger">"Too many risks, need a systematic approach"</p>
+        <p>Risk matrix with impact/probability, mitigation strategies, owners and timelines.</p>
+      </div>
+    </div>
+
+    <!-- Interrogation -->
+    <details class="skill-section" open>
+      <summary>
+        <span>Interrogation Framework <span class="section-tag">17 questions &middot; 4 phases</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="interrogation-block">
+          <h4>Phase 1 &mdash; Team &amp; Project Context (Q1&ndash;6)</h4>
+          <ul class="q-list">
+            <li><strong>Team Composition</strong> How many people? Roles? Remote/collocated? Time zones?</li>
+            <li><strong>Project Budget</strong> Total contract value? Burn rate? Contingency?</li>
+            <li><strong>Project Scope</strong> 3&ndash;5 main deliverables? Timeline to completion?</li>
+            <li><strong>Success Metrics</strong> How does the client measure success? KPIs?</li>
+            <li><strong>Delivery Methodology</strong> Agile, waterfall, hybrid? Sprint length?</li>
+            <li><strong>Current Phase</strong> Discovery, build, testing, launch, sustain?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 2 &mdash; Client &amp; Stakeholder Dynamics (Q7&ndash;10)</h4>
+          <ul class="q-list">
+            <li><strong>Client Stakeholder Map</strong> Who makes decisions? Data-driven, political, or consensus style?</li>
+            <li><strong>Relationship Health</strong> Client satisfaction level? Any tensions or escalations?</li>
+            <li><strong>Client Team</strong> Are they embedded? Do they have capacity to review/approve?</li>
+            <li><strong>Change Management</strong> How resistant is the org to the change you are delivering?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 3 &mdash; Risk &amp; Dependencies (Q11&ndash;14)</h4>
+          <ul class="q-list">
+            <li><strong>Known Risks</strong> What keeps you up at night? Top 3 risk items?</li>
+            <li><strong>Dependencies</strong> What is blocking progress? External dependencies?</li>
+            <li><strong>Escalation Paths</strong> Who do you escalate to? Decision timeline?</li>
+            <li><strong>Resource Constraints</strong> Skills gaps, competing priorities?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 4 &mdash; Organizational Context (Q15&ndash;17)</h4>
+          <ul class="q-list">
+            <li><strong>Portfolio Context</strong> How does this fit broader program/portfolio?</li>
+            <li><strong>Organizational Readiness</strong> Is the org ready for this change?</li>
+            <li><strong>Tribal Knowledge</strong> What does every DL wish they knew about this type of project?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Prompt Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Starter Prompt Templates <span class="section-tag">copy and paste</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario A (Priority Building with ABCD)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Delivery Lead Second Brain.
+I need to build FY priorities for [PROGRAM/PROJECT NAME].
+
+Before generating anything, ask me:
+Phase 1: Team composition, budget, deliverables, success metrics, methodology, current phase
+Phase 2: Stakeholder map, relationship health, client capacity, change management
+Phase 3: Top 3 risks, blocking dependencies, escalation paths
+Phase 4: Portfolio context, org readiness, tribal knowledge
+
+Then generate:
+- 3-5 priorities in CSV format using ABCD columns:
+  Priority, Action, Behavior, Context, Delivered, Owner, Timeline, Metrics, Notes
+- Strategic narrative for steering committee
+- Risk matrix (top 5 risks with Impact, Probability, Mitigation, Owner)
+- Execution checklist by quarter</pre>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario C (Weekly Status Report)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Delivery Lead Second Brain.
+I need to write a weekly status report for [PROJECT NAME] to send to [AUDIENCE].
+
+Ask me:
+1. What is the overall status? GREEN / YELLOW / RED — and why?
+2. What milestones were supposed to happen this week? What happened?
+3. What are the top 3 achievements?
+4. What risks have escalated or changed since last week?
+5. What do you need the client/leadership to decide or action this week?
+6. What is the specific plan for next week?
+
+Then generate a ready-to-send status report with:
+- Executive summary (2 sentences)
+- Milestone tracker (RAG table)
+- Achievements this week
+- Risks & escalations (with specific impact if not resolved)
+- Next week plan
+- Client asks with deadlines</pre>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- Output Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Output Templates <span class="section-tag">ABCD CSV &middot; status report &middot; risk matrix &middot; onboarding plan</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+
+        <div class="template-block">
+          <div class="template-header">
+            Priority Building — ABCD CSV Format
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>Priority,Action,Behavior,Context,Delivered,Owner,Timeline,Metrics,Notes
+"Q1 Foundation","[what you are doing]","[how — quality, coverage, standards]","[why it matters — business impact]","[what success looks like]","[owner]","[dates]","[measurable metrics]","[dependencies, risks]"
+"Q2 Adoption","[what you are doing]","[how — quality, coverage, standards]","[why it matters — business impact]","[what success looks like]","[owner]","[dates]","[measurable metrics]","[dependencies, risks]"</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Weekly Status Report
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Weekly Status Report: [Project Name]
+**Week of**: [Date]
+**Overall Status**: GREEN / YELLOW / RED
+
+### 1. Milestone Tracker
+| Deliverable     | Target Date | Status | Progress | Notes |
+|-----------------|------------|--------|----------|-------|
+| [Milestone 1]   | [date]      | GREEN  | 100%     | [note]|
+| [Milestone 2]   | [date]      | YELLOW | 65%      | [risk]|
+
+### 2. Key Achievements This Week
+- [Achievement 1]
+- [Achievement 2]
+
+### 3. Risks & Escalations
+**ESCALATION NEEDED**: [Risk description]
+- **Impact**: [What slips if not resolved]
+- **Mitigation in progress**: [What is being done]
+- **Ask**: [Specific decision or action needed]
+
+### 4. Next Week's Plan
+- [ ] [Action 1]
+- [ ] [Action 2]
+
+### 5. Client Asks / Open Items
+| Ask     | Owner   | Status   | Timeline |
+|---------|---------|----------|----------|
+| [ask 1] | [client]| Pending  | [date]   |</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Risk Assessment Matrix
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>| Risk                      | Probability | Impact | Score | Mitigation                 | Owner  | Timeline |
+|---------------------------|-------------|--------|-------|----------------------------|--------|----------|
+| [Key vendor delay]        | Medium      | High   | 6     | Build contingency layer    | [name] | Week 1   |
+| [Scope creep]             | High        | High   | 8     | Change control board       | [name] | Immediate|
+| [Team capacity — testing] | Medium      | High   | 6     | Hire contract QA for wk 8  | [name] | Week 4   |
+
+Score = Probability (1-3) × Impact (1-3)</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Team Onboarding Plan
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Onboarding Plan: [New Team Member]
+
+### Phase 1: Week 1 — Foundation
+| Day   | Activity                                     | Owner    | Duration |
+|-------|----------------------------------------------|----------|----------|
+| 1     | Project mission, scope, success criteria      | [DL]     | 2h       |
+| 1     | Meet core team + role clarity                 | [PM]     | 1h       |
+| 2     | Client context + stakeholder map              | [AE]     | 1.5h     |
+| 2     | Current phase deep-dive + blockers            | [TL]     | 2h       |
+| 3     | Documentation review (plan, ADRs, design docs)| Self     | 3h       |
+| 4-5   | Shadow team ceremonies                        | [Team]   | 5h       |
+
+### Phase 1 Checkpoint
+- [ ] Can articulate project goal in 2 sentences
+- [ ] Knows all core team members and roles
+- [ ] Understands current phase and top 3 blockers
+- [ ] Attended at least 3 ceremonies
+
+### Phase 3: Week 4-6 — First Real Task
+- Assigned task has clear success criteria
+- Mentor reviews work before integration
+- Autonomy increases over time</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+  </div><!-- /tab-dl -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       TAB: TECH LEAD
+  ═══════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-tl" role="tabpanel">
+
+    <div class="yaml-block">
+      <span class="yaml-label">skill spec</span>
+      <span class="yaml-sep">---</span><br>
+      <span class="yaml-key">name</span>: <span class="yaml-val">tl-second-brain</span><br>
+      <span class="yaml-key">version</span>: <span class="yaml-val">1.0</span><br>
+      <span class="yaml-key">description</span>: <span class="yaml-val">ADRs, metaprompting, technical spike planning, team technical standards</span><br>
+      <span class="yaml-key">patterns</span>: <span class="yaml-val">[Tree-of-Thoughts, ADR, metaprompt, cursorrules]</span><br>
+      <span class="yaml-sep">---</span>
+    </div>
+
+    <div class="skill-header">
+      <h2>Tech Lead Second Brain</h2>
+      <p class="tagline">Guides architectural decisions through Tree of Thoughts (GENERATE&rarr;EVALUATE&rarr;DECIDE), builds metaprompts for team amplification, and codifies standards as <code>.cursorrules</code>.</p>
+      <div class="three-intuitions">
+        <span class="intuition-pill">Context is everything</span>
+        <span class="intuition-pill">Structure gets rewarded</span>
+        <span class="intuition-pill">You are the retrieval system</span>
+      </div>
+      <button class="download-btn" onclick="downloadSkill('tl')">&#8681; Download SKILL.md</button>
+    </div>
+
+    <p class="section-label">When to use each scenario</p>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>A &mdash; Architecture Decision Record</h4>
+        <p class="trigger">"Should we decompose our monolith or use strangler fig?"</p>
+        <p>3 options via Tree of Thoughts, ADR document, implementation roadmap.</p>
+      </div>
+      <div class="scenario-card green">
+        <h4>B &mdash; Metaprompting</h4>
+        <p class="trigger">"I need each engineer to get role-specific architecture guidance"</p>
+        <p>Metaprompt with backend/DevOps/QA/security role branches, usage examples.</p>
+      </div>
+      <div class="scenario-card purple">
+        <h4>C &mdash; Technical Spike Planning</h4>
+        <p class="trigger">"Should we migrate to Kubernetes? Need data before committing"</p>
+        <p>Spike plan with investigation phases, success criteria, decision gates, time-box.</p>
+      </div>
+      <div class="scenario-card yellow">
+        <h4>D &mdash; Team Technical Standards</h4>
+        <p class="trigger">"Our async/await patterns are inconsistent across the team"</p>
+        <p><code>.cursorrules</code> file with patterns, anti-patterns, examples, rationale.</p>
+      </div>
+    </div>
+
+    <!-- Interrogation -->
+    <details class="skill-section" open>
+      <summary>
+        <span>Interrogation Framework <span class="section-tag">17 questions &middot; 4 phases</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="interrogation-block">
+          <h4>Phase 1 &mdash; Current Architecture (Q1&ndash;6)</h4>
+          <ul class="q-list">
+            <li><strong>Current System Design</strong> Monolith, microservices, event-driven, hybrid?</li>
+            <li><strong>Technology Stack</strong> Languages, frameworks, databases, message queues, versions?</li>
+            <li><strong>Scale Context</strong> Transactions/sec? Users? Data volume? Growth rate?</li>
+            <li><strong>Team Size &amp; Skills</strong> How many engineers? Key expertise areas? Skill gaps?</li>
+            <li><strong>Operational Maturity</strong> CI/CD, monitoring, on-call model?</li>
+            <li><strong>Technical Debt</strong> Biggest pain point? What slows down development?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 2 &mdash; Target State &amp; Constraints (Q7&ndash;10)</h4>
+          <ul class="q-list">
+            <li><strong>Strategic Goal</strong> What problem are we solving? Business driver?</li>
+            <li><strong>Success Metrics</strong> Latency, throughput, developer velocity?</li>
+            <li><strong>Hard Constraints</strong> Budget, timeline, compliance, team availability?</li>
+            <li><strong>Integration Requirements</strong> Other systems that must integrate?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 3 &mdash; Organizational Context (Q11&ndash;14)</h4>
+          <ul class="q-list">
+            <li><strong>Team Maturity</strong> Can the team handle microservices, distributed systems, new frameworks?</li>
+            <li><strong>Appetite for Change</strong> How much disruption is acceptable?</li>
+            <li><strong>Support &amp; Tooling</strong> What infrastructure already exists?</li>
+            <li><strong>Decision Authority</strong> Who decides? What is the approval process?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 4 &mdash; Risk &amp; Knowledge (Q15&ndash;17)</h4>
+          <ul class="q-list">
+            <li><strong>Similar Decisions</strong> Have we done something like this before?</li>
+            <li><strong>Hidden Risks</strong> What keeps you up at night about this decision?</li>
+            <li><strong>Decision Timeline</strong> When does this need to be made? How long to implement?</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Prompt Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Starter Prompt Templates <span class="section-tag">copy and paste</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario A (ADR with Tree of Thoughts)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Tech Lead Second Brain using Tree of Thoughts (GENERATE→EVALUATE→DECIDE).
+I need an Architecture Decision Record for: [DECISION QUESTION]
+
+Before generating options, interrogate me through 4 phases:
+Phase 1: Current architecture, tech stack, scale, team composition, tech debt
+Phase 2: Strategic goal, success metrics, hard constraints, integration requirements
+Phase 3: Team maturity, change appetite, existing tooling, decision authority
+Phase 4: Prior similar decisions, risks, decision timeline
+
+Then generate:
+ADR-NNN with:
+- Context (problem statement, constraints, success criteria)
+- 3 fundamentally different options (not variations on one idea)
+  Each option: THINK (how it works) → EVALUATE (pros/cons/risks)
+- Decision with clear rationale (which constraint it best fits)
+- Consequences (positive, negative, action items with timeline)</pre>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario B (Metaprompt Generation)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Tech Lead Second Brain.
+I want a metaprompt for [ARCHITECTURE TOPIC — e.g., "caching strategy design"].
+
+The metaprompt should, when given to any team member, generate role-specific guidance.
+
+Ask me:
+1. What is the architectural decision or topic?
+2. What are the performance targets and constraints?
+3. What roles need different guidance? (Backend, DevOps, QA, Security?)
+4. What are the team's existing patterns I want to enforce?
+5. What are the top 3 anti-patterns we want to prevent?
+
+Then generate a metaprompt that includes:
+- Primary mission (what the role should produce)
+- Interrogation questions the role must answer first
+- Role-specific generation sections (one per role)
+- Rationale section explaining key trade-offs</pre>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Scenario D (.cursorrules Team Standards)
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Tech Lead Second Brain.
+I need a .cursorrules file for [PROJECT/TEAM NAME].
+
+Ask me:
+1. What is the one-sentence vision for our architecture?
+2. What are the 3-4 most critical patterns to enforce? (async/await, error handling, logging, service contracts?)
+3. For each pattern: what does the team do WRONG today?
+4. For each pattern: what does the CORRECT implementation look like?
+5. What are the top 3 anti-patterns you keep seeing in code review?
+6. Under what conditions can engineers break these patterns?
+
+Then generate a .cursorrules file with:
+- Vision statement
+- Core patterns (each with PATTERN code example and ANTI-PATTERN code example)
+- Code review checklist
+- When to break the rules (explicit conditions)</pre>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- Output Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Output Templates <span class="section-tag">ADR &middot; spike plan &middot; .cursorrules</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+
+        <div class="template-block">
+          <div class="template-header">
+            Architecture Decision Record (ADR)
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## ADR-NNN: [Decision Title]
+
+### Context
+- **Problem Statement**: What decision are we making and why?
+- **Constraints**: Timeline, budget, team size, technical/organizational limits
+- **Success Criteria**: How will we measure if this was the right choice?
+
+### Options (Tree of Thoughts)
+
+#### Option A: [Approach Name]
+**THINK**: How would this work? (architecture sketch)
+**EVALUATE**:
+Pros:
+- [pro 1]
+Cons:
+- [con 1]
+Risks:
+- [ ] High: [risk]
+- [ ] Medium: [risk]
+
+#### Option B: [Approach Name]
+[same structure]
+
+#### Option C: [Approach Name]
+[same structure]
+
+### Decision
+**CHOOSE**: Option [A/B/C]
+**Rationale**: Best fits [constraint]. Team capability: [assessment]. Risk profile: [acceptable risks].
+
+### Consequences
+#### Positive
+- [benefit 1]
+#### Negative
+- [trade-off 1]
+#### Action Items
+- [ ] [Action] — [Owner] — [Date]</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            Technical Spike Plan
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>## Technical Spike: [Investigation Topic]
+
+### Objective
+**Question**: Should we migrate to [technology/pattern]?
+**Time-box**: [1-2 weeks]
+**Success Criteria**:
+- [ ] Proof-of-concept running
+- [ ] Performance benchmarks vs. current system
+- [ ] Team impact assessment (learning curve, hiring needs)
+- [ ] 3-year cost/benefit analysis
+- [ ] Risk mitigation strategy documented
+
+### Decision Gates
+| Gate            | Criteria                              | Owner       | Target |
+|-----------------|---------------------------------------|-------------|--------|
+| POC Success     | POC runs on developer laptop          | [Engineer]  | Day 3  |
+| Performance     | Meets latency targets                 | [Engineer]  | Day 6  |
+| Team Fit        | Learning curve acceptable             | [TL]        | Day 7  |
+| Financial       | 3-year TCO justifies migration cost   | [PM]        | Day 8  |
+
+### Explicitly Not in Scope
+- Full migration plan
+- Integration with all downstream systems
+- Vendor negotiation</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="template-block">
+          <div class="template-header">
+            .cursorrules — Team Standards File
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre># .cursorrules — Team Technical Standards for [Project]
+
+## Vision
+[1 sentence: "We are an async-first microservices team that values observable deployments."]
+
+## Core Patterns
+
+### 1. Async/Await
+# PATTERN
+async def get_user(user_id: int):
+    user = await db.query(f"SELECT * FROM users WHERE id = {user_id}")
+    return user
+
+# ANTI-PATTERN
+def get_user(user_id: int):  # Blocks request thread
+    return requests.get(f"https://userapi.com/{user_id}")
+
+### 2. Error Handling
+# PATTERN — Named exceptions with full context
+class PaymentProcessingError(Exception):
+    def __init__(self, user_id: int, amount: float, reason: str): ...
+
+# ANTI-PATTERN
+except Exception as e:
+    logger.error(f"Error: {e}")  # No context!
+
+### 3. Logging
+# PATTERN — Structured JSON, always queryable
+logger.info("order_created", extra={"order_id": order.id, "amount": order.total})
+
+# ANTI-PATTERN
+logger.info(f"Order {order.id} created")  # Not queryable
+
+## Code Review Checklist
+- [ ] No synchronous I/O in async functions
+- [ ] All exceptions named and contextual
+- [ ] Logging is structured JSON
+- [ ] Service boundaries clear (input/output contracts)
+- [ ] Tests cover happy path + at least 2 error scenarios
+- [ ] Type hints on all function signatures
+
+## When to Break These Patterns
+Only with explicit TL approval and documented rationale.
+File issue: `patterns: [pattern-name]: [reason for exception]`</pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- Tree of Thoughts reference -->
+    <details class="skill-section">
+      <summary>
+        <span>Tree of Thoughts Pattern Reference</span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="react-block">
+          <div class="react-step">
+            <span class="step-label think">GENERATE</span>
+            <span class="step-body">What are 3 fundamentally different approaches? Not variations — genuinely different options that each solve the problem in a distinct way.</span>
+          </div>
+          <div class="react-step">
+            <span class="step-label act">EVALUATE</span>
+            <span class="step-body">For each option: pros, cons, and risks. Be honest about trade-offs. Prevent premature convergence on the familiar option.</span>
+          </div>
+          <div class="react-step">
+            <span class="step-label obs">DECIDE</span>
+            <span class="step-body">Which option best balances constraints and team capabilities? State rationale explicitly. Acknowledge which risks you are accepting.</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /tab-tl -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       TAB: MAKE SKILLS (CAPSTONE)
+  ═══════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-make" role="tabpanel">
+
+    <div class="yaml-block">
+      <span class="yaml-label">skill spec</span>
+      <span class="yaml-sep">---</span><br>
+      <span class="yaml-key">name</span>: <span class="yaml-val">make-skills</span><br>
+      <span class="yaml-key">version</span>: <span class="yaml-val">1.0</span><br>
+      <span class="yaml-key">description</span>: <span class="yaml-val">Capstone — turn your repeated work into a production-ready interrogation-driven skill</span><br>
+      <span class="yaml-key">phases</span>: <span class="yaml-val">[task-discovery, pattern-extraction, skill-generation]</span><br>
+      <span class="yaml-key">output</span>: <span class="yaml-val">SKILL.md file you can save and use immediately</span><br>
+      <span class="yaml-sep">---</span>
+    </div>
+
+    <div class="skill-header">
+      <h2>Make Skills — Capstone</h2>
+      <p class="tagline">Stop using skills. Start building them. A 3-phase workflow that extracts the pattern hidden in your weekly work and turns it into a reusable AI workflow.</p>
+      <div class="three-intuitions">
+        <span class="intuition-pill">Context is everything</span>
+        <span class="intuition-pill">Structure gets rewarded</span>
+        <span class="intuition-pill">You are the retrieval system</span>
+      </div>
+      <button class="download-btn" onclick="downloadSkill('make')">&#8681; Download SKILL.md</button>
+    </div>
+
+    <div class="callout accent">
+      <strong>The Capstone Reveal</strong> — After you generate your first skill you will see: it ASKS questions (retrieval), it ASSEMBLES your answers into structured context (augmentation), it FEEDS that context to the AI for generation (generation). You just built a RAG system. Every skill is a RAG system.
+    </div>
+
+    <p class="section-label">When to build a skill</p>
+    <div class="scenarios-grid">
+      <div class="scenario-card">
+        <h4>A &mdash; Repeatable Document Creation</h4>
+        <p class="trigger">"I create [documents] at least weekly"</p>
+        <p>Sales decks, RFP responses, project briefs, technical specs.</p>
+      </div>
+      <div class="scenario-card green">
+        <h4>B &mdash; Code Generation or Migration</h4>
+        <p class="trigger">"I build [code structures] repeatedly"</p>
+        <p>Microservice scaffolding, API contract implementation, database migration planning.</p>
+      </div>
+      <div class="scenario-card purple">
+        <h4>C &mdash; Analysis or Decision Support</h4>
+        <p class="trigger">"I analyze [situations] and produce structured recommendations"</p>
+        <p>Architecture reviews, competitive analysis, incident post-mortems.</p>
+      </div>
+      <div class="scenario-card yellow">
+        <h4>D &mdash; Communication or Planning</h4>
+        <p class="trigger">"I create [communications] regularly"</p>
+        <p>Meeting agendas, status reports, project proposals, email templates.</p>
+      </div>
+    </div>
+
+    <!-- 3-Phase Workflow -->
+    <details class="skill-section" open>
+      <summary>
+        <span>3-Phase Workflow <span class="section-tag">task discovery &middot; pattern extraction &middot; skill generation</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="interrogation-block">
+          <h4>Phase 1 &mdash; Task Discovery (15 min)</h4>
+          <ul class="q-list">
+            <li><strong>Weekly Task</strong> What task do you repeat at least weekly?</li>
+            <li><strong>Current Process</strong> Walk me through your steps today, step by step.</li>
+            <li><strong>Input Requirements</strong> What information do you need before starting?</li>
+            <li><strong>Quality Definition</strong> What does GOOD output look like? What does BAD look like?</li>
+            <li><strong>Audience</strong> Who uses your output and how?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 2 &mdash; Pattern Extraction (10 min)</h4>
+          <ul class="q-list">
+            <li><strong>Task Category</strong> Code generation, document creation, analysis, communication, or planning?</li>
+            <li><strong>Context Requirements</strong> What 5&ndash;7 pieces of information always change but are always needed?</li>
+            <li><strong>Question Design</strong> What questions should the skill ask to gather that context?</li>
+            <li><strong>Output Structure</strong> What sections, ordering, and format for the output?</li>
+          </ul>
+        </div>
+        <div class="interrogation-block">
+          <h4>Phase 3 &mdash; Skill Generation (automatic)</h4>
+          <ul class="q-list">
+            <li><strong>Formatting</strong> Converts your answers into proper SKILL.md structure</li>
+            <li><strong>Example Generation</strong> Creates a worked example (interrogation &rarr; output)</li>
+            <li><strong>Integration Notes</strong> Explains how the skill connects to RAG, ReAct, bootcamp patterns</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Prompt Templates -->
+    <details class="skill-section">
+      <summary>
+        <span>Starter Prompt Template <span class="section-tag">copy and paste</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="prompt-block">
+          <div class="prompt-block-header">
+            Prompt Template &mdash; Make-Skills Capstone
+            <button class="copy-btn" onclick="copyParent(this)">Copy</button>
+          </div>
+          <pre>You are a Make-Skills capstone assistant. Help me build a production-ready SKILL.md for a task I repeat at work.
+
+Run me through 3 phases:
+
+PHASE 1 — Task Discovery (ask all 5 questions, one at a time):
+1. What task do you repeat at least weekly at work?
+2. Walk me through how you do it today, step by step.
+3. What information do you need to gather before you start?
+4. What does GOOD output look like? What does BAD look like?
+5. Who is the audience for your output?
+
+PHASE 2 — Pattern Extraction (ask all 4 questions):
+6. Which category best fits your task: code generation, document creation, analysis, communication, or planning?
+7. What are 5-7 pieces of context that always change but are always needed?
+8. What questions should the skill ask the user to gather that context?
+9. What structure should the output follow? (section headings, ordering, format)
+
+PHASE 3 — Generate the skill file:
+Using all my answers, generate a complete SKILL.md with:
+- YAML frontmatter (name, version, description)
+- Overview section (what it does, 3 intuitions)
+- Structured interrogation framework (formatted as phases)
+- Output format specification (with template)
+- Complete worked example (interrogation → output)
+- Reflection: explain what the participant just built (the RAG reveal)</pre>
+        </div>
+      </div>
+    </details>
+
+    <!-- Output Template -->
+    <details class="skill-section">
+      <summary>
+        <span>Generated Skill File Template <span class="section-tag">the structure your skill will follow</span></span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <div class="template-block">
+          <div class="template-header">
+            SKILL.md — Generated Structure
+            <button class="copy-btn" onclick="copyTemplateBlock(this)">Copy</button>
+          </div>
+          <div class="template-body">
+            <div class="copyable">
+<pre>---
+name: [your-task-name]
+description: [your task] interrogation-driven skill
+version: 1.0
+---
+
+# [Your Skill Name]
+
+## Overview
+[Purpose, target audience, core value]
+[The 3 bootcamp intuitions as they apply to your task]
+
+## Key Capabilities
+[What this skill does — derived from Phase 2 answers]
+
+## Structured Interrogation Framework
+
+### Phase 1: [Context gathering]
+[Your questions, formatted as numbered list with bold category + question]
+
+### Phase 2: [Structure definition]
+[Your output structure requirements]
+
+## Output Format Specification
+
+```[your format]
+[Your template with all sections filled in with examples]
+```
+
+## Example: Complete Workflow
+
+### Interrogation Phase
+[Worked example: Q1: → "answer" Q2: → "answer" ...]
+
+### Generated Output
+[Sample output your skill produces from those answers]
+
+## Reflection: What You Just Built
+
+- It ASKS questions → that is retrieval
+- It ASSEMBLES your answers into structured context → that is augmentation
+- It FEEDS that context to the AI → that is generation
+
+You just built a RAG system. Every skill is a RAG system.</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Decision: build or skip -->
+    <details class="skill-section">
+      <summary>
+        <span>Should you build a skill for this task?</span>
+        <span class="arrow">&#9654;</span>
+      </summary>
+      <div class="section-body">
+        <table class="ref-table">
+          <thead><tr><th>Build a skill if&hellip;</th><th>Skip skills if&hellip;</th></tr></thead>
+          <tbody>
+            <tr><td class="good">You do this at least weekly</td><td>You do it once per quarter</td></tr>
+            <tr><td class="good">Output affects others</td><td>Output is just for you</td></tr>
+            <tr><td class="good">It takes 30+ minutes</td><td>It takes 2 minutes (template works fine)</td></tr>
+            <tr><td class="good">You always gather the same information</td><td>The process changes dramatically each time</td></tr>
+            <tr><td class="good">Others could use it too</td><td>It is already fully automated</td></tr>
+          </tbody>
+        </table>
+        <div class="callout blue" style="margin-top:20px;">
+          <strong>Skill composition:</strong> Once you have a few skills you can chain them. Spec-generator output feeds into plan-generator, which feeds into test-strategy-generator. That is a workflow, not just a skill.
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /tab-make -->
+
+</div><!-- /tabs-wrapper -->
+</article>
+<footer class="footer">
+
+  <div>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></div>
+  <div style="margin-top:6px;">
+    <a href="../index.html">home</a> &middot;
+    <a href="prompt-engineering-bootcamp.html">bootcamp</a> &middot;
+    <a href="#dev" data-tab="dev">developer</a> &middot;
+    <a href="#po" data-tab="po">PO/PM</a> &middot;
+    <a href="#dl" data-tab="dl">delivery</a> &middot;
+    <a href="#tl" data-tab="tl">tech lead</a> &middot;
+    <a href="#make" data-tab="make">make skills</a>
+  </div>
+</footer>
+
+<script>
+// ── COPY BUTTON ────────────────────────────────────────────
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(function() {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+}
+
+// Copy the <pre> that is a sibling/descendant of the button's parent prompt-block
+function copyParent(btn) {
+  const block = btn.closest('.prompt-block');
+  const pre = block ? block.querySelector('pre') : null;
+  if (pre) copyText(pre.innerText, btn);
+}
+
+// Copy the <pre> inside a template-block
+function copyTemplateBlock(btn) {
+  const block = btn.closest('.template-block');
+  const pre = block ? block.querySelector('pre') : null;
+  if (pre) copyText(pre.innerText, btn);
+}
+
+// Attach copy buttons to all plain .copyable blocks automatically
+document.querySelectorAll('.copyable').forEach(function(wrap) {
+  if (wrap.closest('.template-block') || wrap.closest('.prompt-block')) return; // already handled
+  const pre = wrap.querySelector('pre');
+  if (!pre) return;
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copy';
+  btn.onclick = function() { copyText(pre.innerText, btn); };
+  wrap.style.position = 'relative';
+  wrap.appendChild(btn);
+});
+
+// ── TAB SWITCHING ──────────────────────────────────────────
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.tab === tabId);
+  });
+  document.querySelectorAll('.tab-panel').forEach(function(p) {
+    p.classList.toggle('active', p.id === 'tab-' + tabId);
+  });
+  history.replaceState(null, '', '#' + tabId);
+}
+
+document.querySelectorAll('[data-tab]').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    const tabId = el.dataset.tab;
+    if (!tabId) return;
+    e.preventDefault();
+    switchTab(tabId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Hash on load
+(function() {
+  const hash = location.hash.replace('#', '');
+  const valid = ['dev', 'po', 'dl', 'tl', 'make'];
+  if (valid.includes(hash)) switchTab(hash);
+})();
+
+// ── SMOOTH SCROLL (hash-only links, not tab links) ─────────
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    if (a.dataset.tab) return; // tab links handled above
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ── DOWNLOAD SKILL.MD ─────────────────────────────────────
+var skillContent = {
+  dev: `---\nname: dev-second-brain\ndescription: Developer second brain — interrogation-driven code assistance using systematic patterns (ReAct, spec-kit)\nversion: 1.0\n---\n\n# Developer Second Brain Skill\n\nInterrogation-driven code assistance for migrations, refactoring, features, and debugging.\nUses ReAct (THINK→ACT→OBSERVE) to produce structured plans, diffs, and test strategies.\n\n## Scenarios\nA: Code Migration — "I need to migrate from Framework A to B"\nB: Refactoring — "I need to refactor this component"\nC: Feature Implementation — "Build a new feature following our patterns"\nD: Systematic Debugging — "Track down root cause of production issue"\n\n## Interrogation Framework\nPhase 1 (Current State): Language/framework, architecture, problem, scope, team size\nPhase 2 (Target State): Success criteria, constraints, dependencies\nPhase 3 (Implementation): Test coverage, conventions, review process, rollback plan\nPhase 4 (Knowledge): Prior similar changes, tribal knowledge, decision constraints\n\n## Starter Prompt (Scenario A)\nYou are a Developer Second Brain using the ReAct pattern (THINK→ACT→OBSERVE).\nInterrogate me through 4 phases, then produce:\n1. Implementation plan with THINK/ACT/OBSERVE annotations\n2. Code diffs (before/after) for the critical path\n3. Test strategy matrix\n4. Pre-deployment checklist\n`,
+  po: `---\nname: po-second-brain\ndescription: PO/PM second brain — interrogation-driven requirements capture, sprint planning, and stakeholder communication\nversion: 1.0\n---\n\n# PO/PM Second Brain Skill\n\nRequirements capture, sprint planning, stakeholder communication, roadmap prioritization.\nUses spec-kit (Knowledge → Specification → Plan → Execution).\n\n## Scenarios\nA: Requirements Capture — "Document requirements for our new feature"\nB: Sprint Planning — "Help me plan the next 2-week sprint"\nC: Stakeholder Communication — "Status report for exec leadership"\nD: Roadmap Planning — "Prioritize 15 features for Q2-Q3"\n\n## Interrogation Framework\nPhase 1 (Business Context): Company/product, goal, current state, success, stakeholders, timeline\nPhase 2 (Scope): Scope statement, primary users, key workflows, constraints, dependencies\nPhase 3 (Team): Size, experience, patterns, velocity\nPhase 4 (Acceptance): Criteria style, definition of done, validation, rollback\nPhase 5 (Knowledge): Decision constraints, tribal knowledge, competitive intel\n\n## Priority Formula\nPriority Score = (Value × 3 + Revenue Impact) - (Effort × 2 + Risk × 1.5)\n`,
+  dl: `---\nname: dl-second-brain\ndescription: Delivery Lead second brain — priority building, team scaling, client delivery, risk assessment\nversion: 1.0\n---\n\n# Delivery Lead Second Brain Skill\n\nFY priority building with ABCD, team scaling and onboarding, client status reporting, risk assessment.\n\n## Scenarios\nA: Priority Building — "Build priorities for Q1 and Q2 with ABCD"\nB: Team Scaling — "Onboarding plan for 3 new engineers"\nC: Client Status Reporting — "Weekly report for steering committee"\nD: Delivery Risk Assessment — "Systematic risk identification and mitigation"\n\n## Interrogation Framework\nPhase 1 (Team & Project): Composition, budget, scope, success metrics, methodology, phase\nPhase 2 (Client & Stakeholders): Stakeholder map, relationship health, client team, change readiness\nPhase 3 (Risk & Dependencies): Known risks, blockers, escalation paths, resource constraints\nPhase 4 (Organizational): Portfolio context, org readiness, tribal knowledge\n\n## ABCD Priority Format\nPriority, Action, Behavior, Context, Delivered, Owner, Timeline, Metrics, Notes\n`,
+  tl: `---\nname: tl-second-brain\ndescription: Tech Lead second brain — architecture decisions, metaprompting, technical spikes, team standards\nversion: 1.0\n---\n\n# Tech Lead Second Brain Skill\n\nADRs with Tree of Thoughts, metaprompts for team amplification, technical spike planning, .cursorrules standards.\n\n## Scenarios\nA: Architecture Decision Record — multi-option evaluation with Tree of Thoughts\nB: Metaprompting — create prompts that generate role-specific prompts\nC: Technical Spike Planning — scope investigation with decision gates and time-box\nD: Team Technical Standards — .cursorrules with patterns and anti-patterns\n\n## Interrogation Framework\nPhase 1 (Current Architecture): System design, tech stack, scale, team, operational maturity, tech debt\nPhase 2 (Target State): Strategic goal, success metrics, hard constraints, integrations\nPhase 3 (Org Context): Team maturity, change appetite, tooling, decision authority\nPhase 4 (Risk): Prior decisions, hidden risks, decision timeline\n\n## Tree of Thoughts Pattern\nGENERATE: 3 fundamentally different approaches (not variations)\nEVALUATE: Pros/cons/risks for each option honestly\nDECIDE: Best fit for constraints + team capability, with explicit rationale\n`,
+  make: `---\nname: make-skills\ndescription: Meta-skill capstone — build your own interrogation-driven AI skill for any repeated task\nversion: 1.0\n---\n\n# Make-Skills Meta-Skill (Capstone)\n\nTurn your repeated work into a production-ready SKILL.md.\nDemonstrates all 3 bootcamp intuitions at the meta level.\n\n## 3-Phase Workflow\n\nPhase 1 — Task Discovery (15 min):\n1. What task do you repeat at least weekly?\n2. Walk me through your steps today (step by step)\n3. What information do you need before starting?\n4. What does GOOD output look like? BAD?\n5. Who is the audience for your output?\n\nPhase 2 — Pattern Extraction (10 min):\n6. Task category: code generation, document creation, analysis, communication, or planning?\n7. What 5-7 pieces of context always change but are always needed?\n8. What questions should the skill ask to gather that context?\n9. What structure should the output follow?\n\nPhase 3 — Skill Generation (automatic):\nConvert answers into a complete SKILL.md with worked example.\n\n## The RAG Reveal\nThe skill you build IS a RAG system:\n- Retrieval: Questions fetch relevant context from your knowledge\n- Augmentation: Answers organized into structured format\n- Generation: Structure becomes artifact (skill file or document)\n\n## Build a skill if:\n- You do it weekly, output affects others, takes 30+ min,\n  you always gather the same info, others could use it too\n`
+};
+
+function downloadSkill(tab) {
+  var content = skillContent[tab] || '# Skill content not found';
+  var blob = new Blob([content], { type: 'text/markdown' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = tab + '-second-brain-SKILL.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

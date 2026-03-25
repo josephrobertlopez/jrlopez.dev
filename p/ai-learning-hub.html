@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Hub | Joey Lopez</title>
+    <meta name="description" content="The front door to prompt engineering and AI tooling. Four tracks, five skills, two live sessions — pick where you are and move forward.">
+    <meta property="og:title" content="AI Learning Hub | Joey Lopez">
+    <meta property="og:description" content="Practical AI workflows for developers, POs, delivery leads, and tech leads. Context is everything. Structure gets rewarded. You are the retrieval system.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jrlopez.dev/p/ai-learning-hub.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "AI Learning Hub | Joey Lopez",
+  "description": "The front door to prompt engineering and AI tooling. Four tracks, five skills, two live sessions — pick where you are and move forward.",
+  "author": {"@type": "Person", "name": "Joey Lopez", "url": "https://jrlopez.dev"},
+  "datePublished": "2026-03-22",
+  "keywords": ["prompting", "workshop", "teaching"],
+  "url": "https://jrlopez.dev/p/ai-learning-hub.html"
+}
+</script>
+<link rel="alternate" type="text/markdown" href="ai-learning-hub.md">
+<meta name="keywords" content="prompting, workshop, teaching">
+<meta property="article:published_time" content="2026-03-22">
+<meta property="article:author" content="Joey Lopez">
+<meta name="twitter:card" content="summary">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+    <style>
+        /* ================================================================
+           DESIGN TOKENS — aligned to jrlopez.dev/style.css
+           ================================================================ */
+        :root {
+            --bg: #0f0f1a;
+            --bg-card: #161625;
+            --bg-code: #1a1a2e;
+            --border: #2a2a40;
+            --text: #c8c8d8;
+            --text-bright: #e8e8f0;
+            --text-muted: #8888a0;
+            --accent: #e94560;
+            --blue: #58a6ff;
+            --green: #3fb950;
+            --yellow: #d4a017;
+            --purple: #a78bfa;
+
+            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --mono: 'Courier New', 'Monaco', monospace;
+
+            --radius: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.5);
+        }
+
+        /* ================================================================
+           RESET & BASE
+           ================================================================ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4 { color: var(--text-bright); line-height: 1.2; }
+        h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 800; }
+        h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 700; margin-bottom: 1rem; }
+        h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+        p { margin-bottom: 1rem; line-height: 1.7; }
+        a { color: var(--blue); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent); text-decoration: underline; }
+        strong { color: var(--accent); font-weight: 600; }
+        ul, ol { padding-left: 1.4rem; }
+        li { margin-bottom: 0.4rem; }
+
+        /* ================================================================
+           NAV BAR
+           ================================================================ */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15,15,26,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-bar::-webkit-scrollbar { display: none; }
+        .nav-pill {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .nav-pill:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ================================================================
+           HERO
+           ================================================================ */
+        .hero {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 40%, #1a0f25 100%);
+            padding: 72px 20px 56px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+        .hero h1 { margin-bottom: 12px; }
+        .hero .subtitle {
+            font-size: clamp(15px, 2.2vw, 18px);
+            color: var(--text);
+            max-width: 600px;
+            margin: 0 auto 8px;
+            font-style: italic;
+        }
+        .hero .byline {
+            font-size: 0.9rem;
+            color: var(--blue);
+            margin-bottom: 28px;
+        }
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .hero-tag {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .hero-tag:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            text-decoration: none;
+        }
+        /* Meta pills row */
+        .meta-pills {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .meta-pill {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3px 12px;
+        }
+
+        /* ================================================================
+           CONTAINER
+           ================================================================ */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .container-narrow {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ================================================================
+           SECTION CHROME
+           ================================================================ */
+        section {
+            padding: 56px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        section:last-of-type { border-bottom: none; }
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .section-intro {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 680px;
+        }
+
+        /* ================================================================
+           CARD GRID (general)
+           ================================================================ */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        /* ================================================================
+           MATERIAL CARD (link cards)
+           ================================================================ */
+        .material-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+        }
+        .material-card:hover {
+            border-left-color: var(--blue);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .material-card.accent:hover { border-left-color: var(--accent); }
+        .material-card.green:hover { border-left-color: var(--green); }
+        .material-card.purple:hover { border-left-color: var(--purple); }
+        .material-card .icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        .material-card h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+        .material-card .desc {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.6;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+        .material-card a.card-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--blue);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .material-card a.card-link:hover { color: var(--accent); text-decoration: none; }
+        .material-card a.card-link::after {
+            content: '→';
+            transition: transform 0.2s;
+        }
+        .material-card a.card-link:hover::after { transform: translateX(4px); }
+
+        /* ================================================================
+           START HERE — numbered cards
+           ================================================================ */
+        .start-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .start-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            position: relative;
+            transition: all 0.2s;
+        }
+        .start-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(233,69,96,0.12);
+        }
+        .start-card .step-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 10px;
+            font-variant-numeric: tabular-nums;
+        }
+        .start-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+        .start-card p {
+            font-size: 0.875rem;
+            color: var(--text);
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+        .start-card a.card-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .start-card a.card-link:hover { color: var(--accent); }
+        .start-card a.card-link::after { content: '→'; }
+
+        /* ================================================================
+           WHY AI — inline content cards (no links)
+           ================================================================ */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+        }
+        .why-card .why-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .why-card .why-label.blue { color: var(--blue); }
+        .why-card .why-label.green { color: var(--green); }
+        .why-card .why-label.purple { color: var(--purple); }
+        .why-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 14px;
+        }
+        .why-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .why-card ul li {
+            font-size: 0.9rem;
+            color: var(--text);
+            padding: 5px 0;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.5;
+        }
+        .why-card ul li:last-child { border-bottom: none; }
+        .why-card ul li::before {
+            content: '·  ';
+            color: var(--text-muted);
+        }
+        .why-card .role-rows { margin-top: 0; }
+        .role-row {
+            display: flex;
+            flex-direction: column;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .role-row:last-child { border-bottom: none; }
+        .role-row .role-name {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--blue);
+            margin-bottom: 2px;
+        }
+        .role-row .role-desc {
+            font-size: 0.875rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .shift-card {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            grid-column: 1 / -1;
+        }
+        .shift-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 16px;
+        }
+        .shift-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .shift-item {
+            text-align: center;
+            padding: 16px 12px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .shift-item .shift-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .shift-item .shift-val {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            line-height: 1.4;
+        }
+        .shift-item .shift-val em {
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        /* ================================================================
+           TOOL LANDSCAPE TABLE
+           ================================================================ */
+        .tool-table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+        }
+        .tool-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 640px;
+        }
+        .tool-table thead tr {
+            background: var(--bg-code);
+        }
+        .tool-table th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            border-bottom: 2px solid var(--accent);
+            white-space: nowrap;
+        }
+        .tool-table th:first-child {
+            color: var(--text-muted);
+            font-weight: 600;
+            width: 130px;
+        }
+        .tool-table th.col-highlight {
+            color: var(--accent);
+        }
+        .tool-table td {
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+        .tool-table td:first-child {
+            font-weight: 700;
+            color: var(--text-bright);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            background: var(--bg-code);
+        }
+        .tool-table tbody tr:last-child td { border-bottom: none; }
+        .tool-table tbody tr:hover td { background: rgba(88,166,255,0.04); }
+        .tool-table tbody tr:hover td:first-child { background: var(--bg-code); }
+        .tool-table .ex {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+        .tool-table .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-top: 4px;
+        }
+        .badge-green { background: rgba(63,185,80,0.15); color: var(--green); }
+        .badge-blue { background: rgba(88,166,255,0.15); color: var(--blue); }
+        .badge-yellow { background: rgba(212,160,23,0.15); color: var(--yellow); }
+        .badge-accent { background: rgba(233,69,96,0.15); color: var(--accent); }
+
+        .table-footer-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border-left: 3px solid var(--border);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        /* ================================================================
+           TRACK CARDS
+           ================================================================ */
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .track-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            text-align: center;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: block;
+        }
+        .track-card:hover {
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+        .track-card.dev:hover { border-color: var(--blue); box-shadow: 0 4px 20px rgba(88,166,255,0.15); }
+        .track-card.po:hover { border-color: var(--green); box-shadow: 0 4px 20px rgba(63,185,80,0.15); }
+        .track-card.dl:hover { border-color: var(--yellow); box-shadow: 0 4px 20px rgba(212,160,23,0.15); }
+        .track-card.tl:hover { border-color: var(--purple); box-shadow: 0 4px 20px rgba(167,139,250,0.15); }
+        .track-card.make:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(233,69,96,0.15); }
+        .track-icon { font-size: 2rem; margin-bottom: 10px; }
+        .track-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+        .track-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .track-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .track-label.dev { background: rgba(88,166,255,0.15); color: var(--blue); }
+        .track-label.po { background: rgba(63,185,80,0.15); color: var(--green); }
+        .track-label.dl { background: rgba(212,160,23,0.15); color: var(--yellow); }
+        .track-label.tl { background: rgba(167,139,250,0.15); color: var(--purple); }
+        .track-label.make { background: rgba(233,69,96,0.15); color: var(--accent); }
+
+        /* ================================================================
+           SESSION TIMELINE
+           ================================================================ */
+        .timeline {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .tl-block {
+            flex: 1;
+            padding: 16px 12px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+        }
+        .tl-block:last-child { border-right: none; }
+        .tl-block.primary { border-top: 3px solid var(--accent); }
+        .tl-block.blue { border-top: 3px solid var(--blue); }
+        .tl-block.green { border-top: 3px solid var(--green); }
+        .tl-block.yellow { border-top: 3px solid var(--yellow); }
+        .tl-time {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .tl-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .tl-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* ================================================================
+           COLLAPSIBLE (Workshop Delivery)
+           ================================================================ */
+        .collapsible-header {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-family: var(--font);
+            color: var(--text-bright);
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .collapsible-header:hover { border-color: var(--accent); }
+        .collapsible-header .chevron {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+        }
+        .collapsible-header.open .chevron { transform: rotate(180deg); }
+        .collapsible-body {
+            display: none;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            background: var(--bg-card);
+            padding: 28px 24px;
+        }
+        .collapsible-body.open { display: block; }
+
+        /* ================================================================
+           GO DEEPER CARDS (smaller)
+           ================================================================ */
+        .deeper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 16px;
+        }
+        .deeper-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: all 0.2s;
+        }
+        .deeper-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-1px);
+        }
+        .deeper-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 6px;
+        }
+        .deeper-card p {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .deeper-card a {
+            font-size: 0.83rem;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        .deeper-card a:hover { color: var(--accent); }
+
+        /* ================================================================
+           FOOTER
+           ================================================================ */
+        .footer {
+            margin-top: 0;
+            padding: 28px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer a:hover { color: var(--blue); text-decoration: none; }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 768px) {
+            section { padding: 40px 0; }
+            .card-grid, .card-grid-4 { grid-template-columns: 1fr; }
+            .start-grid { grid-template-columns: 1fr 1fr; }
+            .track-grid { grid-template-columns: 1fr 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .shift-grid { grid-template-columns: 1fr; }
+            .deeper-grid { grid-template-columns: 1fr 1fr; }
+            .timeline { flex-direction: column; }
+            .tl-block { border-right: none; border-bottom: 1px solid var(--border); }
+            .tl-block:last-child { border-bottom: none; }
+            .container, .container-narrow { padding: 0 16px; }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.7rem; }
+            .start-grid { grid-template-columns: 1fr; }
+            .track-grid { grid-template-columns: 1fr 1fr; }
+            .deeper-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================
+         NAV
+         ================================================================ -->
+    <nav class="nav-bar">
+        <a href="../index.html" class="nav-pill">← home</a>
+        <a href="#start-here" class="nav-pill">start here</a>
+        <a href="#tracks" class="nav-pill">tracks</a>
+        <a href="#tools" class="nav-pill">tools</a>
+        <a href="#sessions" class="nav-pill">sessions</a>
+        <a href="#workshop" class="nav-pill">workshop</a>
+    </nav>
+<article>
+    <!-- ================================================================
+         HERO
+         ================================================================ -->
+    <section class="hero">
+        <div class="hero-eyebrow">Prompt Engineering &amp; Tooling</div>
+        <h1>AI Learning Hub</h1>
+        <p class="subtitle">Context is everything. Structure gets rewarded. You are the retrieval system.</p>
+        <p class="byline">Joey Lopez · Sr. Data Engineer</p>
+        <div class="hero-tags">
+            <a href="#start-here" class="hero-tag">start here</a>
+            <a href="#why-ai" class="hero-tag">why AI?</a>
+            <a href="#tools" class="hero-tag">tool landscape</a>
+            <a href="#tracks" class="hero-tag">pick your track</a>
+            <a href="#sessions" class="hero-tag">sessions</a>
+        </div>
+        <div class="meta-pills">
+            <span class="meta-pill">4 tracks</span>
+            <span class="meta-pill">5 skills</span>
+            <span class="meta-pill">90 min live + self-paced</span>
+            <span class="meta-pill">maintained 2026</span>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         START HERE
+         ================================================================ -->
+    <section id="start-here">
+        <div class="container">
+            <span class="section-label">Start Here</span>
+            <h2>Four steps, then you're off</h2>
+            <p class="section-intro">Whether you're brand new or have been prompting for a year, this path covers the foundation before branching into role-specific work.</p>
+
+            <div class="start-grid">
+
+                <div class="start-card">
+                    <div class="step-num">01</div>
+                    <h4>Why AI?</h4>
+                    <p>What it actually does well, what changes for your role, and why prompting is closer to programming than talking.</p>
+                    <a href="#why-ai" class="card-link">read it here</a>
+                </div>
+
+                <div class="start-card">
+                    <div class="step-num">02</div>
+                    <h4>Pick Your Tool</h4>
+                    <p>Chat assistant, code completion, AI-native editor, or agentic IDE — don't overthink it, but know the difference.</p>
+                    <a href="#tools" class="card-link">tool landscape</a>
+                </div>
+
+                <div class="start-card">
+                    <div class="step-num">03</div>
+                    <h4>Learn the Patterns</h4>
+                    <p>Zero-shot, few-shot, chain-of-thought, ReAct, Tree of Thoughts — foundations and advanced patterns, with a second brain framework.</p>
+                    <a href="prompting.html" class="card-link">prompting patterns</a>
+                </div>
+
+                <div class="start-card">
+                    <div class="step-num">04</div>
+                    <h4>Pick Your Role Track</h4>
+                    <p>Dev, PO/PM, Delivery Lead, Tech Lead, or capstone. Role-specific workflows built on the same underlying patterns.</p>
+                    <a href="#tracks" class="card-link">choose a track</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         WHY AI
+         ================================================================ -->
+    <section id="why-ai">
+        <div class="container">
+            <span class="section-label">Why AI? Why Should I Care?</span>
+            <h2>Before you learn the patterns, orient yourself</h2>
+            <p class="section-intro">Three things worth internalizing before you touch a prompt library or install a tool.</p>
+
+            <div class="why-grid">
+
+                <!-- Card 1: What it does well -->
+                <div class="why-card">
+                    <span class="why-label blue">What AI actually does well</span>
+                    <h4>The tasks where it earns its keep</h4>
+                    <ul>
+                        <li>Drafting first passes on anything text-shaped (emails, docs, PRDs, summaries)</li>
+                        <li>Transforming content — reformatting, translating register, restructuring arguments</li>
+                        <li>Recognizing patterns in messy inputs (logs, feedback, transcripts)</li>
+                        <li>Writing boilerplate and scaffolding you'd otherwise copy-paste</li>
+                        <li>Rubber-ducking your own thinking — externalizing and stress-testing ideas</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: What changes per role -->
+                <div class="why-card">
+                    <span class="why-label green">What changes for your role</span>
+                    <h4>The same tool, different leverage points</h4>
+                    <div class="role-rows">
+                        <div class="role-row">
+                            <span class="role-name">Developer</span>
+                            <span class="role-desc">Specs and test cases arrive faster than code. The bottleneck shifts to review and integration, not generation.</span>
+                        </div>
+                        <div class="role-row">
+                            <span class="role-name">PO / PM</span>
+                            <span class="role-desc">User stories with Given/When/Then, sprint backlogs, and roadmap rationales in seconds instead of hours.</span>
+                        </div>
+                        <div class="role-row">
+                            <span class="role-name">Delivery Lead</span>
+                            <span class="role-desc">Risk matrices, status reports, and onboarding plans generated from your notes — you edit, not author.</span>
+                        </div>
+                        <div class="role-row">
+                            <span class="role-name">Tech Lead</span>
+                            <span class="role-desc">Run parallel architecture evaluations, generate ADRs via Tree of Thoughts, and build metaprompts that amplify your whole team.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: The shift -->
+                <div class="why-card" style="background: var(--bg-code);">
+                    <span class="why-label purple">The mental model shift</span>
+                    <h4>Prompting is programming</h4>
+                    <p style="font-size: 0.9rem; color: var(--text); margin-bottom: 20px;">A prompt isn't a request. It's a program. The same engineering principles that make code maintainable make prompts effective.</p>
+                    <div class="shift-grid">
+                        <div class="shift-item">
+                            <div class="shift-label">In code</div>
+                            <div class="shift-val">Database</div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">In a prompt</div>
+                            <div class="shift-val"><em>Context</em></div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">Why it matters</div>
+                            <div class="shift-val">What you include determines what the model can retrieve</div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">In code</div>
+                            <div class="shift-val">Schema</div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">In a prompt</div>
+                            <div class="shift-val"><em>Structure</em></div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">Why it matters</div>
+                            <div class="shift-val">Format and constraints shape the output space</div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">In code</div>
+                            <div class="shift-val">Query / retrieval</div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">In a prompt</div>
+                            <div class="shift-val"><em>You</em></div>
+                        </div>
+                        <div class="shift-item">
+                            <div class="shift-label">Why it matters</div>
+                            <div class="shift-val">You decide what enters the context — that is the skill</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         TOOL LANDSCAPE
+         ================================================================ -->
+    <section id="tools">
+        <div class="container">
+            <span class="section-label">Tool Landscape</span>
+            <h2>Four categories of AI tooling</h2>
+            <p class="section-intro">Most people start with whatever's available and upgrade when they hit a ceiling. That's the right move. Here's what the categories actually mean.</p>
+
+            <div class="tool-table-wrap">
+                <table class="tool-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Chat Assistant</th>
+                            <th>Code Completion</th>
+                            <th>AI-Native Editor</th>
+                            <th class="col-highlight">Agentic IDE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>What it is</td>
+                            <td>
+                                Conversational interface for open-ended prompting
+                                <div class="ex">e.g. ChatGPT, Claude.ai, Copilot Chat</div>
+                            </td>
+                            <td>
+                                Inline suggestions as you type, trained on code
+                                <div class="ex">e.g. GitHub Copilot, Tabnine, Codeium</div>
+                            </td>
+                            <td>
+                                Editor with deep AI integration — inline editing, codebase awareness
+                                <div class="ex">e.g. Cursor, Windsurf</div>
+                            </td>
+                            <td>
+                                Agent that reads, edits, and runs code autonomously across files
+                                <div class="ex">e.g. Claude Code, Devin, Copilot Workspace</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Best for</td>
+                            <td>Drafting, explaining, brainstorming, non-code tasks</td>
+                            <td>Speeding up typing in familiar codebases; boilerplate</td>
+                            <td>Refactoring, multi-file edits, test generation, codebase Q&amp;A</td>
+                            <td>
+                                Large refactors, new features with specs, automated review loops
+                                <span class="badge badge-accent">highest leverage</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Primary users</td>
+                            <td>Everyone — all roles benefit</td>
+                            <td>Developers (and technically-minded POs/TLs)</td>
+                            <td>Developers who want more than autocomplete</td>
+                            <td>Senior devs and tech leads comfortable giving AI significant scope</td>
+                        </tr>
+                        <tr>
+                            <td>Context window</td>
+                            <td>Single conversation; loses context across sessions</td>
+                            <td>Current file + a few nearby files</td>
+                            <td>
+                                Whole codebase via embeddings or selection
+                                <span class="badge badge-blue">significant upgrade</span>
+                            </td>
+                            <td>
+                                Repo-wide; can run commands, read logs, write tests
+                                <span class="badge badge-blue">maximum scope</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Learning curve</td>
+                            <td>
+                                Low — natural language interface
+                                <span class="badge badge-green">start here</span>
+                            </td>
+                            <td>
+                                Low-medium — mostly passive until you learn to steer it
+                                <span class="badge badge-green">start here</span>
+                            </td>
+                            <td>Medium — new prompting patterns, composer mode, rules files</td>
+                            <td>
+                                High — requires spec discipline and trust calibration
+                                <span class="badge badge-yellow">graduate when ready</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>When to start</td>
+                            <td>Day one — use it for anything you'd Google</td>
+                            <td>Week one if you write code regularly</td>
+                            <td>When you're writing AI-assisted features or doing large refactors</td>
+                            <td>When you can write a spec that an agent can execute without babysitting</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="table-footer-note">Don't overthink tool choice. Start with what's available, graduate when you hit limits.</p>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         PICK YOUR TRACK
+         ================================================================ -->
+    <section id="tracks">
+        <div class="container">
+            <span class="section-label">Pick Your Track</span>
+            <h2>Five role-specific skill files</h2>
+            <p class="section-intro">Each track is a complete, production-relevant workflow — not a tutorial. You get a skill file you can actually run.</p>
+
+            <div class="track-grid">
+
+                <a href="bootcamp-skills.html#tab-dev" class="track-card dev">
+                    <div class="track-label dev">Developer</div>
+                    <div class="track-icon">&#128187;</div>
+                    <h4>Developer Second Brain</h4>
+                    <p>ReAct-driven migrations, refactoring, feature implementation, and systematic debugging with annotated diffs.</p>
+                </a>
+
+                <a href="bootcamp-skills.html#tab-po" class="track-card po">
+                    <div class="track-label po">PO / PM</div>
+                    <div class="track-icon">&#128202;</div>
+                    <h4>PO/PM Second Brain</h4>
+                    <p>User stories with Given/When/Then, sprint backlogs, roadmap prioritization, and executive reporting.</p>
+                </a>
+
+                <a href="bootcamp-skills.html#tab-dl" class="track-card dl">
+                    <div class="track-label dl">Delivery Lead</div>
+                    <div class="track-icon">&#128203;</div>
+                    <h4>Delivery Lead Second Brain</h4>
+                    <p>ABCD priority building, risk matrices, client status reports, and phased onboarding — all system-ready.</p>
+                </a>
+
+                <a href="bootcamp-skills.html#tab-tl" class="track-card tl">
+                    <div class="track-label tl">Tech Lead</div>
+                    <div class="track-icon">&#127959;&#65039;</div>
+                    <h4>Tech Lead Second Brain</h4>
+                    <p>ADRs via Tree of Thoughts, metaprompts for team amplification, spike plans, and .cursorrules generation.</p>
+                </a>
+
+                <a href="bootcamp-skills.html#tab-make" class="track-card make">
+                    <div class="track-label make">Capstone</div>
+                    <div class="track-icon">&#128296;</div>
+                    <h4>Make Skills</h4>
+                    <p>Turn any repeated weekly task into a structured skill file. Discover, extract the pattern, generate. Every skill is a RAG system.</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         SESSIONS & REFERENCE
+         ================================================================ -->
+    <section id="sessions">
+        <div class="container">
+            <span class="section-label">Sessions &amp; Reference</span>
+            <h2>Materials for the live workshop</h2>
+            <p class="section-intro">Self-study first, then the live sessions, then keep the reference cards close.</p>
+
+            <div class="card-grid">
+
+                <div class="material-card">
+                    <div class="icon">&#128203;</div>
+                    <h4>Common Knowledge</h4>
+                    <p class="desc">15-minute self-study. Complete before the live session to align on foundational concepts and vocabulary.</p>
+                    <a href="bootcamp-prereq.html" class="card-link">Prereq materials</a>
+                </div>
+
+                <div class="material-card">
+                    <div class="icon">&#127908;</div>
+                    <h4>Session 1 — Patterns &amp; Priority Builder</h4>
+                    <p class="desc">60 min. Three Approaches Framework, foundational patterns, and a hands-on priority builder exercise.</p>
+                    <a href="bootcamp-session1.html" class="card-link">Session 1</a>
+                </div>
+
+                <div class="material-card">
+                    <div class="icon">&#127919;</div>
+                    <h4>Session 2 — Advanced Patterns &amp; Interview Prep</h4>
+                    <p class="desc">60 min. ReAct, Tree of Thoughts, and a complete interview preparation workflow using spec-kit methodology.</p>
+                    <a href="bootcamp-session2.html" class="card-link">Session 2</a>
+                </div>
+
+                <div class="material-card accent">
+                    <div class="icon">&#9889;</div>
+                    <h4>Quick Reference Cards</h4>
+                    <p class="desc">Pattern recognition guide and decision tree for rapid lookup during practice. Printable and screen-friendly.</p>
+                    <a href="bootcamp-reference.html" class="card-link">Quick reference</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         GO DEEPER
+         ================================================================ -->
+    <section id="go-deeper">
+        <div class="container">
+            <span class="section-label">Go Deeper</span>
+            <h2>When you want more than the workshop covers</h2>
+
+            <div class="deeper-grid">
+
+                <div class="deeper-card">
+                    <h4>Advanced Patterns</h4>
+                    <p>Self-consistency, constitutional AI, chain-of-density, structured generation, and evaluation loops.</p>
+                    <a href="prompting-advanced.html">prompting-advanced</a>
+                </div>
+
+                <div class="deeper-card">
+                    <h4>Prompt Cheat Sheet</h4>
+                    <p>Composition patterns, operator reference, and the scaffolding primitives behind every skill file.</p>
+                    <a href="prompt-cheatsheet.html">cheat sheet</a>
+                </div>
+
+                <div class="deeper-card">
+                    <h4>Diagrams as Prompts</h4>
+                    <p>Using Mermaid diagrams as structured reasoning inputs. Why pictures beat paragraphs for complex specs.</p>
+                    <a href="mermaid-prompts.html">mermaid prompts</a>
+                </div>
+
+                <div class="deeper-card">
+                    <h4>Lattice-Driven Dev</h4>
+                    <p>Dependency-ordered development methodology. Build L1 before L2, verify before shipping each layer.</p>
+                    <a href="lattice-dev.html">lattice dev</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================================================
+         WORKSHOP DELIVERY (collapsible — for facilitators)
+         ================================================================ -->
+    <section id="workshop">
+        <div class="container">
+            <span class="section-label">Workshop Delivery</span>
+            <h2>For facilitators</h2>
+            <p class="section-intro">Session structure, timing, and materials for running the live workshop.</p>
+
+            <button class="collapsible-header" onclick="toggleCollapsible(this)" aria-expanded="false">
+                <span>Session flow &amp; facilitator notes</span>
+                <span class="chevron">&#9660;</span>
+            </button>
+            <div class="collapsible-body">
+
+                <h3 style="margin-bottom: 16px;">Session flow — 105 min total</h3>
+                <div class="timeline">
+                    <div class="tl-block primary">
+                        <span class="tl-time">15 min</span>
+                        <span class="tl-label">Prereq</span>
+                        <span class="tl-sub">Self-study before the call</span>
+                    </div>
+                    <div class="tl-block blue">
+                        <span class="tl-time">15 min</span>
+                        <span class="tl-label">Activation</span>
+                        <span class="tl-sub">Framing &amp; three intuitions</span>
+                    </div>
+                    <div class="tl-block green">
+                        <span class="tl-time">40 min</span>
+                        <span class="tl-label">Role Fork</span>
+                        <span class="tl-sub">Role-specific deep dive with skill file</span>
+                    </div>
+                    <div class="tl-block primary">
+                        <span class="tl-time">20 min</span>
+                        <span class="tl-label">Capstone</span>
+                        <span class="tl-sub">Build your own skill</span>
+                    </div>
+                    <div class="tl-block yellow">
+                        <span class="tl-time">10 min</span>
+                        <span class="tl-label">Close</span>
+                        <span class="tl-sub">Synthesis &amp; next steps</span>
+                    </div>
+                </div>
+
+                <div class="card-grid" style="margin-bottom: 28px;">
+                    <div class="material-card">
+                        <div class="icon">&#128218;</div>
+                        <h4>Facilitator Guide v2</h4>
+                        <p class="desc">Minute-by-minute script, timing notes, failure modes, and contingency plans for delivery.</p>
+                        <a href="bootcamp-facilitator.html" class="card-link">Facilitator guide</a>
+                    </div>
+                    <div class="material-card">
+                        <div class="icon">&#128101;</div>
+                        <h4>Participant Materials</h4>
+                        <p class="desc">Decision matrices, demo personas, spec-kit templates, and workshop completion checklist.</p>
+                        <a href="bootcamp-prereq.html" class="card-link">Participant materials</a>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 12px;">v2 improvements</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text);">
+                        <strong>Faster</strong> — 90 min instead of 120 (still covers more ground)
+                    </li>
+                    <li style="padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text);">
+                        <strong>Role-specific</strong> — four parallel tracks instead of one generic path
+                    </li>
+                    <li style="padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text);">
+                        <strong>Agency</strong> — participants build their own skill file in the capstone
+                    </li>
+                    <li style="padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text);">
+                        <strong>Lower entry friction</strong> — 15-min prereq removes baseline alignment overhead from live time
+                    </li>
+                    <li style="padding: 6px 0; font-size: 0.9rem; color: var(--text);">
+                        <strong>Production-grounded</strong> — examples drawn from real project patterns, not textbook exercises
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================================================================
+         FOOTER
+         ================================================================ -->
+    <div class="container">
+        <div class="footer">
+            Joey Lopez · 2026 · <a href="https://jrlopez.dev">jrlopez.dev</a> &nbsp;·&nbsp; <a href="../index.html">← home</a> &nbsp;·&nbsp; <a href="guardrails-engineers.html">guardrails →</a>
+        </div>
+    </div>
+
+
+</article>
+<script>
+        // Smooth scroll — skip non-hash hrefs to avoid blocking page navigation
+        document.querySelectorAll('.nav-pill').forEach(pill => {
+            pill.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (!href || !href.startsWith('#')) return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Collapsible workshop section
+        function toggleCollapsible(btn) {
+            const isOpen = btn.classList.contains('open');
+            btn.classList.toggle('open', !isOpen);
+            btn.setAttribute('aria-expanded', String(!isOpen));
+            const body = btn.nextElementSibling;
+            body.classList.toggle('open', !isOpen);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Pre-commit hook for jrlopez.dev
+# Runs: forge build → BDD validation → stage generated files
+# On failure: commit is BLOCKED.
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+echo "╔══════════════════════════════════════╗"
+echo "║  forge: pre-commit pipeline          ║"
+echo "╚══════════════════════════════════════╝"
+
+# L1-L3: Build (extract .md, rebuild discovery files)
+echo ""
+echo "▸ [L1-L3] Building..."
+python3 build/forge.py build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed. Commit blocked."
+  exit 1
+fi
+
+# L4: BDD validation gate (13 scenarios, 107 steps)
+echo ""
+echo "▸ [L4] Validating (BDD)..."
+if ! command -v behave &>/dev/null && ! python3 -m behave --version &>/dev/null 2>&1; then
+  echo "⚠ behave not installed. Run: pip install behave"
+  echo "  Skipping validation (install behave to enable)."
+else
+  python3 -m behave features/site_coherence.feature --no-capture --format progress
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Validation failed. Commit blocked."
+    echo "   Run 'make validate' to see details."
+    exit 1
+  fi
+fi
+
+# L5: Stage generated/rebuilt files
+echo ""
+echo "▸ [L5] Staging generated files..."
+git add p/*.md llms-full.txt sitemap.xml llms.txt 2>/dev/null || true
+git add index.json 2>/dev/null || true
+
+echo ""
+echo "✅ All checks passed. Committing."

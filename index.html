@@ -3,158 +3,934 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joey Lopez</title>
-<meta name="description" content="Sr. Data Engineer. Open-source tools and teaching materials for prompt engineering and AI development.">
-<meta property="og:title" content="Joey Lopez">
-<meta property="og:description" content="Sr. Data Engineer. Open-source tools and teaching materials for prompt engineering and AI development.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://jrlopez.dev">
-<meta property="og:image" content="https://jrlopez.dev/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://jrlopez.dev/og-image.png">
+<title>Joey Lopez — Second Brain</title>
+<meta name="description" content="Filterable index of every piece of work. Tag-driven, agent-readable.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
-<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Joey Lopez",
+  "jobTitle": "Sr. Data Engineer",
+  "url": "https://jrlopez.dev",
+  "sameAs": [
+    "https://github.com/josephrobertlopez",
+    "https://www.linkedin.com/in/joseph-lopez-80aa81166/"
+  ],
+  "email": "josephrobertlopez@gmail.com",
+  "knowsAbout": ["Prompt Engineering", "AI Safety", "Formal Language Theory", "Data Engineering", "Syntactic Monoids"]
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f0f1a;--bg-card:#161625;--bg-code:#1a1a2e;--border:#2a2a40;
+  --text:#c8c8d8;--text-bright:#e8e8f0;--text-muted:#8888a0;
+  --link:#58a6ff;--accent:#e94560;--green:#3fb950;
+  --tag-bg:#1a1a2e;--tag-text:#8888a0;
+  --tag-active-bg:#e94560;--tag-active-text:#fff;
+  /* tag colors — 45° hue steps, HSL(h,75%,65%) for even spacing + clean blending */
+  --c-prompting:#5b9ef5;  /* 220° blue — learning, patterns */
+  --c-security:#f05555;   /* 0° red — danger, defense */
+  --c-methodology:#b07ef5;/* 270° violet — abstract, meta */
+  --c-workshop:#50c878;   /* 150° emerald — hands-on */
+  --c-skills:#f0a030;     /* 35° amber — tools, applied */
+  --c-reference:#90a4ae;  /* neutral steel — lookups */
+  --c-code:#e0d44a;       /* 55° gold — implementation */
+  --c-paper:#f070a0;      /* 340° rose — published work */
+  --c-diagrams:#40d0d0;   /* 180° teal — visual */
+  --c-teaching:#e078d0;  /* 300° magenta — instruction */
+  --c-template:#8ed050;  /* 95° lime — copy-paste ready */
+  --c-theory:#f09858;    /* 20° sienna — formal/conceptual */
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,#0f0f1a 0%,#1a1030 40%,#1a0f25 100%);background-size:200% 200%;animation:gradientShift 8s ease infinite;padding:72px 20px 52px;text-align:center;border-bottom:1px solid var(--border);position:relative}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.hero h1{font-size:clamp(28px,5vw,48px);color:var(--text-bright);font-weight:800;margin-bottom:6px;line-height:1.2}
+.hero .subtitle{font-size:clamp(13px,1.8vw,15px);color:var(--text-muted);margin-bottom:14px;letter-spacing:.5px}
+.hero .blurb{font-size:clamp(14px,2vw,16px);color:var(--text);max-width:520px;margin:0 auto 24px;line-height:1.7}
+.hero-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.hero-links a{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;color:var(--text);background:var(--bg-card);border:1px solid var(--border);transition:all .2s}
+.hero-links a:hover{background:var(--accent);color:#fff;border-color:var(--accent);text-decoration:none;transform:scale(1.03)}
+
+/* mode toggle */
+.mode-toggle{position:absolute;top:16px;right:20px;display:flex;gap:0;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-size:12px;font-weight:600}
+.mode-toggle button{background:var(--bg-card);color:var(--text-muted);border:none;padding:5px 12px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:all .15s}
+.mode-toggle button.active{background:var(--accent);color:#fff}
+
+/* ── Container ── */
+.container{max-width:860px;margin:0 auto;padding:0 20px}
+
+/* ── Section Label ── */
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-top:40px;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--accent);display:inline-block}
+
+/* ── Pinned Compositions ── */
+.pins{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:8px}
+.pin{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;transition:all .2s;border-left:4px solid var(--accent)}
+.pin:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 14px rgba(233,69,96,0.15)}
+.pin.active-pin{border-color:var(--accent);box-shadow:0 0 0 2px rgba(233,69,96,0.25)}
+.pin-head{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.pin-icon{font-size:13px;line-height:1}
+.pin-title{font-size:14px;font-weight:700;color:var(--text-bright)}
+.pin-tags{font-size:11px;color:var(--text-muted);font-family:'SF Mono',ui-monospace,monospace}
+
+/* ── Tag Bar ── */
+.tagbar{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 20px;align-items:center}
+.tagbar-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-right:4px}
+.tag-btn{background:var(--tag-bg);color:var(--tag-text);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.tag-btn:hover{border-color:var(--c-prompting);color:var(--text-bright)}
+.tag-btn.active{color:#fff;border-color:transparent}
+.tag-btn[data-tag="prompting"].active{background:var(--c-prompting)}
+.tag-btn[data-tag="security"].active{background:var(--c-security)}
+.tag-btn[data-tag="methodology"].active{background:var(--c-methodology)}
+.tag-btn[data-tag="workshop"].active{background:var(--c-workshop)}
+.tag-btn[data-tag="skills"].active{background:var(--c-skills)}
+.tag-btn[data-tag="reference"].active{background:var(--c-reference)}
+.tag-btn[data-tag="code"].active{background:var(--c-code)}
+.tag-btn[data-tag="paper"].active{background:var(--c-paper)}
+.tag-btn[data-tag="diagrams"].active{background:var(--c-diagrams)}
+.tag-btn[data-tag="teaching"].active{background:var(--c-teaching)}
+.tag-btn[data-tag="template"].active{background:var(--c-template)}
+.tag-btn[data-tag="theory"].active{background:var(--c-theory)}
+.clear-btn{background:transparent;color:var(--text-muted);border:1px dashed var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s;display:none}
+.clear-btn.show{display:inline-block}
+.clear-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* count badge */
+.atom-count{font-size:12px;color:var(--text-muted);margin-left:auto;white-space:nowrap;align-self:center}
+
+/* ── Atom Grid ── */
+#atom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+
+/* ── Atom Card ── */
+.atom{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;border-left:4px solid var(--border);transition:opacity .2s,transform .2s;display:flex;flex-direction:column;gap:6px}
+.atom:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.atom.hidden{display:none}
+.atom.flash{animation:atomFlash .6s ease}
+@keyframes atomFlash{0%{box-shadow:0 0 0 0 var(--accent)}30%{box-shadow:0 0 12px 2px var(--accent)}100%{box-shadow:none}}
+
+/* left-border: gradient blend of ALL tag colors (set by JS on load) */
+.atom[data-primary="diagrams"]{border-left-color:var(--c-diagrams)}
+
+.atom h3{font-size:14px;font-weight:700;color:var(--text-bright);line-height:1.35}
+.atom h3 a{color:inherit;text-decoration:none}
+.atom h3 a:hover{color:var(--link)}
+.atom .desc{font-size:13px;color:var(--text);line-height:1.55;flex:1}
+.atom-footer{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
+.atom .tag-pill{font-size:11px;padding:2px 8px;border-radius:10px;border:1px solid var(--border);cursor:pointer;font-weight:600;background:var(--tag-bg);color:var(--tag-text);transition:all .12s;font-family:inherit}
+.atom .tag-pill:hover{color:var(--text-bright)}
+.atom .tag-pill[data-tag="prompting"]{color:var(--c-prompting);border-color:rgba(88,166,255,.25)}
+.atom .tag-pill[data-tag="security"]{color:var(--c-security);border-color:rgba(233,69,96,.25)}
+.atom .tag-pill[data-tag="methodology"]{color:var(--c-methodology);border-color:rgba(167,139,250,.25)}
+.atom .tag-pill[data-tag="workshop"]{color:var(--c-workshop);border-color:rgba(63,185,80,.25)}
+.atom .tag-pill[data-tag="skills"]{color:var(--c-skills);border-color:rgba(240,136,62,.25)}
+.atom .tag-pill[data-tag="reference"]{color:var(--c-reference);border-color:rgba(139,148,158,.25)}
+.atom .tag-pill[data-tag="code"]{color:var(--c-code);border-color:rgba(212,160,23,.25)}
+.atom .tag-pill[data-tag="paper"]{color:var(--c-paper);border-color:rgba(247,120,186,.25)}
+.atom .tag-pill[data-tag="diagrams"]{color:var(--c-diagrams);border-color:rgba(86,212,221,.25)}
+.atom .tag-pill[data-tag="teaching"]{color:var(--c-teaching);border-color:rgba(224,120,208,.25)}
+.atom .tag-pill[data-tag="template"]{color:var(--c-template);border-color:rgba(142,208,80,.25)}
+.atom .tag-pill[data-tag="theory"]{color:var(--c-theory);border-color:rgba(240,152,88,.25)}
+.tag-btn.disabled{opacity:.25;cursor:not-allowed;pointer-events:none}
+.md-pill{font-family:'SF Mono',ui-monospace,monospace;font-size:10px;background:var(--bg-code);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:2px 6px;cursor:pointer;margin-left:auto;white-space:nowrap;flex-shrink:0;user-select:none}
+.md-pill:hover{color:var(--link);border-color:var(--link)}
+.md-pill.active{color:var(--green);border-color:var(--green)}
+.atom-date{font-size:10px;color:var(--text-muted);margin-left:auto;white-space:nowrap;font-family:'SF Mono',ui-monospace,monospace;opacity:.6}
+.md-viewer{display:none;margin-top:10px;max-height:400px;overflow-y:auto;background:#0a0a14;border:1px solid var(--border);border-radius:6px;padding:14px;font-family:'SF Mono',ui-monospace,monospace;font-size:12px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.md-viewer.open{display:block}
+.md-viewer .md-line-num{color:var(--text-muted);user-select:none;display:inline-block;width:3ch;margin-right:1ch;text-align:right;opacity:.4}
+.md-viewer .md-heading{color:var(--text-bright);font-weight:bold}
+.md-viewer .md-code{color:var(--green)}
+.md-viewer .md-comment{color:var(--text-muted);font-style:italic}
+
+/* ── Agent Mode ── */
+#agent-view{display:none}
+#agent-view pre{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:'SF Mono',ui-monospace,monospace;font-size:12px;color:var(--text);overflow-x:auto;white-space:pre;line-height:1.6;margin-top:16px}
+
+/* ── Empty state ── */
+#no-results{display:none;text-align:center;padding:48px 0;color:var(--text-muted);font-size:15px}
+
+/* ── Footer ── */
+.footer{margin-top:48px;padding:24px 0;color:var(--text-muted);font-size:13px;text-align:center;border-top:1px solid var(--border)}
+.footer a{color:var(--text-muted);text-decoration:none;transition:color .2s}
+.footer a:hover{color:var(--link)}
+
+@media(max-width:600px){
+  .hero{padding:56px 16px 40px}
+  .mode-toggle{top:12px;right:12px}
+  .container{padding:0 14px}
+  #atom-grid{grid-template-columns:1fr}
+  .pins{grid-template-columns:1fr 1fr}
+  #graph{height:250px !important}
+}
+</style>
 </head>
 <body>
 
 <div class="hero">
-<h1>Joey Lopez</h1>
-<div class="subtitle">Sr. Data Engineer</div>
-<p class="blurb">I ask the questions, AI does the heavy lifting. Research notes and open-source tools live here. Always happy to brainstorm — reach out or book time on calendly.</p>
-<div class="hero-links">
-<a href="resume.html" target="_blank">resume</a>
-<a href="https://github.com/josephrobertlopez" target="_blank">github</a>
-<a href="https://www.linkedin.com/in/joseph-lopez-80aa81166/" target="_blank">linkedin</a>
-<a href="https://calendly.com/josephrobertlopez" target="_blank">calendly</a>
-<a href="mailto:josephrobertlopez@gmail.com">email</a>
+  <div class="mode-toggle" id="modeToggle" aria-label="Toggle agent mode">
+    <button class="active" id="modeHuman" onclick="setMode('human')">human</button>
+    <button id="modeAgent" onclick="setMode('agent')">agent</button>
+  </div>
+  <h1>Joey Lopez</h1>
+  <div class="subtitle">Sr. Data Engineer</div>
+  <p class="blurb">A pastebin of useful things I've made. Prompt templates, teaching materials, security research, workshop kits. Hope you get value out of it.</p>
+  <div class="hero-links">
+    <a href="resume.html">resume</a>
+    <a href="https://github.com/josephrobertlopez" target="_blank">github</a>
+    <a href="https://www.linkedin.com/in/joseph-lopez-80aa81166/" target="_blank">linkedin</a>
+    <a href="https://calendly.com/josephrobertlopez" target="_blank">calendly</a>
+    <a href="mailto:josephrobertlopez@gmail.com">email</a>
+  </div>
 </div>
+
+<!-- ── Zettelkasten Graph (front and center) ── -->
+<div style="padding:24px 20px 0;text-align:center;max-width:1100px;margin:0 auto">
+  <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:6px">click to filter · drag to move · double-click to open · scroll to zoom</div>
+  <canvas id="graph" width="900" height="500" style="background:#0a0a14;border:1px solid var(--border);border-radius:10px;max-width:100%;cursor:grab;box-shadow:0 4px 24px rgba(0,0,0,.4)"></canvas>
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;flex-wrap:wrap">
+    <span style="font-size:9px;color:var(--text-muted)">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#5b9ef5;margin-right:3px;vertical-align:middle"></span>prompting
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f05555;margin:0 3px;vertical-align:middle"></span>security
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#b07ef5;margin:0 3px;vertical-align:middle"></span>methodology
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#50c878;margin:0 3px;vertical-align:middle"></span>workshop
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f0a030;margin:0 3px;vertical-align:middle"></span>skills
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#90a4ae;margin:0 3px;vertical-align:middle"></span>reference
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e0d44a;margin:0 3px;vertical-align:middle"></span>code
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f070a0;margin:0 3px;vertical-align:middle"></span>paper
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#40d0d0;margin:0 3px;vertical-align:middle"></span>diagrams
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e078d0;margin:0 3px;vertical-align:middle"></span>teaching
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8ed050;margin:0 3px;vertical-align:middle"></span>template
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f09858;margin:0 3px;vertical-align:middle"></span>theory
+    </span>
+  </div>
 </div>
 
 <div class="container">
 
-<div class="section-label">Work</div>
+  <!-- Pinned Compositions -->
+  <div class="section-label">Compositions</div>
+  <div class="pins" id="pins">
+    <div class="pin" data-query="workshop prompting" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Learning Hub</span></div>
+      <div class="pin-tags">#workshop #prompting</div>
+    </div>
+    <div class="pin" data-query="security paper" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Security Research</span></div>
+      <div class="pin-tags">#security #paper</div>
+    </div>
+    <div class="pin" data-query="workshop" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Workshop Materials</span></div>
+      <div class="pin-tags">#workshop</div>
+    </div>
+    <div class="pin" data-query="reference" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Reference Library</span></div>
+      <div class="pin-tags">#reference</div>
+    </div>
+  </div>
 
-<div class="filter">
-<button class="active" onclick="filter('all')">all</button>
-<button onclick="filter('paper')">paper</button>
-<button onclick="filter('teaching')">teaching</button>
-<button onclick="filter('code')">code</button>
-</div>
+  <!-- Tag Bar -->
+  <div class="section-label">Atoms</div>
+  <div class="tagbar" id="tagbar">
+    <span class="tagbar-label">filter</span>
+    <button class="tag-btn" data-tag="prompting" onclick="toggleTag('prompting')">prompting</button>
+    <button class="tag-btn" data-tag="security" onclick="toggleTag('security')">security</button>
+    <button class="tag-btn" data-tag="methodology" onclick="toggleTag('methodology')">methodology</button>
+    <button class="tag-btn" data-tag="workshop" onclick="toggleTag('workshop')">workshop</button>
+    <button class="tag-btn" data-tag="skills" onclick="toggleTag('skills')">skills</button>
+    <button class="tag-btn" data-tag="reference" onclick="toggleTag('reference')">reference</button>
+    <button class="tag-btn" data-tag="code" onclick="toggleTag('code')">code</button>
+    <button class="tag-btn" data-tag="paper" onclick="toggleTag('paper')">paper</button>
+    <button class="tag-btn" data-tag="diagrams" onclick="toggleTag('diagrams')">diagrams</button>
+    <button class="tag-btn" data-tag="teaching" onclick="toggleTag('teaching')">teaching</button>
+    <button class="tag-btn" data-tag="template" onclick="toggleTag('template')">template</button>
+    <button class="tag-btn" data-tag="theory" onclick="toggleTag('theory')">theory</button>
+    <button class="clear-btn" id="clearBtn" onclick="clearTags()">clear</button>
+    <span class="atom-count" id="atomCount">23 atoms</span>
+  </div>
 
-<div id="items">
+  <!-- Human mode: atom grid -->
+  <div id="human-view">
+    <div id="atom-grid"></div><!-- /#atom-grid -->
+    <div id="no-results">No atoms match those filters. <button onclick="clearTags()" style="background:none;border:none;color:var(--link);cursor:pointer;font-size:15px;">Clear filters</button></div>
+  </div><!-- /#human-view -->
 
-<div class="item" data-tags="paper code">
-<h3><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">Your Regex Guardrails Are Provably Blind</a></h3>
-<div class="desc">Formal proof that regex safety filters have a fatal algebraic blind spot — 34/35 production patterns are aperiodic, making modular-position bypasses undetectable. 91 patterns analyzed.</div>
-<div class="tags">
-<span class="tag" onclick="filter('paper')">paper</span>
-<span class="tag" onclick="filter('code')">code</span>
-<span class="tag">formal-languages</span>
-<span class="tag">syntactic-monoids</span>
-<span class="tag">2026</span>
-</div>
-<div class="item-links">
-<a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">pdf</a>
-<a href="https://github.com/josephrobertlopez/aperiodic-guardrails" target="_blank">repo</a>
-</div>
-</div>
+  <!-- Agent Mode -->
+  <div id="agent-view">
+    <p style="color:var(--text-muted);font-size:13px;margin-top:16px">Machine-readable atom index. Fetch any <code style="font-size:12px;color:var(--link)">md_url</code> for raw content.</p>
+    <pre id="agent-json"></pre>
+  </div>
 
-<div class="item" data-tags="teaching">
-<h3><a href="teaching/guardrails-engineers.html">Why Your Safety Filters Fail (and the Math Behind It)</a></h3>
-<div class="desc">The guardrails paper for engineers — no PhD required. SQL injection bypasses, working defense code, and why the fix isn't more regex.</div>
-<div class="tags">
-<span class="tag" onclick="filter('teaching')">teaching</span>
-<span class="tag">formal-languages</span>
-<span class="tag">walkthrough</span>
-<span class="tag">2026</span>
-</div>
-<div class="item-links">
-<a href="teaching/guardrails-engineers.html">for engineers</a>
-<a href="teaching/guardrails-deep-dive.html">deep dive</a>
-</div>
-</div>
+<div class="footer">Joey Lopez · 2026 · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a> · <a href="index.html">← home</a></div>
 
-<div class="item" data-tags="teaching">
-<h3><a href="teaching/prompting.html">What Every Prompt Pattern Actually Does</a></h3>
-<div class="desc">Patterns, templates, and a second brain framework. Foundational and advanced — because prompting is programming.</div>
-<div class="tags">
-<span class="tag" onclick="filter('teaching')">teaching</span>
-<span class="tag">prompting</span>
-<span class="tag">patterns</span>
-<span class="tag">2026</span>
-</div>
-<div class="item-links">
-<a href="teaching/prompting.html">foundational</a>
-<a href="teaching/prompting-advanced.html">advanced patterns</a>
-</div>
-</div>
-
-<div class="item" data-tags="teaching">
-<h3><a href="teaching/prompt-engineering-bootcamp.html">Prompt Engineering Bootcamp</a></h3>
-<div class="desc">A 90-minute hands-on workshop: context is everything, structure gets rewarded, you are the retrieval system. Role-specific tracks for devs, POs, delivery leads, and tech leads. Participants leave with installed tools and a capstone skill they built themselves.</div>
-<div class="tags">
-<span class="tag" onclick="filter('teaching')">teaching</span>
-<span class="tag">prompting</span>
-<span class="tag">workshop</span>
-<span class="tag">2026</span>
-</div>
-<div class="item-links">
-<a href="teaching/prompt-engineering-bootcamp.html">bootcamp</a>
-</div>
-</div>
-
-<div class="item" data-tags="teaching code">
-<h3><a href="teaching/prompt-cheatsheet.html">Prompts Are Programs, Not Sentences</a></h3>
-<div class="desc">Composition cheat sheet, mermaid diagrams as reasoning tools, and lattice-driven development — the method behind how I build.</div>
-<div class="tags">
-<span class="tag" onclick="filter('teaching')">teaching</span>
-<span class="tag" onclick="filter('code')">code</span>
-<span class="tag">methodology</span>
-<span class="tag">lattice</span>
-<span class="tag">mermaid</span>
-<span class="tag">2026</span>
-</div>
-<div class="item-links">
-<a href="teaching/prompt-cheatsheet.html">cheat sheet</a>
-<a href="teaching/mermaid-prompts.html">diagrams as prompts</a>
-<a href="teaching/lattice-dev.html">lattice dev</a>
-</div>
-</div>
-
-<div class="item" data-tags="code">
-<h3><a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">prompt-kit</a></h3>
-<div class="desc">The prompt templates and tooling I actually use. Clone it, adapt it, make it yours.</div>
-<div class="tags">
-<span class="tag" onclick="filter('code')">code</span>
-<span class="tag">open-source</span>
-<span class="tag">framework</span>
-<span class="tag">2026</span>
-</div>
-<div class="item-links">
-<a href="https://github.com/josephrobertlopez/prompt-kit" target="_blank">repo</a>
-</div>
-</div>
-
-</div>
-
-<div class="footer">Joey Lopez · 2026 · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a></div>
-
-</div>
+</div><!-- /.container -->
 
 <script>
-function filter(tag) {
-  document.querySelectorAll('.filter button').forEach(b => {
-    b.classList.toggle('active', b.textContent === tag);
-  });
-  document.querySelectorAll('.item').forEach(item => {
-    if (tag === 'all') {
-      item.classList.remove('hidden');
-    } else {
-      const tags = item.dataset.tags || '';
-      item.classList.toggle('hidden', !tags.includes(tag));
+// ── State ──
+let activeTags = new Set();
+let currentMode = 'human';
+
+// ── Atom data (loaded from index.json, single source of truth) ──
+let ATOMS = [];
+
+async function loadAtoms() {
+  try {
+    const res = await fetch('index.json');
+    const data = await res.json();
+    ATOMS = data.atoms;
+    buildAtomGrid();
+    buildGraph();
+    initFromHash();
+  } catch(e) {
+    console.error('Failed to load index.json:', e);
+  }
+}
+
+function buildAtomGrid() {
+  const grid = document.getElementById('atom-grid');
+  grid.innerHTML = '';
+
+  // Sort by date descending
+  const sorted = [...ATOMS].sort((a,b) => (b.date||'').localeCompare(a.date||''));
+
+  const TAG_COLORS = {
+    prompting:'#5b9ef5', security:'#f05555', methodology:'#b07ef5',
+    workshop:'#50c878', skills:'#f0a030', reference:'#90a4ae',
+    code:'#e0d44a', paper:'#f070a0', diagrams:'#40d0d0',
+    teaching:'#e078d0', template:'#8ed050', theory:'#f09858'
+  };
+
+  sorted.forEach(atom => {
+    const isExternal = atom.html_url.startsWith('http');
+    const target = isExternal ? ' target="_blank"' : '';
+    const tagPills = atom.tags.map(t =>
+      `<span class="tag-pill" data-tag="${t}" onclick="toggleTag('${t}')">#${t}</span>`
+    ).join('\n          ');
+
+    const mdBtn = atom.md_url
+      ? `<span class="md-pill" onclick="toggleMd(this,'${atom.md_url}')">md</span>`
+      : '';
+    const mdViewer = atom.md_url
+      ? `<div class="md-viewer" data-src="${atom.md_url}"></div>`
+      : '';
+
+    const dateStr = atom.date ? atom.date.slice(0,7) : '';
+
+    const div = document.createElement('div');
+    div.className = 'atom';
+    div.dataset.tags = atom.tags.join(' ');
+    div.dataset.primary = atom.tags[0] || '';
+    div.dataset.date = dateStr;
+    div.innerHTML = `
+        <h3><a href="${atom.html_url}"${target}>${atom.title}</a></h3>
+        <div class="desc">${atom.desc}</div>
+        <div class="atom-footer">
+          ${tagPills}
+          ${mdBtn}
+          <span class="atom-date">${dateStr}</span>
+        </div>
+        ${mdViewer}
+    `;
+    grid.appendChild(div);
+
+    // Apply blended tag colors to borders
+    const tags = atom.tags || [];
+    const colors = tags.map(t => TAG_COLORS[t]).filter(Boolean);
+    if (colors.length === 1) {
+      div.style.borderLeftColor = colors[0];
+    } else if (colors.length >= 2) {
+      div.style.borderLeft = 'none';
+      div.style.paddingLeft = '20px';
+      div.style.backgroundImage = `linear-gradient(to bottom, ${colors.join(', ')})`;
+      div.style.backgroundSize = '4px 100%';
+      div.style.backgroundRepeat = 'no-repeat';
+      div.style.backgroundPosition = 'left center';
     }
   });
+
+  // Update count
+  document.getElementById('atomCount').textContent = `${ATOMS.length} atoms`;
 }
+
+// ── Tag toggle ──
+function toggleTag(tag) {
+  if (activeTags.has(tag)) {
+    activeTags.delete(tag);
+  } else {
+    activeTags.add(tag);
+  }
+  syncUI();
+}
+
+function clearTags() {
+  activeTags.clear();
+  // also clear active pin
+  document.querySelectorAll('.pin').forEach(p => p.classList.remove('active-pin'));
+  syncUI();
+}
+
+// ── Pinned compositions ──
+function activatePin(el) {
+  const query = el.dataset.query.split(' ');
+  const isSame = query.every(t => activeTags.has(t)) && activeTags.size === query.length;
+  document.querySelectorAll('.pin').forEach(p => p.classList.remove('active-pin'));
+  if (isSame) {
+    activeTags.clear();
+  } else {
+    activeTags = new Set(query);
+    el.classList.add('active-pin');
+  }
+  syncUI();
+}
+
+// ── Sync everything ──
+function syncUI() {
+  // Sort atoms by date (newest first)
+  const sortedAtoms = [...document.querySelectorAll('.atom')].sort((a,b) => {
+    const da = a.dataset.date || '0000-00';
+    const db = b.dataset.date || '0000-00';
+    return db.localeCompare(da);
+  });
+  const grid = document.getElementById('atom-grid');
+  sortedAtoms.forEach(a => grid.appendChild(a));
+
+  const atoms = document.querySelectorAll('.atom');
+  let visible = 0;
+
+  atoms.forEach(atom => {
+    const tags = atom.dataset.tags.split(' ');
+    const show = activeTags.size === 0 || [...activeTags].every(t => tags.includes(t));
+    const wasHidden = atom.classList.contains('hidden');
+    atom.classList.toggle('hidden', !show);
+    if (show) {
+      visible++;
+      // Flash atoms that just appeared
+      if (wasHidden && activeTags.size > 0) {
+        atom.classList.remove('flash');
+        void atom.offsetWidth; // force reflow
+        atom.classList.add('flash');
+      }
+    }
+  });
+
+  // count
+  const total = atoms.length;
+  const countEl = document.getElementById('atomCount');
+  if (activeTags.size === 0) {
+    countEl.textContent = `${total} atoms`;
+    countEl.style.color = '';
+  } else {
+    countEl.textContent = `${visible} matching · ${total} total`;
+    countEl.style.color = 'var(--accent)';
+  }
+
+  // tag buttons — disable combos that would produce zero results
+  document.querySelectorAll('.tag-btn').forEach(btn => {
+    const tag = btn.dataset.tag;
+    btn.classList.toggle('active', activeTags.has(tag));
+    // Check if adding this tag to current selection would yield results
+    if (!activeTags.has(tag)) {
+      const hypothetical = new Set([...activeTags, tag]);
+      const wouldMatch = [...atoms].some(atom => {
+        const atags = atom.dataset.tags.split(' ');
+        return [...hypothetical].every(t => atags.includes(t));
+      });
+      btn.classList.toggle('disabled', !wouldMatch);
+      btn.disabled = !wouldMatch;
+    } else {
+      btn.classList.remove('disabled');
+      btn.disabled = false;
+    }
+  });
+
+  // clear button
+  document.getElementById('clearBtn').classList.toggle('show', activeTags.size > 0);
+
+  // no results
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+
+  // pin active state — check if current tag set matches a pin
+  document.querySelectorAll('.pin').forEach(pin => {
+    const q = new Set(pin.dataset.query.split(' '));
+    const matches = q.size === activeTags.size && [...q].every(t => activeTags.has(t));
+    pin.classList.toggle('active-pin', matches);
+  });
+
+  // URL hash
+  const hash = activeTags.size > 0 ? [...activeTags].join('+') : '';
+  history.replaceState(null, '', hash ? '#' + hash : location.pathname);
+}
+
+// ── Mode toggle ──
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeHuman').classList.toggle('active', mode === 'human');
+  document.getElementById('modeAgent').classList.toggle('active', mode === 'agent');
+  document.getElementById('human-view').style.display = mode === 'human' ? '' : 'none';
+  document.getElementById('agent-view').style.display = mode === 'agent' ? 'block' : 'none';
+
+  if (mode === 'agent') renderAgentJSON();
+}
+
+function renderAgentJSON() {
+  const index = {
+    schema: "jrlopez-atom-index/1.0",
+    base_url: "https://jrlopez.dev/",
+    generated: new Date().toISOString().slice(0,10),
+    total: ATOMS.length,
+    atoms: ATOMS.map(a => ({
+      id: a.id,
+      title: a.title,
+      desc: a.desc,
+      html_url: a.html_url,
+      md_url: a.md_url,
+      tags: a.tags
+    }))
+  };
+  document.getElementById('agent-json').textContent = JSON.stringify(index, null, 2);
+}
+
+// ── Init from URL hash ──
+function initFromHash() {
+  const hash = location.hash.replace('#','').trim();
+  if (hash) {
+    hash.split('+').forEach(t => { if (t) activeTags.add(t); });
+  }
+  syncUI();
+}
+
+window.addEventListener('hashchange', initFromHash);
+
+// ── Zettelkasten Graph (interactive second brain) ──
+function buildGraph() {
+  const canvas = document.getElementById('graph');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 900, H = 500;
+  canvas.width = W; canvas.height = H;
+
+  const TC = {prompting:'#5b9ef5',security:'#f05555',methodology:'#b07ef5',workshop:'#50c878',skills:'#f0a030',reference:'#90a4ae',code:'#e0d44a',paper:'#f070a0',diagrams:'#40d0d0',teaching:'#e078d0',template:'#8ed050',theory:'#f09858'};
+
+  // Nodes from ATOMS — size by connection count
+  const nodes = ATOMS.map((a,i) => ({
+    id: i, label: a.title, shortLabel: a.title.length > 24 ? a.title.slice(0,22)+'…' : a.title,
+    tags: a.tags,
+    color: a.tags.length === 1 ? (TC[a.tags[0]] || '#888') : null,
+    colors: a.tags.map(t => TC[t] || '#888'),
+    // Blend: average RGB of all tag colors
+    get blendedColor() {
+      if (this.color) return this.color;
+      const rgbs = this.colors.map(c => [parseInt(c.slice(1,3),16), parseInt(c.slice(3,5),16), parseInt(c.slice(5,7),16)]);
+      const avg = rgbs.reduce((a,b) => [a[0]+b[0], a[1]+b[1], a[2]+b[2]], [0,0,0]).map(v => Math.round(v/rgbs.length));
+      return '#' + avg.map(v => v.toString(16).padStart(2,'0')).join('');
+    },
+    html_url: a.html_url,
+    x: W/2 + (Math.random()-.5)*400,
+    y: H/2 + (Math.random()-.5)*300,
+    vx: 0, vy: 0, r: 5, connections: 0
+  }));
+
+  // Edges + connection counting
+  const edges = [];
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i+1; j < nodes.length; j++) {
+      const shared = nodes[i].tags.filter(t => nodes[j].tags.includes(t));
+      if (shared.length > 0) {
+        edges.push({a: i, b: j, strength: shared.length, color: TC[shared[0]] || '#333'});
+        nodes[i].connections += shared.length;
+        nodes[j].connections += shared.length;
+      }
+    }
+  }
+  // Scale node radius by connections (more connected = bigger)
+  const maxConn = Math.max(...nodes.map(n => n.connections));
+  nodes.forEach(n => { n.r = 4 + (n.connections / maxConn) * 8; });
+
+  let hoveredNode = null;
+  let selectedNode = null;
+  let dragging = null;
+  let dragMoved = false;
+  let zoom = 1;
+  let panX = 0, panY = 0;
+  let isPanning = false;
+  let lastMouse = {x:0, y:0};
+  let throwVx = 0, throwVy = 0;
+
+  // Force simulation — loose, floaty, momentum
+  function tick() {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i+1; j < nodes.length; j++) {
+        let dx = nodes[j].x - nodes[i].x, dy = nodes[j].y - nodes[i].y;
+        let d = Math.sqrt(dx*dx + dy*dy) || 1;
+        let f = 1500 / (d * d);
+        nodes[i].vx -= dx/d*f; nodes[i].vy -= dy/d*f;
+        nodes[j].vx += dx/d*f; nodes[j].vy += dy/d*f;
+      }
+    }
+    edges.forEach(e => {
+      let a = nodes[e.a], b = nodes[e.b];
+      let dx = b.x-a.x, dy = b.y-a.y, d = Math.sqrt(dx*dx+dy*dy)||1;
+      let f = (d - 120) * 0.003 * e.strength;
+      a.vx += dx/d*f; a.vy += dy/d*f;
+      b.vx -= dx/d*f; b.vy -= dy/d*f;
+    });
+    nodes.forEach(n => {
+      n.vx += (W/2 - n.x) * 0.0005;
+      n.vy += (H/2 - n.y) * 0.0005;
+      // Low damping = more momentum, floatier
+      n.vx *= 0.95; n.vy *= 0.95;
+      if (n !== dragging) { n.x += n.vx; n.y += n.vy; }
+      n.x = Math.max(30, Math.min(W-30, n.x));
+      n.y = Math.max(30, Math.min(H-30, n.y));
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    ctx.translate(panX, panY);
+    ctx.scale(zoom, zoom);
+
+    const isFiltered = activeTags.size > 0;
+    const isSelected = selectedNode !== null;
+
+    // Find neighbors of selected node
+    const neighbors = new Set();
+    if (isSelected) {
+      edges.forEach(e => {
+        if (e.a === selectedNode.id) neighbors.add(e.b);
+        if (e.b === selectedNode.id) neighbors.add(e.a);
+      });
+    }
+
+    // Draw edges
+    edges.forEach(e => {
+      const a = nodes[e.a], b = nodes[e.b];
+      const aMatch = !isFiltered || [...activeTags].every(t => a.tags.includes(t));
+      const bMatch = !isFiltered || [...activeTags].every(t => b.tags.includes(t));
+
+      let alpha = '12';
+      if (isSelected) {
+        if (e.a === selectedNode.id || e.b === selectedNode.id) alpha = '80';
+        else alpha = '06';
+      } else if (aMatch && bMatch) {
+        alpha = '30';
+      }
+
+      // Curved edges for multi-connection pairs
+      const midX = (a.x + b.x)/2, midY = (a.y + b.y)/2;
+      const offset = e.strength > 1 ? 15 : 0;
+      const cpX = midX + offset, cpY = midY - offset;
+
+      ctx.strokeStyle = e.color + alpha;
+      ctx.lineWidth = Math.min(e.strength * 0.8, 3);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      if (offset) { ctx.quadraticCurveTo(cpX, cpY, b.x, b.y); }
+      else { ctx.lineTo(b.x, b.y); }
+      ctx.stroke();
+    });
+
+    // Draw nodes
+    nodes.forEach(n => {
+      const match = !isFiltered || [...activeTags].every(t => n.tags.includes(t));
+      const isNeighbor = neighbors.has(n.id);
+      const isSel = isSelected && n === selectedNode;
+      const isHov = n === hoveredNode;
+
+      // Determine visual state
+      let alpha = 1;
+      let r = n.r;
+      if (isSelected && !isSel && !isNeighbor) alpha = 0.15;
+      else if (isFiltered && !match) alpha = 0.12;
+      if (isHov) r = n.r + 4;
+      if (isSel) r = n.r + 3;
+
+      // Glow for hovered/selected
+      if ((isHov || isSel) && alpha > 0.5) {
+        ctx.beginPath(); ctx.arc(n.x, n.y, r + 8, 0, Math.PI*2);
+        ctx.fillStyle = n.blendedColor + '15';
+        ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x, n.y, r + 4, 0, Math.PI*2);
+        ctx.fillStyle = n.blendedColor + '25';
+        ctx.fill();
+      }
+
+      // Node circle
+      ctx.globalAlpha = alpha;
+      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI*2);
+      ctx.fillStyle = n.blendedColor;
+      ctx.fill();
+      if (isSel) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke(); }
+      else if (isHov) { ctx.strokeStyle = n.blendedColor; ctx.lineWidth = 1.5; ctx.stroke(); }
+      ctx.globalAlpha = 1;
+
+      // Always show labels for visible nodes when filtered or selected
+      const showLabel = isHov || isSel || (isSelected && isNeighbor) || (isFiltered && match && nodes.filter(nn => !isFiltered || [...activeTags].every(t => nn.tags.includes(t))).length <= 12);
+
+      if (showLabel && alpha > 0.5) {
+        ctx.font = isSel ? 'bold 12px -apple-system,sans-serif' : '11px -apple-system,sans-serif';
+        ctx.fillStyle = isSel ? '#fff' : '#ccc';
+        ctx.textAlign = 'center';
+        ctx.fillText(n.shortLabel, n.x, n.y - r - 6);
+
+        if (isHov || isSel) {
+          ctx.font = '9px monospace';
+          ctx.fillStyle = '#666';
+          ctx.fillText(n.tags.map(t => '#'+t).join(' '), n.x, n.y + r + 14);
+          // Connection count
+          ctx.fillText(n.connections + ' connections', n.x, n.y + r + 26);
+        }
+      }
+    });
+
+    ctx.restore();
+  }
+
+  function animate() { tick(); draw(); requestAnimationFrame(animate); }
+  animate();
+
+  // ── Mouse interaction — generous grab, momentum throw, pan ──
+  function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: ((e.clientX - rect.left) * (W / rect.width) - panX) / zoom,
+      y: ((e.clientY - rect.top) * (H / rect.height) - panY) / zoom,
+      rawX: e.clientX, rawY: e.clientY
+    };
+  }
+
+  function findNode(mx, my) {
+    // Big grab radius — easy to click
+    let closest = null, closestDist = 50; // 50px grab zone — very generous
+    for (const n of nodes) {
+      const d = Math.hypot(n.x - mx, n.y - my);
+      if (d < closestDist) { closest = n; closestDist = d; }
+    }
+    return closest;
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const {x, y, rawX, rawY} = getMousePos(e);
+    hoveredNode = findNode(x, y);
+
+    if (dragging) {
+      // Track velocity for throw
+      throwVx = x - dragging.x;
+      throwVy = y - dragging.y;
+      dragging.x = x; dragging.y = y;
+      dragging.vx = 0; dragging.vy = 0;
+      // Only count as drag if moved more than 4px (prevents click-jitter)
+      if (Math.abs(throwVx) > 0.5 || Math.abs(throwVy) > 0.5) dragMoved = true;
+    } else if (isPanning) {
+      panX += (rawX - lastMouse.x);
+      panY += (rawY - lastMouse.y);
+    }
+    lastMouse = {x: rawX, y: rawY};
+
+    canvas.style.cursor = hoveredNode ? 'pointer' : (dragging ? 'grabbing' : isPanning ? 'grabbing' : 'grab');
+  });
+
+  let mouseStartPos = null;
+  let mouseStartNode = null;
+
+  canvas.addEventListener('mousedown', e => {
+    const {x, y, rawX, rawY} = getMousePos(e);
+    mouseStartPos = {x: rawX, y: rawY};
+    lastMouse = {x: rawX, y: rawY};
+    mouseStartNode = findNode(x, y);
+    if (mouseStartNode) {
+      dragging = mouseStartNode; dragMoved = false;
+      throwVx = 0; throwVy = 0;
+    } else {
+      isPanning = true;
+    }
+  });
+
+  canvas.addEventListener('mouseup', e => {
+    const {rawX, rawY} = getMousePos(e);
+    const dist = mouseStartPos ? Math.hypot(rawX - mouseStartPos.x, rawY - mouseStartPos.y) : 999;
+
+    if (mouseStartNode && dist < 8) {
+      // CLICK — barely moved
+      if (selectedNode === mouseStartNode) {
+        selectedNode = null;
+        activeTags.clear();
+        syncUI();
+      } else {
+        selectedNode = mouseStartNode;
+        activeTags = new Set(ATOMS[mouseStartNode.id].tags);
+        syncUI();
+        setTimeout(() => {
+          document.getElementById('atom-grid').scrollIntoView({behavior:'smooth',block:'start'});
+        }, 100);
+      }
+    } else if (dragging && dragMoved) {
+      dragging.vx = throwVx * 3;
+      dragging.vy = throwVy * 3;
+    }
+    dragging = null; dragMoved = false; isPanning = false;
+    mouseStartPos = null; mouseStartNode = null;
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    if (dragging) {
+      dragging.vx = throwVx * 3;
+      dragging.vy = throwVy * 3;
+    }
+    dragging = null; isPanning = false; hoveredNode = null;
+  });
+
+  canvas.addEventListener('dblclick', e => {
+    const {x, y} = getMousePos(e);
+    const n = findNode(x, y);
+    if (n) {
+      const url = ATOMS[n.id].html_url;
+      if (url.startsWith('http')) window.open(url, '_blank');
+      else window.location.href = url;
+    }
+  });
+
+  // Scroll to zoom — desktop only (don't hijack mobile scroll)
+  const isMobile = 'ontouchstart' in window;
+  if (!isMobile) {
+    canvas.addEventListener('wheel', e => {
+      e.preventDefault();
+      const {rawX, rawY} = getMousePos(e);
+      const rect = canvas.getBoundingClientRect();
+      const mx = rawX - rect.left, my = rawY - rect.top;
+      const oldZoom = zoom;
+      zoom *= e.deltaY > 0 ? 0.92 : 1.08;
+      zoom = Math.max(0.3, Math.min(4, zoom));
+      panX = mx - (mx - panX) * (zoom / oldZoom);
+      panY = my - (my - panY) * (zoom / oldZoom);
+    }, {passive: false});
+  }
+
+  // Touch support for mobile
+  // ── Touch: DON'T hijack scroll. Only intercept if touching a node. ──
+  let touchStartNode = null;
+  let touchStartPos = null;
+  let touchIntercepted = false;
+
+  canvas.addEventListener('touchstart', e => {
+    const touch = e.touches[0];
+    const fake = {clientX: touch.clientX, clientY: touch.clientY};
+    const {x, y} = getMousePos(fake);
+    touchStartPos = {x: touch.clientX, y: touch.clientY};
+    lastMouse = {x: touch.clientX, y: touch.clientY};
+    touchStartNode = findNode(x, y);
+
+    if (touchStartNode) {
+      // Only prevent default (hijack scroll) if we're touching a node
+      e.preventDefault();
+      dragging = touchStartNode; dragMoved = false; throwVx = 0; throwVy = 0;
+      touchIntercepted = true;
+    } else {
+      // Let the page scroll normally — don't intercept
+      touchIntercepted = false;
+    }
+  }, {passive: false});
+
+  canvas.addEventListener('touchmove', e => {
+    if (!touchIntercepted) return; // let page scroll
+    e.preventDefault();
+    const touch = e.touches[0];
+    const fake = {clientX: touch.clientX, clientY: touch.clientY};
+    const {x, y} = getMousePos(fake);
+    if (dragging) {
+      throwVx = x - dragging.x; throwVy = y - dragging.y;
+      dragging.x = x; dragging.y = y; dragging.vx = 0; dragging.vy = 0;
+      dragMoved = true;
+    }
+    lastMouse = {x: touch.clientX, y: touch.clientY};
+  }, {passive: false});
+
+  canvas.addEventListener('touchend', e => {
+    if (!touchIntercepted) { touchStartNode = null; touchStartPos = null; return; }
+
+    const endTouch = e.changedTouches[0];
+    const dist = touchStartPos ? Math.hypot(endTouch.clientX - touchStartPos.x, endTouch.clientY - touchStartPos.y) : 999;
+
+    if (touchStartNode && dist < 15) {
+      // TAP on a node — select and filter
+      if (selectedNode === touchStartNode) {
+        selectedNode = null;
+        activeTags.clear();
+        syncUI();
+      } else {
+        selectedNode = touchStartNode;
+        activeTags = new Set(ATOMS[touchStartNode.id].tags);
+        syncUI();
+        setTimeout(() => {
+          document.getElementById('atom-grid').scrollIntoView({behavior:'smooth',block:'start'});
+        }, 150);
+      }
+    } else if (dragging && dragMoved) {
+      dragging.vx = throwVx * 3; dragging.vy = throwVy * 3;
+    }
+    dragging = null; touchIntercepted = false; touchStartNode = null; touchStartPos = null;
+  });
+
+  // When external filter changes, update selected node
+  const origSync = syncUI;
+  // Watch for tag changes and reflect in graph
+  const observer = new MutationObserver(() => {
+    if (activeTags.size === 0) selectedNode = null;
+  });
+  observer.observe(document.getElementById('atomCount'), {childList: true, characterData: true, subtree: true});
+}
+
+// ── Inline Markdown Viewer (Jenkins log style) ──
+async function toggleMd(pill, src) {
+  const viewer = pill.closest('.atom').querySelector('.md-viewer');
+  if (!viewer) return;
+
+  // Toggle open/close
+  if (viewer.classList.contains('open')) {
+    viewer.classList.remove('open');
+    pill.classList.remove('active');
+    pill.textContent = 'md';
+    return;
+  }
+
+  // Load content if not already loaded
+  if (!viewer.dataset.loaded) {
+    viewer.textContent = 'loading...';
+    viewer.classList.add('open');
+    try {
+      const resp = await fetch(src);
+      if (!resp.ok) throw new Error(resp.status);
+      const text = await resp.text();
+      // Render with line numbers and syntax hints
+      const lines = text.split('\n');
+      viewer.innerHTML = lines.map((line, i) => {
+        const num = `<span class="md-line-num">${i+1}</span>`;
+        let cls = '';
+        if (line.startsWith('#')) cls = 'md-heading';
+        else if (line.startsWith('```') || line.startsWith('  ')) cls = 'md-code';
+        else if (line.startsWith('---') || line.startsWith('<!--')) cls = 'md-comment';
+        const escaped = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return `${num}<span class="${cls}">${escaped}</span>`;
+      }).join('\n');
+      viewer.dataset.loaded = 'true';
+    } catch(e) {
+      viewer.textContent = `Error loading ${src}: ${e.message}`;
+    }
+  } else {
+    viewer.classList.add('open');
+  }
+
+  pill.classList.add('active');
+  pill.textContent = '× close';
+}
+
+// ── Initialize: load atoms from index.json ──
+loadAtoms();
 </script>
 
 </body>
