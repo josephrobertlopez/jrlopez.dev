@@ -4,7 +4,7 @@
   "description": "A pastebin of useful things — prompt templates, teaching materials, security research, workshop kits.",
   "base_url": "https://jrlopez.dev/",
   "updated": "2026-03-25",
-  "total": 24,
+  "total": 26,
   "tags": [
     "prompting",
     "security",
@@ -316,6 +316,30 @@
         "teaching"
       ],
       "date": "2026-01-10"
+    },
+    {
+      "id": 25,
+      "title": "About",
+      "desc": "CHSPE → community college → UC Irvine → data engineering → formal proofs via AI agents.",
+      "html_url": "p/about.html",
+      "md_url": "p/about.md",
+      "tags": [
+        "reference"
+      ],
+      "date": "2026-03-25"
+    },
+    {
+      "id": 26,
+      "title": "Agent-First Website Design",
+      "desc": "Your website has two audiences now. One of them doesn't have eyes. Standards, patterns, implementation.",
+      "html_url": "p/agent-first-design.html",
+      "md_url": "p/agent-first-design.md",
+      "tags": [
+        "methodology",
+        "code",
+        "theory"
+      ],
+      "date": "2026-03-25"
     }
   ]
 }
