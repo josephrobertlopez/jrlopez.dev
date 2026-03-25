@@ -3,7 +3,7 @@ title: "Session 2 — Advanced"
 description: "ReAct, Tree of Thoughts, spec-kit, interview prep."
 author: "Joey Lopez"
 date: "2026-01-22"
-tags: ["workshop", "prompting", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 10
 source_html: "bootcamp-session2.html"
 url: "https://jrlopez.dev/p/bootcamp-session2.html"
@@ -150,4 +150,4 @@ ACT: Migrate to SecurityFilterChain pattern
  - White et al. (2023) — Prompt Pattern Catalog · arXiv 2302.11382
  - Yao et al. (2022) — ReAct Pattern · arXiv 2210.03629
  - Yao et al. (2023) — Tree of Thoughts · arXiv 2305.10601 Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [← session 1 ]()· [participant materials ]()· [quick reference ]()· [facilitator guide ]()
+[← home ]()· [bootcamp overview ]()· [← session 1 ]()· [participant materials ]()· [quick reference ]()· [facilitator guide ]()[.md ]()

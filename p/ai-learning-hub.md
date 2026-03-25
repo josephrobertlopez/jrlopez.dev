@@ -3,7 +3,7 @@ title: "AI Learning Hub"
 description: "Guided path: why AI → tools → patterns → pick your track."
 author: "Joey Lopez"
 date: "2026-03-22"
-tags: ["prompting", "workshop", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 6
 source_html: "ai-learning-hub.html"
 url: "https://jrlopez.dev/p/ai-learning-hub.html"
@@ -68,4 +68,4 @@ Don't overthink tool choice. Start with what's available, graduate when you hit 
  - **Role-specific **— four parallel tracks instead of one generic path
  - **Agency **— participants build their own skill file in the capstone
  - **Lower entry friction **— 15-min prereq removes baseline alignment overhead from live time
- - **Production-grounded **— examples drawn from real project patterns, not textbook exercises Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()
+ - **Production-grounded **— examples drawn from real project patterns, not textbook exercises Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()[.md ]()

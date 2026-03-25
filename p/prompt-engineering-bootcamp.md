@@ -3,7 +3,7 @@ title: "Prompt Engineering Bootcamp"
 description: "90-minute hands-on workshop — systematic AI workflows, role-specific tracks, capstone skill build."
 author: "Joey Lopez"
 date: "2026-01-10"
-tags: ["workshop", "prompting", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 24
 source_html: "prompt-engineering-bootcamp.html"
 url: "https://jrlopez.dev/p/prompt-engineering-bootcamp.html"
@@ -52,4 +52,4 @@ generated: true
  - ✓ **More relevant **: Role-specific patterns, not one-size-fits-all
  - ✓ **Agency **: Participants build their own skills in the capstone
  - ✓ **Production-tested **: Methodology grounded in real project outcomes
- - ✓ **Lower activation energy **: Prereq removes baseline friction Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()
+ - ✓ **Lower activation energy **: Prereq removes baseline friction Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()[.md ]()

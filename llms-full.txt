@@ -1,5 +1,5 @@
 # Joey Lopez — Knowledge Base
-Generated: 2026-03-25T09:40:54.725135
+Generated: 2026-03-25T10:48:12.947021
 Base URL: https://jrlopez.dev/
 
 This file aggregates all public knowledge from jrlopez.dev.
@@ -16,7 +16,7 @@ title: "AI Learning Hub"
 description: "Guided path: why AI → tools → patterns → pick your track."
 author: "Joey Lopez"
 date: "2026-03-22"
-tags: ["prompting", "workshop", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 6
 source_html: "ai-learning-hub.html"
 url: "https://jrlopez.dev/p/ai-learning-hub.html"
@@ -81,7 +81,7 @@ Don't overthink tool choice. Start with what's available, graduate when you hit 
  - **Role-specific **— four parallel tracks instead of one generic path
  - **Agency **— participants build their own skill file in the capstone
  - **Lower entry friction **— 15-min prereq removes baseline alignment overhead from live time
- - **Production-grounded **— examples drawn from real project patterns, not textbook exercises Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()
+ - **Production-grounded **— examples drawn from real project patterns, not textbook exercises Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()[.md ]()
 ---
 # bootcamp-facilitator.md
 # https://jrlopez.dev/p/bootcamp-facilitator.html
@@ -91,7 +91,7 @@ title: "Facilitator Guide"
 description: "Minute-by-minute script for running the workshop."
 author: "Joey Lopez"
 date: "2026-01-18"
-tags: ["workshop", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 12
 source_html: "bootcamp-facilitator.html"
 url: "https://jrlopez.dev/p/bootcamp-facilitator.html"
@@ -292,7 +292,7 @@ generated: true
  - Systematic methodology internalized
  - Cross-domain pattern recognition achieved
  - Concrete action plans for ongoing application Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [quick reference ]()
+[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [quick reference ]()[.md ]()
 ---
 # bootcamp-prereq.md
 # https://jrlopez.dev/p/bootcamp-prereq.html
@@ -302,7 +302,7 @@ title: "Bootcamp Prereq"
 description: "15-minute self-study before the live session."
 author: "Joey Lopez"
 date: "2026-01-10"
-tags: ["workshop", "reference", "teaching"]
+tags: ["prompting", "teaching", "reference"]
 atom_id: 8
 source_html: "bootcamp-prereq.html"
 url: "https://jrlopez.dev/p/bootcamp-prereq.html"
@@ -489,7 +489,7 @@ Generate → Evaluate → Choose pattern for decision making Completion
  - Create a spec-kit workflow for a task I do repeatedly
  - Evaluate new AI tools using the Tier Framework
  - Share the Three Approaches framework with my team Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [session 1 → ]()· [session 2 → ]()· [quick reference → ]()· [facilitator guide → ]()
+[← home ]()· [bootcamp overview ]()· [session 1 → ]()· [session 2 → ]()· [quick reference → ]()· [facilitator guide → ]()[.md ]()
 ---
 # bootcamp-reference.md
 # https://jrlopez.dev/p/bootcamp-reference.html
@@ -577,7 +577,7 @@ Foundational patterns: Persona, Few-shot, Template, Chain-of-Thought
 Think → Act → Observe for complex reasoning
  - **Yao et al. (2023) **— Tree of Thoughts · arXiv 2305.10601
 Generate → Evaluate → Choose for decision making Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [facilitator guide ]()
+[← home ]()· [bootcamp overview ]()· [session 1 ]()· [session 2 ]()· [participant materials ]()· [facilitator guide ]()[.md ]()
 ---
 # bootcamp-session1.md
 # https://jrlopez.dev/p/bootcamp-session1.html
@@ -587,7 +587,7 @@ title: "Session 1 — Patterns"
 description: "Three Approaches, foundational patterns, priority builder."
 author: "Joey Lopez"
 date: "2026-01-15"
-tags: ["workshop", "prompting", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 9
 source_html: "bootcamp-session1.html"
 url: "https://jrlopez.dev/p/bootcamp-session1.html"
@@ -685,7 +685,7 @@ migrate UserController to Spring Boot 3"
  - **Tree of Thoughts **for decision points with real tradeoffs
  - **Interview prep workflow **— 4-file systematic approach
  - **Live technical demo **— Spring Boot migration using same patterns Bring a job description you're interested in, or use the samples in the participant materials. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [participant materials ]()· [session 2 → ]()· [quick reference ]()· [facilitator guide ]()
+[← home ]()· [bootcamp overview ]()· [participant materials ]()· [session 2 → ]()· [quick reference ]()· [facilitator guide ]()[.md ]()
 ---
 # bootcamp-session2.md
 # https://jrlopez.dev/p/bootcamp-session2.html
@@ -695,7 +695,7 @@ title: "Session 2 — Advanced"
 description: "ReAct, Tree of Thoughts, spec-kit, interview prep."
 author: "Joey Lopez"
 date: "2026-01-22"
-tags: ["workshop", "prompting", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 10
 source_html: "bootcamp-session2.html"
 url: "https://jrlopez.dev/p/bootcamp-session2.html"
@@ -842,18 +842,18 @@ ACT: Migrate to SecurityFilterChain pattern
  - White et al. (2023) — Prompt Pattern Catalog · arXiv 2302.11382
  - Yao et al. (2022) — ReAct Pattern · arXiv 2210.03629
  - Yao et al. (2023) — Tree of Thoughts · arXiv 2305.10601 Joey Lopez · 2026 · [jrlopez.dev ]()
-[← home ]()· [bootcamp overview ]()· [← session 1 ]()· [participant materials ]()· [quick reference ]()· [facilitator guide ]()
+[← home ]()· [bootcamp overview ]()· [← session 1 ]()· [participant materials ]()· [quick reference ]()· [facilitator guide ]()[.md ]()
 ---
 # bootcamp-skills.md
 # https://jrlopez.dev/p/bootcamp-skills.html
 
 ---
-title: "Bootcamp Skills"
-description: "5 role-specific skills — Swagger-style with copy buttons."
+title: "Make Skills (Capstone)"
+description: "Build your own skill from any repeated task."
 author: "Joey Lopez"
-date: "2026-02-15"
-tags: ["skills", "workshop", "teaching", "template"]
-atom_id: 7
+date: "2026-03-20"
+tags: ["methodology", "teaching", "template"]
+atom_id: 21
 source_html: "bootcamp-skills.html"
 url: "https://jrlopez.dev/p/bootcamp-skills.html"
 generated: true
@@ -1655,7 +1655,7 @@ Should you build a skill for this task? ▶
 
 | Others could use it too  || It is already fully automated  |
 
-**Skill composition: **Once you have a few skills you can chain them. Spec-generator output feeds into plan-generator, which feeds into test-strategy-generator. That is a workflow, not just a skill. Joey Lopez · 2026 · [jrlopez.dev ]()[home ]()· [bootcamp ]()· [developer ]()· [PO/PM ]()· [delivery ]()· [tech lead ]()· [make skills ]()
+**Skill composition: **Once you have a few skills you can chain them. Spec-generator output feeds into plan-generator, which feeds into test-strategy-generator. That is a workflow, not just a skill. Joey Lopez · 2026 · [jrlopez.dev ]()[home ]()· [bootcamp ]()· [developer ]()· [PO/PM ]()· [delivery ]()· [tech lead ]()· [make skills ]()[.md ]()
 ---
 # guardrails-deep-dive.md
 # https://jrlopez.dev/p/guardrails-deep-dive.html
@@ -1788,7 +1788,7 @@ graph TB
      style INF fill:#3d1520,stroke:#e94560,color:#fff
      style EXE fill:#1a3d20,stroke:#3fb950,color:#fff Key Insight The common thread across all four impossibility results: **the guardrail cannot see what the attacker sees **. The regex cannot see modular encodings. The abstraction-layer classifier cannot see which fiber an artifact belongs to. The complexity barrier prevents searching all interpretations. The indistinguishability theorem makes the prompt itself uninformative. The solution is architectural: move safety checks to the point where abstract operations become concrete artifacts -- the execution layer. At that point, the thing being inspected is no longer an abstraction. It is the actual file, the actual API call, the actual network request. Mixed fibers collapse. Steganography fails. The artifact is observable. Check Your Understanding If execution-layer defenses are the answer, why keep inference-layer guardrails at all? Because defense in depth is still valuable. Inference-layer guardrails catch the vast majority of unsophisticated attacks -- direct requests, simple rephrasing, etc. The impossibility results apply to adversaries who deliberately construct attacks exploiting the structural limits. Removing inference-layer defenses would be like removing TSA screening because determined attackers can get through -- you still want to catch the easy cases. What is the single most important takeaway from this paper? That the limitations of inference-layer guardrails are not bugs to be fixed but mathematical theorems to be respected. The defense architecture should be designed with these limits as given constraints, not as problems to be solved. This means investing in execution-layer monitoring, sandboxing, and artifact inspection rather than expecting the inference layer to catch everything. **Read the full paper and proof-of-concept: **[View on GitHub ]()
 Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← for engineers ]()· [prompting notes → ]()
+[← jrlopez.dev ]()· [← for engineers ]()· [prompting notes → ]()[.md ]()
 ---
 # guardrails-engineers.md
 # https://jrlopez.dev/p/guardrails-engineers.html
@@ -1976,7 +1976,7 @@ print("  Do NOT rely on this as a security boundary.")
 The Bottom Line Content-layer guardrails are **filters, not firewalls **. They catch the easy stuff. They will always miss some hard stuff, and the miss rate has a mathematical floor. Defense in depth is not a best practice — it is a provable necessity. Move your critical security decisions to the execution layer, where you can observe what the system actually does rather than trying to predict it from what was asked. **Read the full paper and explore the tools: **
 [github.com/josephrobertlopez/aperiodic-guardrails ]()
 Paper: "Algebraic and Computational Limits of LLM Guardrails" Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [deep dive → ]()· [prompting notes → ]()
+[← jrlopez.dev ]()· [deep dive → ]()· [prompting notes → ]()[.md ]()
 ---
 # lattice-dev.md
 # https://jrlopez.dev/p/lattice-dev.html
@@ -2292,7 +2292,7 @@ Warning Regex-based guardrails can't stop certain attack classes. The answer isn
 EOF# Step 3: Draft SPEC.md (LLM drafts, human verifies against KNOWLEDGE)# Prompt: "Given this KNOWLEDGE.md, write a SPEC with acceptance criteria"# Then run Gate 2: every KNOWLEDGE constraint maps to a SPEC criterion# Step 4: Draft PLAN.md (LLM drafts, human verifies against SPEC)# Prompt: "Given this SPEC.md, decompose into tasks with prerequisites"# Then run Gate 3: DAG is acyclic, every SPEC criterion has a task# Step 5: Execute PLAN (LLM generates, human reviews at each gate)# For each task in topo-sort order:#   1. LLM generates output#   2. Human runs Gate 4: does output match PLAN task?#   3. If gate passes, move to next task#   4. If gate fails, LLM regenerates (not the human fixing it)
 ```
 Try It Pick your next feature. Before touching code, write the three files: KNOWLEDGE, SPEC, PLAN. Spend three hours. Then compare the result to how you usually build features. Two things will surprise you: (1) the spec will catch requirements gaps you'd normally find during testing, and (2) the LLM's code quality improves dramatically when it has a verified spec to work from instead of a vague prompt. Warning The most common failure mode: skipping KNOWLEDGE and jumping straight to SPEC. "I know the domain, I don't need to write it down." You do. KNOWLEDGE.md isn't for you today -- it's for the LLM that drafts SPEC, for the gate that verifies SPEC, and for you in three months when you've forgotten why you made that constraint. Write it down. One hour. That's it. No fancy tooling. No formal verification software. Just structure, gates, and honesty about what you know and what you don't. The result: fewer bugs, faster development, and -- most importantly -- sleep. You know what your system will do before it does it. The lattice holds the proof. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← diagrams as prompts ]()· [guardrails → ]()
+[← jrlopez.dev ]()· [← diagrams as prompts ]()· [guardrails → ]()[.md ]()
 ---
 # mermaid-prompts.md
 # https://jrlopez.dev/p/mermaid-prompts.html
@@ -2302,7 +2302,7 @@ title: "Diagrams as Prompts"
 description: "Mermaid diagrams as structured reasoning inputs."
 author: "Joey Lopez"
 date: "2026-02-10"
-tags: ["diagrams", "methodology", "theory"]
+tags: ["methodology", "theory"]
 atom_id: 14
 source_html: "mermaid-prompts.html"
 url: "https://jrlopez.dev/p/mermaid-prompts.html"
@@ -2510,7 +2510,7 @@ graph TD
    T1 --> L
    P --> L
    T2 --> L **Used for: **Shared with a designer. They could see exactly how users move through the site without reading a single paragraph of documentation. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← cheat sheet ]()· [lattice development → ]()
+[← jrlopez.dev ]()· [← cheat sheet ]()· [lattice development → ]()[.md ]()
 ---
 # prompt-cheatsheet.md
 # https://jrlopez.dev/p/prompt-cheatsheet.html
@@ -2520,7 +2520,7 @@ title: "Prompts Are Programs"
 description: "Composition cheat sheet. Load/Chain/Compose operators."
 author: "Joey Lopez"
 date: "2025-11-20"
-tags: ["methodology", "reference", "template"]
+tags: ["methodology", "prompting", "template", "reference"]
 atom_id: 13
 source_html: "prompt-cheatsheet.html"
 url: "https://jrlopez.dev/p/prompt-cheatsheet.html"
@@ -2824,7 +2824,7 @@ Section 09
 | Load KNOWLEDGE + SPEC + PLAN together  || Surgical load: pick one or two per step  || Irrelevant files waste context window  |
 
 Try It Pick your last 3 prompts. Check each against this table. Did you make any of these mistakes? Rewrite one to fix it. Share the before/after with a colleague. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← guardrails ]()· [foundational patterns → ]()
+[← jrlopez.dev ]()· [← guardrails ]()· [foundational patterns → ]()[.md ]()
 ---
 # prompt-engineering-bootcamp.md
 # https://jrlopez.dev/p/prompt-engineering-bootcamp.html
@@ -2834,7 +2834,7 @@ title: "Prompt Engineering Bootcamp"
 description: "90-minute hands-on workshop — systematic AI workflows, role-specific tracks, capstone skill build."
 author: "Joey Lopez"
 date: "2026-01-10"
-tags: ["workshop", "prompting", "teaching"]
+tags: ["prompting", "teaching"]
 atom_id: 24
 source_html: "prompt-engineering-bootcamp.html"
 url: "https://jrlopez.dev/p/prompt-engineering-bootcamp.html"
@@ -2883,7 +2883,7 @@ generated: true
  - ✓ **More relevant **: Role-specific patterns, not one-size-fits-all
  - ✓ **Agency **: Participants build their own skills in the capstone
  - ✓ **Production-tested **: Methodology grounded in real project outcomes
- - ✓ **Lower activation energy **: Prereq removes baseline friction Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()
+ - ✓ **Lower activation energy **: Prereq removes baseline friction Joey Lopez · 2026 · [jrlopez.dev ]()· [← home ]()· [guardrails → ]()[.md ]()
 ---
 # prompting-advanced.md
 # https://jrlopez.dev/p/prompting-advanced.html
@@ -3202,7 +3202,7 @@ Important Don't over-engineer. If the task is "rename a variable," you don't nee
  - **Each step depends on the previous one: **Use ReAct with CHECK steps
  - **You're not sure if it worked: **Add validation checkpoints
  - **You're over-engineering: **Strip it back. Start simple. Upgrade when complexity demands it. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← foundational patterns ]()· [guardrails → ]()
+[← jrlopez.dev ]()· [← foundational patterns ]()· [guardrails → ]()[.md ]()
 ---
 # prompting.md
 # https://jrlopez.dev/p/prompting.html
@@ -3930,7 +3930,7 @@ One line. The model doesn't need a resume. Mistake Providing 10 few-shot example
 | Architecture Decision Records  || Systematic prompt organization  || Nygard (2011)  |
 
 Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [advanced patterns → ]()· [guardrails → ]()
+[← jrlopez.dev ]()· [advanced patterns → ]()· [guardrails → ]()[.md ]()
 ---
 # resume.md
 # https://jrlopez.dev/p/resume.html

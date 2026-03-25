@@ -29,19 +29,16 @@
   --link:#58a6ff;--accent:#e94560;--green:#3fb950;
   --tag-bg:#1a1a2e;--tag-text:#8888a0;
   --tag-active-bg:#e94560;--tag-active-text:#fff;
-  /* tag colors — 45° hue steps, HSL(h,75%,65%) for even spacing + clean blending */
-  --c-prompting:#5b9ef5;  /* 220° blue — learning, patterns */
-  --c-security:#f05555;   /* 0° red — danger, defense */
-  --c-methodology:#b07ef5;/* 270° violet — abstract, meta */
-  --c-workshop:#50c878;   /* 150° emerald — hands-on */
-  --c-skills:#f0a030;     /* 35° amber — tools, applied */
-  --c-reference:#90a4ae;  /* neutral steel — lookups */
-  --c-code:#e0d44a;       /* 55° gold — implementation */
-  --c-paper:#f070a0;      /* 340° rose — published work */
-  --c-diagrams:#40d0d0;   /* 180° teal — visual */
-  --c-teaching:#e078d0;  /* 300° magenta — instruction */
-  --c-template:#8ed050;  /* 95° lime — copy-paste ready */
-  --c-theory:#f09858;    /* 20° sienna — formal/conceptual */
+  /* topic colors */
+  --c-prompting:#5b9ef5;  /* blue */
+  --c-security:#f05555;   /* red */
+  --c-methodology:#b07ef5;/* violet */
+  --c-code:#e0d44a;       /* gold */
+  /* format colors */
+  --c-teaching:#e078d0;   /* magenta */
+  --c-template:#8ed050;   /* lime */
+  --c-theory:#f09858;     /* sienna */
+  --c-reference:#90a4ae;  /* steel */
 }
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
@@ -57,10 +54,6 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 .hero-links a{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;color:var(--text);background:var(--bg-card);border:1px solid var(--border);transition:all .2s}
 .hero-links a:hover{background:var(--accent);color:#fff;border-color:var(--accent);text-decoration:none;transform:scale(1.03)}
 
-/* mode toggle */
-.mode-toggle{position:absolute;top:16px;right:20px;display:flex;gap:0;border:1px solid var(--border);border-radius:20px;overflow:hidden;font-size:12px;font-weight:600}
-.mode-toggle button{background:var(--bg-card);color:var(--text-muted);border:none;padding:5px 12px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:all .15s}
-.mode-toggle button.active{background:var(--accent);color:#fff}
 
 /* ── Container ── */
 .container{max-width:860px;margin:0 auto;padding:0 20px}
@@ -87,18 +80,16 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 .tag-btn[data-tag="prompting"].active{background:var(--c-prompting)}
 .tag-btn[data-tag="security"].active{background:var(--c-security)}
 .tag-btn[data-tag="methodology"].active{background:var(--c-methodology)}
-.tag-btn[data-tag="workshop"].active{background:var(--c-workshop)}
-.tag-btn[data-tag="skills"].active{background:var(--c-skills)}
-.tag-btn[data-tag="reference"].active{background:var(--c-reference)}
 .tag-btn[data-tag="code"].active{background:var(--c-code)}
-.tag-btn[data-tag="paper"].active{background:var(--c-paper)}
-.tag-btn[data-tag="diagrams"].active{background:var(--c-diagrams)}
 .tag-btn[data-tag="teaching"].active{background:var(--c-teaching)}
 .tag-btn[data-tag="template"].active{background:var(--c-template)}
 .tag-btn[data-tag="theory"].active{background:var(--c-theory)}
+.tag-btn[data-tag="reference"].active{background:var(--c-reference)}
 .clear-btn{background:transparent;color:var(--text-muted);border:1px dashed var(--border);border-radius:20px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s;display:none}
 .clear-btn.show{display:inline-block}
 .clear-btn:hover{color:var(--accent);border-color:var(--accent)}
+.tier-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);width:50px;flex-shrink:0}
+.tagbar-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
 
 /* count badge */
 .atom-count{font-size:12px;color:var(--text-muted);margin-left:auto;white-space:nowrap;align-self:center}
@@ -123,18 +114,14 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 .atom-footer{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
 .atom .tag-pill{font-size:11px;padding:2px 8px;border-radius:10px;border:1px solid var(--border);cursor:pointer;font-weight:600;background:var(--tag-bg);color:var(--tag-text);transition:all .12s;font-family:inherit}
 .atom .tag-pill:hover{color:var(--text-bright)}
-.atom .tag-pill[data-tag="prompting"]{color:var(--c-prompting);border-color:rgba(88,166,255,.25)}
-.atom .tag-pill[data-tag="security"]{color:var(--c-security);border-color:rgba(233,69,96,.25)}
-.atom .tag-pill[data-tag="methodology"]{color:var(--c-methodology);border-color:rgba(167,139,250,.25)}
-.atom .tag-pill[data-tag="workshop"]{color:var(--c-workshop);border-color:rgba(63,185,80,.25)}
-.atom .tag-pill[data-tag="skills"]{color:var(--c-skills);border-color:rgba(240,136,62,.25)}
-.atom .tag-pill[data-tag="reference"]{color:var(--c-reference);border-color:rgba(139,148,158,.25)}
-.atom .tag-pill[data-tag="code"]{color:var(--c-code);border-color:rgba(212,160,23,.25)}
-.atom .tag-pill[data-tag="paper"]{color:var(--c-paper);border-color:rgba(247,120,186,.25)}
-.atom .tag-pill[data-tag="diagrams"]{color:var(--c-diagrams);border-color:rgba(86,212,221,.25)}
+.atom .tag-pill[data-tag="prompting"]{color:var(--c-prompting);border-color:rgba(91,158,245,.25)}
+.atom .tag-pill[data-tag="security"]{color:var(--c-security);border-color:rgba(240,85,85,.25)}
+.atom .tag-pill[data-tag="methodology"]{color:var(--c-methodology);border-color:rgba(176,126,245,.25)}
+.atom .tag-pill[data-tag="code"]{color:var(--c-code);border-color:rgba(224,212,74,.25)}
 .atom .tag-pill[data-tag="teaching"]{color:var(--c-teaching);border-color:rgba(224,120,208,.25)}
 .atom .tag-pill[data-tag="template"]{color:var(--c-template);border-color:rgba(142,208,80,.25)}
 .atom .tag-pill[data-tag="theory"]{color:var(--c-theory);border-color:rgba(240,152,88,.25)}
+.atom .tag-pill[data-tag="reference"]{color:var(--c-reference);border-color:rgba(144,164,174,.25)}
 .tag-btn.disabled{opacity:.25;cursor:not-allowed;pointer-events:none}
 .md-pill{font-family:'SF Mono',ui-monospace,monospace;font-size:10px;background:var(--bg-code);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:2px 6px;cursor:pointer;margin-left:auto;white-space:nowrap;flex-shrink:0;user-select:none}
 .md-pill:hover{color:var(--link);border-color:var(--link)}
@@ -147,9 +134,6 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 .md-viewer .md-code{color:var(--green)}
 .md-viewer .md-comment{color:var(--text-muted);font-style:italic}
 
-/* ── Agent Mode ── */
-#agent-view{display:none}
-#agent-view pre{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:20px;font-family:'SF Mono',ui-monospace,monospace;font-size:12px;color:var(--text);overflow-x:auto;white-space:pre;line-height:1.6;margin-top:16px}
 
 /* ── Empty state ── */
 #no-results{display:none;text-align:center;padding:48px 0;color:var(--text-muted);font-size:15px}
@@ -172,19 +156,15 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 <body>
 
 <div class="hero">
-  <div class="mode-toggle" id="modeToggle" aria-label="Toggle agent mode">
-    <button class="active" id="modeHuman" onclick="setMode('human')">human</button>
-    <button id="modeAgent" onclick="setMode('agent')">agent</button>
-  </div>
   <h1>Joey Lopez</h1>
   <div class="subtitle">Sr. Data Engineer</div>
   <p class="blurb">A pastebin of useful things I've made. Prompt templates, teaching materials, security research, workshop kits. Hope you get value out of it.</p>
   <div class="hero-links">
-    <a href="resume.html">resume</a>
-    <a href="https://github.com/josephrobertlopez" target="_blank">github</a>
-    <a href="https://www.linkedin.com/in/joseph-lopez-80aa81166/" target="_blank">linkedin</a>
-    <a href="https://calendly.com/josephrobertlopez" target="_blank">calendly</a>
-    <a href="mailto:josephrobertlopez@gmail.com">email</a>
+    <a href="resume.html">Resume</a>
+    <a href="https://github.com/josephrobertlopez" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/joseph-lopez-80aa81166/" target="_blank">LinkedIn</a>
+    <a href="https://calendly.com/josephrobertlopez" target="_blank">Calendly</a>
+    <a href="mailto:josephrobertlopez@gmail.com">Email</a>
   </div>
 </div>
 
@@ -197,15 +177,12 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#5b9ef5;margin-right:3px;vertical-align:middle"></span>prompting
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f05555;margin:0 3px;vertical-align:middle"></span>security
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#b07ef5;margin:0 3px;vertical-align:middle"></span>methodology
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#50c878;margin:0 3px;vertical-align:middle"></span>workshop
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f0a030;margin:0 3px;vertical-align:middle"></span>skills
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#90a4ae;margin:0 3px;vertical-align:middle"></span>reference
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e0d44a;margin:0 3px;vertical-align:middle"></span>code
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f070a0;margin:0 3px;vertical-align:middle"></span>paper
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#40d0d0;margin:0 3px;vertical-align:middle"></span>diagrams
+      <span style="margin:0 6px;color:#333">|</span>
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e078d0;margin:0 3px;vertical-align:middle"></span>teaching
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8ed050;margin:0 3px;vertical-align:middle"></span>template
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f09858;margin:0 3px;vertical-align:middle"></span>theory
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#90a4ae;margin:0 3px;vertical-align:middle"></span>reference
     </span>
   </div>
 </div>
@@ -215,42 +192,43 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
   <!-- Pinned Compositions -->
   <div class="section-label">Compositions</div>
   <div class="pins" id="pins">
-    <div class="pin" data-query="workshop prompting" onclick="activatePin(this)">
-      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Learning Hub</span></div>
-      <div class="pin-tags">#workshop #prompting</div>
+    <div class="pin" data-query="prompting teaching" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Learn Prompting</span></div>
+      <div class="pin-tags">#prompting × #teaching</div>
     </div>
-    <div class="pin" data-query="security paper" onclick="activatePin(this)">
-      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Security Research</span></div>
-      <div class="pin-tags">#security #paper</div>
+    <div class="pin" data-query="security" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Security Stack</span></div>
+      <div class="pin-tags">#security</div>
     </div>
-    <div class="pin" data-query="workshop" onclick="activatePin(this)">
-      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Workshop Materials</span></div>
-      <div class="pin-tags">#workshop</div>
+    <div class="pin" data-query="template" onclick="activatePin(this)">
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Copy-Paste Ready</span></div>
+      <div class="pin-tags">#template</div>
     </div>
     <div class="pin" data-query="reference" onclick="activatePin(this)">
-      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Reference Library</span></div>
+      <div class="pin-head"><span class="pin-icon">📌</span><span class="pin-title">Reference Shelf</span></div>
       <div class="pin-tags">#reference</div>
     </div>
   </div>
 
   <!-- Tag Bar -->
   <div class="section-label">Atoms</div>
-  <div class="tagbar" id="tagbar">
-    <span class="tagbar-label">filter</span>
-    <button class="tag-btn" data-tag="prompting" onclick="toggleTag('prompting')">prompting</button>
-    <button class="tag-btn" data-tag="security" onclick="toggleTag('security')">security</button>
-    <button class="tag-btn" data-tag="methodology" onclick="toggleTag('methodology')">methodology</button>
-    <button class="tag-btn" data-tag="workshop" onclick="toggleTag('workshop')">workshop</button>
-    <button class="tag-btn" data-tag="skills" onclick="toggleTag('skills')">skills</button>
-    <button class="tag-btn" data-tag="reference" onclick="toggleTag('reference')">reference</button>
-    <button class="tag-btn" data-tag="code" onclick="toggleTag('code')">code</button>
-    <button class="tag-btn" data-tag="paper" onclick="toggleTag('paper')">paper</button>
-    <button class="tag-btn" data-tag="diagrams" onclick="toggleTag('diagrams')">diagrams</button>
-    <button class="tag-btn" data-tag="teaching" onclick="toggleTag('teaching')">teaching</button>
-    <button class="tag-btn" data-tag="template" onclick="toggleTag('template')">template</button>
-    <button class="tag-btn" data-tag="theory" onclick="toggleTag('theory')">theory</button>
-    <button class="clear-btn" id="clearBtn" onclick="clearTags()">clear</button>
-    <span class="atom-count" id="atomCount">23 atoms</span>
+  <div id="tagbar">
+    <div class="tagbar-row">
+      <span class="tier-label">topic</span>
+      <button class="tag-btn" data-tag="prompting" onclick="toggleTag('prompting')">prompting</button>
+      <button class="tag-btn" data-tag="security" onclick="toggleTag('security')">security</button>
+      <button class="tag-btn" data-tag="methodology" onclick="toggleTag('methodology')">methodology</button>
+      <button class="tag-btn" data-tag="code" onclick="toggleTag('code')">code</button>
+    </div>
+    <div class="tagbar-row">
+      <span class="tier-label">format</span>
+      <button class="tag-btn" data-tag="teaching" onclick="toggleTag('teaching')">teaching</button>
+      <button class="tag-btn" data-tag="template" onclick="toggleTag('template')">template</button>
+      <button class="tag-btn" data-tag="theory" onclick="toggleTag('theory')">theory</button>
+      <button class="tag-btn" data-tag="reference" onclick="toggleTag('reference')">reference</button>
+      <button class="clear-btn" id="clearBtn" onclick="clearTags()">clear</button>
+      <span class="atom-count" id="atomCount">24 atoms</span>
+    </div>
   </div>
 
   <!-- Human mode: atom grid -->
@@ -259,20 +237,24 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
     <div id="no-results">No atoms match those filters. <button onclick="clearTags()" style="background:none;border:none;color:var(--link);cursor:pointer;font-size:15px;">Clear filters</button></div>
   </div><!-- /#human-view -->
 
-  <!-- Agent Mode -->
-  <div id="agent-view">
-    <p style="color:var(--text-muted);font-size:13px;margin-top:16px">Machine-readable atom index. Fetch any <code style="font-size:12px;color:var(--link)">md_url</code> for raw content.</p>
-    <pre id="agent-json"></pre>
-  </div>
 
-<div class="footer">Joey Lopez · 2026 · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a> · <a href="index.html">← home</a></div>
+<!-- Agent endpoints -->
+<div style="margin-top:40px;padding:16px;background:#0a0a14;border:1px solid var(--border);border-radius:8px;font-family:'SF Mono',ui-monospace,monospace;font-size:12px;line-height:2">
+  <span style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);display:block;margin-bottom:6px">Machine-readable endpoints</span>
+  <a href="llms.txt" style="color:var(--green)">llms.txt</a> <span style="color:var(--text-muted)">— site index for LLMs</span><br>
+  <a href="llms-full.txt" style="color:var(--green)">llms-full.txt</a> <span style="color:var(--text-muted)">— full content dump (~83K tokens)</span><br>
+  <a href="index.json" style="color:var(--green)">index.json</a> <span style="color:var(--text-muted)">— structured atom catalog</span><br>
+  <a href="sitemap.xml" style="color:var(--green)">sitemap.xml</a> <span style="color:var(--text-muted)">— page discovery</span><br>
+  <a href="robots.txt" style="color:var(--green)">robots.txt</a> <span style="color:var(--text-muted)">— crawler permissions</span>
+</div>
+
+<div class="footer">Joey Lopez · 2026 · <a href="mailto:josephrobertlopez@gmail.com">josephrobertlopez@gmail.com</a></div>
 
 </div><!-- /.container -->
 
 <script>
 // ── State ──
 let activeTags = new Set();
-let currentMode = 'human';
 
 // ── Atom data (loaded from index.json, single source of truth) ──
 let ATOMS = [];
@@ -299,9 +281,8 @@ function buildAtomGrid() {
 
   const TAG_COLORS = {
     prompting:'#5b9ef5', security:'#f05555', methodology:'#b07ef5',
-    workshop:'#50c878', skills:'#f0a030', reference:'#90a4ae',
-    code:'#e0d44a', paper:'#f070a0', diagrams:'#40d0d0',
-    teaching:'#e078d0', template:'#8ed050', theory:'#f09858'
+    code:'#e0d44a', teaching:'#e078d0', template:'#8ed050',
+    theory:'#f09858', reference:'#90a4ae'
   };
 
   sorted.forEach(atom => {
@@ -311,12 +292,6 @@ function buildAtomGrid() {
       `<span class="tag-pill" data-tag="${t}" onclick="toggleTag('${t}')">#${t}</span>`
     ).join('\n          ');
 
-    const mdBtn = atom.md_url
-      ? `<span class="md-pill" onclick="toggleMd(this,'${atom.md_url}')">md</span>`
-      : '';
-    const mdViewer = atom.md_url
-      ? `<div class="md-viewer" data-src="${atom.md_url}"></div>`
-      : '';
 
     const dateStr = atom.date ? atom.date.slice(0,7) : '';
 
@@ -330,10 +305,8 @@ function buildAtomGrid() {
         <div class="desc">${atom.desc}</div>
         <div class="atom-footer">
           ${tagPills}
-          ${mdBtn}
           <span class="atom-date">${dateStr}</span>
         </div>
-        ${mdViewer}
     `;
     grid.appendChild(div);
 
@@ -368,10 +341,10 @@ function toggleTag(tag) {
 
 function clearTags() {
   activeTags.clear();
-  // also clear active pin
   document.querySelectorAll('.pin').forEach(p => p.classList.remove('active-pin'));
   syncUI();
 }
+
 
 // ── Pinned compositions ──
 function activatePin(el) {
@@ -389,6 +362,7 @@ function activatePin(el) {
 
 // ── Sync everything ──
 function syncUI() {
+
   // Sort atoms by date (newest first)
   const sortedAtoms = [...document.querySelectorAll('.atom')].sort((a,b) => {
     const da = a.dataset.date || '0000-00';
@@ -463,36 +437,9 @@ function syncUI() {
   // URL hash
   const hash = activeTags.size > 0 ? [...activeTags].join('+') : '';
   history.replaceState(null, '', hash ? '#' + hash : location.pathname);
+
 }
 
-// ── Mode toggle ──
-function setMode(mode) {
-  currentMode = mode;
-  document.getElementById('modeHuman').classList.toggle('active', mode === 'human');
-  document.getElementById('modeAgent').classList.toggle('active', mode === 'agent');
-  document.getElementById('human-view').style.display = mode === 'human' ? '' : 'none';
-  document.getElementById('agent-view').style.display = mode === 'agent' ? 'block' : 'none';
-
-  if (mode === 'agent') renderAgentJSON();
-}
-
-function renderAgentJSON() {
-  const index = {
-    schema: "jrlopez-atom-index/1.0",
-    base_url: "https://jrlopez.dev/",
-    generated: new Date().toISOString().slice(0,10),
-    total: ATOMS.length,
-    atoms: ATOMS.map(a => ({
-      id: a.id,
-      title: a.title,
-      desc: a.desc,
-      html_url: a.html_url,
-      md_url: a.md_url,
-      tags: a.tags
-    }))
-  };
-  document.getElementById('agent-json').textContent = JSON.stringify(index, null, 2);
-}
 
 // ── Init from URL hash ──
 function initFromHash() {
@@ -513,7 +460,7 @@ function buildGraph() {
   const W = 900, H = 500;
   canvas.width = W; canvas.height = H;
 
-  const TC = {prompting:'#5b9ef5',security:'#f05555',methodology:'#b07ef5',workshop:'#50c878',skills:'#f0a030',reference:'#90a4ae',code:'#e0d44a',paper:'#f070a0',diagrams:'#40d0d0',teaching:'#e078d0',template:'#8ed050',theory:'#f09858'};
+  const TC = {prompting:'#5b9ef5',security:'#f05555',methodology:'#b07ef5',code:'#e0d44a',teaching:'#e078d0',template:'#8ed050',theory:'#f09858',reference:'#90a4ae'};
 
   // Nodes from ATOMS — size by connection count
   const nodes = ATOMS.map((a,i) => ({
@@ -529,8 +476,8 @@ function buildGraph() {
       return '#' + avg.map(v => v.toString(16).padStart(2,'0')).join('');
     },
     html_url: a.html_url,
-    x: W/2 + (Math.random()-.5)*400,
-    y: H/2 + (Math.random()-.5)*300,
+    x: W/2 + (Math.random()-.5)*300,
+    y: H/2 + (Math.random()-.5)*200,
     vx: 0, vy: 0, r: 5, connections: 0
   }));
 
@@ -560,13 +507,22 @@ function buildGraph() {
   let lastMouse = {x:0, y:0};
   let throwVx = 0, throwVy = 0;
 
-  // Force simulation — loose, floaty, momentum
+  // Force simulation — calm startup, gentle float after settling
+  let settled = false;
+  let tickCount = 0;
+
   function tick() {
+    tickCount++;
+    // Heavy damping during settle phase (first 120 frames ~2s)
+    const damping = tickCount < 120 ? 0.82 : 0.93;
+    // Weaker repulsion during settle to prevent explosion
+    const repulse = tickCount < 60 ? 600 : 1000;
+
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i+1; j < nodes.length; j++) {
         let dx = nodes[j].x - nodes[i].x, dy = nodes[j].y - nodes[i].y;
         let d = Math.sqrt(dx*dx + dy*dy) || 1;
-        let f = 1500 / (d * d);
+        let f = repulse / (d * d);
         nodes[i].vx -= dx/d*f; nodes[i].vy -= dy/d*f;
         nodes[j].vx += dx/d*f; nodes[j].vy += dy/d*f;
       }
@@ -574,15 +530,16 @@ function buildGraph() {
     edges.forEach(e => {
       let a = nodes[e.a], b = nodes[e.b];
       let dx = b.x-a.x, dy = b.y-a.y, d = Math.sqrt(dx*dx+dy*dy)||1;
-      let f = (d - 120) * 0.003 * e.strength;
+      let f = (d - 100) * 0.004 * e.strength;
       a.vx += dx/d*f; a.vy += dy/d*f;
       b.vx -= dx/d*f; b.vy -= dy/d*f;
     });
     nodes.forEach(n => {
-      n.vx += (W/2 - n.x) * 0.0005;
-      n.vy += (H/2 - n.y) * 0.0005;
-      // Low damping = more momentum, floatier
-      n.vx *= 0.95; n.vy *= 0.95;
+      // Gravity toward center
+      n.vx += (W/2 - n.x) * 0.0008;
+      n.vy += (H/2 - n.y) * 0.0008;
+      // Damping
+      n.vx *= damping; n.vy *= damping;
       if (n !== dragging) { n.x += n.vx; n.y += n.vy; }
       n.x = Math.max(30, Math.min(W-30, n.x));
       n.y = Math.max(30, Math.min(H-30, n.y));

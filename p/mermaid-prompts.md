@@ -3,7 +3,7 @@ title: "Diagrams as Prompts"
 description: "Mermaid diagrams as structured reasoning inputs."
 author: "Joey Lopez"
 date: "2026-02-10"
-tags: ["diagrams", "methodology", "theory"]
+tags: ["methodology", "theory"]
 atom_id: 14
 source_html: "mermaid-prompts.html"
 url: "https://jrlopez.dev/p/mermaid-prompts.html"
@@ -211,4 +211,4 @@ graph TD
    T1 --> L
    P --> L
    T2 --> L **Used for: **Shared with a designer. They could see exactly how users move through the site without reading a single paragraph of documentation. Joey Lopez · 2026 · [jrlopez.dev ]()
-[← jrlopez.dev ]()· [← cheat sheet ]()· [lattice development → ]()
+[← jrlopez.dev ]()· [← cheat sheet ]()· [lattice development → ]()[.md ]()

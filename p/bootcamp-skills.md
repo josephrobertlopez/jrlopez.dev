@@ -1,10 +1,10 @@
 ---
-title: "Bootcamp Skills"
-description: "5 role-specific skills — Swagger-style with copy buttons."
+title: "Make Skills (Capstone)"
+description: "Build your own skill from any repeated task."
 author: "Joey Lopez"
-date: "2026-02-15"
-tags: ["skills", "workshop", "teaching", "template"]
-atom_id: 7
+date: "2026-03-20"
+tags: ["methodology", "teaching", "template"]
+atom_id: 21
 source_html: "bootcamp-skills.html"
 url: "https://jrlopez.dev/p/bootcamp-skills.html"
 generated: true
@@ -806,4 +806,4 @@ Should you build a skill for this task? ▶
 
 | Others could use it too  || It is already fully automated  |
 
-**Skill composition: **Once you have a few skills you can chain them. Spec-generator output feeds into plan-generator, which feeds into test-strategy-generator. That is a workflow, not just a skill. Joey Lopez · 2026 · [jrlopez.dev ]()[home ]()· [bootcamp ]()· [developer ]()· [PO/PM ]()· [delivery ]()· [tech lead ]()· [make skills ]()
+**Skill composition: **Once you have a few skills you can chain them. Spec-generator output feeds into plan-generator, which feeds into test-strategy-generator. That is a workflow, not just a skill. Joey Lopez · 2026 · [jrlopez.dev ]()[home ]()· [bootcamp ]()· [developer ]()· [PO/PM ]()· [delivery ]()· [tech lead ]()· [make skills ]()[.md ]()

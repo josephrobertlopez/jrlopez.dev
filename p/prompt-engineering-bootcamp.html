@@ -585,7 +585,10 @@
         .mt-xl { margin-top: var(--spacing-xl); }
         .mb-lg { margin-bottom: var(--spacing-lg); }
         .mb-xl { margin-bottom: var(--spacing-xl); }
-    </style>
+    .md-export{position:fixed;bottom:20px;right:20px;z-index:100;padding:8px 18px;background:#8ed050;color:#0f0f1a;border:none;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'SF Mono',ui-monospace,monospace;box-shadow:0 4px 12px rgba(142,208,80,.3);transition:all .2s;text-decoration:none;display:inline-block}
+.md-export:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(142,208,80,.4)}
+@media print{.md-export{display:none}}
+</style>
 </head>
 <body>
 
@@ -877,5 +880,6 @@
             });
         });
     </script>
+<a class="md-export" href="prompt-engineering-bootcamp.md">.md</a>
 </body>
 </html>

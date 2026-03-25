@@ -332,6 +332,9 @@
   .tag-red { background: #3d1520; color: var(--accent); }
   .tag-green { background: #1a3d20; color: var(--green); }
   .tag-blue { background: #152540; color: var(--blue); }
+.md-export{position:fixed;bottom:20px;right:20px;z-index:100;padding:8px 18px;background:#8ed050;color:#0f0f1a;border:none;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'SF Mono',ui-monospace,monospace;box-shadow:0 4px 12px rgba(142,208,80,.3);transition:all .2s;text-decoration:none;display:inline-block}
+.md-export:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(142,208,80,.4)}
+@media print{.md-export{display:none}}
 </style>
 </head>
 <body>
@@ -1020,5 +1023,6 @@ Looks like homework. Is actually a synthesis procedure.
     }
   }
 </script>
+<a class="md-export" href="guardrails-deep-dive.md">.md</a>
 </body>
 </html>
