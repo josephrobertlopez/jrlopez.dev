@@ -1,10 +1,10 @@
 {
   "schema": "jrlopez-atom-index/1.0",
   "name": "Joey Lopez",
-  "description": "A pastebin of useful things — prompt templates, teaching materials, security research, workshop kits.",
+  "description": "A pastebin of useful things \u2014 prompt templates, teaching materials, security research, workshop kits.",
   "base_url": "https://jrlopez.dev/",
   "updated": "2026-03-25",
-  "total": 26,
+  "total": 27,
   "tags": [
     "prompting",
     "security",
@@ -31,7 +31,7 @@
     {
       "id": 2,
       "title": "Guardrails for Engineers",
-      "desc": "The paper for engineers — no PhD required.",
+      "desc": "The paper for engineers \u2014 no PhD required.",
       "html_url": "p/guardrails-engineers.html",
       "md_url": null,
       "tags": [
@@ -85,7 +85,7 @@
     {
       "id": 6,
       "title": "AI Learning Hub",
-      "desc": "Guided path: why AI → tools → patterns → pick your track.",
+      "desc": "Guided path: why AI \u2192 tools \u2192 patterns \u2192 pick your track.",
       "html_url": "p/ai-learning-hub.html",
       "md_url": null,
       "tags": [
@@ -97,7 +97,7 @@
     {
       "id": 7,
       "title": "Bootcamp Skills",
-      "desc": "5 role-specific skills — Swagger-style with copy buttons.",
+      "desc": "5 role-specific skills \u2014 Swagger-style with copy buttons.",
       "html_url": "p/bootcamp-skills.html",
       "md_url": null,
       "tags": [
@@ -122,7 +122,7 @@
     },
     {
       "id": 9,
-      "title": "Session 1 — Patterns",
+      "title": "Session 1 \u2014 Patterns",
       "desc": "Three Approaches, foundational patterns, priority builder.",
       "html_url": "p/bootcamp-session1.html",
       "md_url": null,
@@ -134,7 +134,7 @@
     },
     {
       "id": 10,
-      "title": "Session 2 — Advanced",
+      "title": "Session 2 \u2014 Advanced",
       "desc": "ReAct, Tree of Thoughts, spec-kit, interview prep.",
       "html_url": "p/bootcamp-session2.html",
       "md_url": null,
@@ -285,7 +285,7 @@
     {
       "id": 22,
       "title": "Resume",
-      "desc": "Sr. Data Engineer — 5 years financial services.",
+      "desc": "Sr. Data Engineer \u2014 5 years financial services.",
       "html_url": "resume.html",
       "md_url": null,
       "tags": [
@@ -308,7 +308,7 @@
     {
       "id": 24,
       "title": "Prompt Engineering Bootcamp",
-      "desc": "90-minute hands-on workshop — systematic AI workflows, role-specific tracks, capstone skill build.",
+      "desc": "90-minute hands-on workshop \u2014 systematic AI workflows, role-specific tracks, capstone skill build.",
       "html_url": "p/prompt-engineering-bootcamp.html",
       "md_url": "p/prompt-engineering-bootcamp.md",
       "tags": [
@@ -320,7 +320,7 @@
     {
       "id": 25,
       "title": "About",
-      "desc": "CHSPE → community college → UC Irvine → data engineering → formal proofs via AI agents.",
+      "desc": "CHSPE \u2192 community college \u2192 UC Irvine \u2192 data engineering \u2192 formal proofs via AI agents.",
       "html_url": "p/about.html",
       "md_url": "p/about.md",
       "tags": [
@@ -340,6 +340,18 @@
         "theory"
       ],
       "date": "2026-03-25"
+    },
+    {
+      "id": 27,
+      "title": "I Taught Claude to Pay My Water Bill",
+      "desc": "My card number ended up in the AI context window. So I built a credential isolation layer.",
+      "html_url": "p/secrets-router.html",
+      "md_url": "p/secrets-router.md",
+      "tags": [
+        "code",
+        "security"
+      ],
+      "date": "2026-03-26"
     }
   ]
 }

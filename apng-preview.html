@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html><head><title>APNG Preview</title>
+<style>
+body{background:#0f0f1a;display:flex;flex-direction:column;align-items:center;padding:20px;margin:0;font-family:sans-serif;color:#c8c8d8;gap:16px}
+h2{color:#e8e8f0;margin:0}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.row img{height:300px;border:1px solid #2a2a40;border-radius:8px}
+.main img{max-height:70vh;border:1px solid #2a2a40;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+a{color:#3fb950;font-size:14px}
+p{color:#8888a0;font-size:13px}
+</style></head>
+<body>
+<h2>Animated PNG Preview</h2>
+<div class="main"><img src="output.apng" alt="APNG animation"></div>
+<a href="output.apng" download>Download APNG</a>
+<p>Individual frames:</p>
+<div class="row">
+<img src="frames/frame_00.png"><img src="frames/frame_01.png"><img src="frames/frame_02.png">
+<img src="frames/frame_03.png"><img src="frames/frame_04.png"><img src="frames/frame_05.png">
+<img src="frames/frame_06.png"><img src="frames/frame_07.png"><img src="frames/frame_08.png">
+<img src="frames/frame_09.png">
+</div>
+</body></html>

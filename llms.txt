@@ -3,6 +3,8 @@
 
 ## Code
 
+- [I Taught Claude to Pay My Water Bill](https://jrlopez.dev/p/secrets-router.html): My card number ended up in the AI context window. So I built a credential isolation layer.
+
 - [Dev Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-dev): ReAct-driven code migrations, refactoring, debugging.
 
 - [TL Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-tl): ADRs, metaprompts, spike plans, .cursorrules.
