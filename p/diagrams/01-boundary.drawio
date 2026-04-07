@@ -1,0 +1,65 @@
+<mxfile>
+  <diagram name="Inference-Execution Boundary" id="boundary">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="500" background="#0d1117">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Inference Layer Box -->
+        <mxCell id="2" value="" style="rounded=1;whiteSpace=wrap;fillColor=#161b22;strokeColor=#30363d;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="440" height="400" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="INFERENCE LAYER" style="text;html=1;fontSize=16;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#58a6ff;" vertex="1" parent="1">
+          <mxGeometry x="140" y="50" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="4" value="(LLM Context Window)" style="text;html=1;fontSize=12;fillColor=none;strokeColor=none;fontColor=#8b949e;" vertex="1" parent="1">
+          <mxGeometry x="140" y="75" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="&quot;I need to check&#xa;pending orders&quot;" style="rounded=1;whiteSpace=wrap;fillColor=#1a1f29;strokeColor=#30363d;fontColor=#e6edf3;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="100" y="120" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="6" value="→ selects tool&#xa;→ constructs params" style="text;html=1;fontSize=12;fillColor=none;strokeColor=none;fontColor=#8b949e;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="180" width="200" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="7" value="&quot;142 pending orders&quot;&#xa;→ reasons about next step" style="rounded=1;whiteSpace=wrap;fillColor=#1a1f29;strokeColor=#30363d;fontColor=#e6edf3;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="100" y="310" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="8" value="Reasoning only.&#xa;No credentials.&#xa;Logged as conversation." style="text;html=1;fontSize=11;fillColor=none;strokeColor=none;fontColor=#3fb950;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="380" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Execution Layer Box -->
+        <mxCell id="10" value="" style="rounded=1;whiteSpace=wrap;fillColor=#161b22;strokeColor=#30363d;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="620" y="40" width="440" height="400" as="geometry"/>
+        </mxCell>
+        <mxCell id="11" value="EXECUTION LAYER" style="text;html=1;fontSize=16;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#58a6ff;" vertex="1" parent="1">
+          <mxGeometry x="720" y="50" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="12" value="(MCP Server Process)" style="text;html=1;fontSize=12;fillColor=none;strokeColor=none;fontColor=#8b949e;" vertex="1" parent="1">
+          <mxGeometry x="720" y="75" width="200" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="13" value="validates params&#xa;connects to DB&#xa;executes query&#xa;formats result" style="rounded=1;whiteSpace=wrap;fillColor=#1a1f29;strokeColor=#30363d;fontColor=#e6edf3;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="700" y="200" width="200" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="14" value="Action only.&#xa;No reasoning.&#xa;Logged as discrete events." style="text;html=1;fontSize=11;fillColor=none;strokeColor=none;fontColor=#3fb950;align=left;" vertex="1" parent="1">
+          <mxGeometry x="700" y="380" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Boundary arrows -->
+        <mxCell id="20" value="params (JSON)" style="html=1;fontSize=12;fontColor=#58a6ff;strokeColor=#58a6ff;strokeWidth=2;fillColor=none;entryX=0;entryY=0.3;exitX=1;exitY=0.5;" edge="1" parent="1" source="6" target="13">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="21" value="result (JSON)" style="html=1;fontSize=12;fontColor=#58a6ff;strokeColor=#58a6ff;strokeWidth=2;fillColor=none;entryX=1;entryY=0.5;exitX=0;exitY=0.3;" edge="1" parent="1" source="13" target="7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- MCP Boundary Label -->
+        <mxCell id="30" value="MCP&#xa;BOUNDARY" style="text;html=1;fontSize=14;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#d29922;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="510" y="200" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="31" value="" style="endArrow=none;dashed=1;strokeColor=#d29922;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="40" as="sourcePoint"/>
+            <mxPoint x="550" y="440" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

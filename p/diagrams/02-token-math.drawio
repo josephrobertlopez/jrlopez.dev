@@ -1,0 +1,56 @@
+<mxfile>
+  <diagram name="Token Math" id="tokens">
+    <mxGraphModel dx="1100" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="340" background="#0d1117">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Without Tool Search -->
+        <mxCell id="2" value="" style="rounded=1;whiteSpace=wrap;fillColor=#2d1117;strokeColor=#f85149;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="480" height="260" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="WITHOUT Tool Search" style="text;html=1;fontSize=16;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#f85149;" vertex="1" parent="1">
+          <mxGeometry x="140" y="55" width="260" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Bar chart - without -->
+        <mxCell id="4" value="" style="rounded=0;fillColor=#f85149;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="380" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="58 tools × 800 tok = 46,400 tokens" style="text;fontSize=12;fillColor=none;strokeColor=none;fontColor=#e6edf3;" vertex="1" parent="1">
+          <mxGeometry x="90" y="115" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="6" value="" style="rounded=0;fillColor=#f8514980;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="80" y="160" width="70" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="7" value="+ 7K overhead = 55,000 tokens GONE" style="text;fontSize=12;fillColor=none;strokeColor=none;fontColor=#8b949e;" vertex="1" parent="1">
+          <mxGeometry x="160" y="165" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="8" value="Half your context window. Before typing anything." style="text;fontSize=13;fontStyle=2;fillColor=none;strokeColor=none;fontColor=#f85149;" vertex="1" parent="1">
+          <mxGeometry x="80" y="220" width="400" height="30" as="geometry"/>
+        </mxCell>
+        <!-- With Tool Search -->
+        <mxCell id="10" value="" style="rounded=1;whiteSpace=wrap;fillColor=#112d11;strokeColor=#3fb950;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="580" y="40" width="480" height="260" as="geometry"/>
+        </mxCell>
+        <mxCell id="11" value="WITH Tool Search (default Jan 2026)" style="text;html=1;fontSize=16;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#3fb950;" vertex="1" parent="1">
+          <mxGeometry x="640" y="55" width="360" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Bar chart - with -->
+        <mxCell id="12" value="" style="rounded=0;fillColor=#3fb950;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="620" y="110" width="50" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="13" value="58 tools × 50 tok = 2,900 tokens at rest" style="text;fontSize=12;fillColor=none;strokeColor=none;fontColor=#e6edf3;" vertex="1" parent="1">
+          <mxGeometry x="680" y="115" width="340" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="14" value="" style="rounded=0;fillColor=#3fb95080;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="620" y="160" width="20" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="15" value="+ 500/call × 5 calls = 5,400 total" style="text;fontSize=12;fillColor=none;strokeColor=none;fontColor=#8b949e;" vertex="1" parent="1">
+          <mxGeometry x="650" y="165" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="16" value="85% reduction. Context preserved for reasoning." style="text;fontSize=13;fontStyle=2;fillColor=none;strokeColor=none;fontColor=#3fb950;" vertex="1" parent="1">
+          <mxGeometry x="620" y="220" width="400" height="30" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

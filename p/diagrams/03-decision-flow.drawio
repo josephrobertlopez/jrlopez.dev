@@ -1,0 +1,53 @@
+<mxfile>
+  <diagram name="Decision Flow" id="decision">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="500" background="#0d1117">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Start -->
+        <mxCell id="2" value="Does it need external systems?&#xa;(DB, API, filesystem, credentials)" style="rhombus;whiteSpace=wrap;fillColor=#161b22;strokeColor=#58a6ff;fontColor=#e6edf3;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="350" y="30" width="300" height="100" as="geometry"/>
+        </mxCell>
+        <!-- NO branch -->
+        <mxCell id="3" value="Does it need to change&#xa;how Claude thinks?" style="rhombus;whiteSpace=wrap;fillColor=#161b22;strokeColor=#bc8cff;fontColor=#e6edf3;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="240" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="4" value="Use a Skill" style="rounded=1;whiteSpace=wrap;fillColor=#1a1040;strokeColor=#bc8cff;fontColor=#bc8cff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="350" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="Bash / inline" style="rounded=1;whiteSpace=wrap;fillColor=#1a1a10;strokeColor=#d29922;fontColor=#d29922;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="350" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <!-- YES branch -->
+        <mxCell id="6" value="Need audit trail?&#xa;Credential isolation?&#xa;Persistent state?" style="rhombus;whiteSpace=wrap;fillColor=#161b22;strokeColor=#3fb950;fontColor=#e6edf3;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="620" y="200" width="250" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="7" value="Use MCP" style="rounded=1;whiteSpace=wrap;fillColor=#0d2d0d;strokeColor=#3fb950;fontColor=#3fb950;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="370" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="8" value="Bash tool is fine" style="rounded=1;whiteSpace=wrap;fillColor=#1a1a10;strokeColor=#d29922;fontColor=#d29922;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="370" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Edges -->
+        <mxCell id="20" value="NO" style="fontSize=12;fontColor=#f85149;strokeColor=#30363d;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="21" value="YES" style="fontSize=12;fontColor=#3fb950;strokeColor=#30363d;" edge="1" parent="1" source="2" target="6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="22" value="YES" style="fontSize=12;fontColor=#3fb950;strokeColor=#30363d;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="23" value="NO" style="fontSize=12;fontColor=#f85149;strokeColor=#30363d;" edge="1" parent="1" source="3" target="5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="24" value="ANY YES" style="fontSize=12;fontColor=#3fb950;strokeColor=#30363d;" edge="1" parent="1" source="6" target="7">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="25" value="ALL NO" style="fontSize=12;fontColor=#d29922;strokeColor=#30363d;" edge="1" parent="1" source="6" target="8">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

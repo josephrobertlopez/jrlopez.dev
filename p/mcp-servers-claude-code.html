@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP Servers: The Inference/Execution Boundary</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "MCP Servers: The Inference/Execution Boundary",
+  "description": "When MCP is worth the token cost, when it's not, and why the separation between reasoning and action is the only argument that matters.",
+  "author": {"@type": "Person", "name": "Joey Lopez", "url": "https://jrlopez.dev"},
+  "datePublished": "2026-04-07",
+  "keywords": ["engineering", "methodology", "code", "claude-code", "mcp"],
+  "url": "https://jrlopez.dev/p/mcp-servers-claude-code.html"
+}
+</script>
+<meta name="keywords" content="engineering, methodology, code, claude-code, mcp">
+<meta property="article:published_time" content="2026-04-07">
+<meta property="article:author" content="Joey Lopez">
+<style>
+  :root { --bg:#0d1117; --surface:#161b22; --border:#30363d; --text:#e6edf3; --dim:#8b949e; --accent:#58a6ff; --green:#3fb950; --red:#f85149; --yellow:#d29922; --purple:#bc8cff; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; line-height:1.7; font-size:18px; }
+  .container { max-width:860px; margin:0 auto; padding:60px 24px 120px; }
+  h1 { font-size:2.2em; margin-bottom:8px; }
+  .subtitle { color:var(--dim); margin-bottom:48px; border-bottom:1px solid var(--border); padding-bottom:24px; font-size:1.1em; }
+  h2 { font-size:1.5em; margin-top:56px; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+  p { margin-bottom:16px; }
+  .lead { font-size:1.15em; font-style:italic; border-left:3px solid var(--accent); padding-left:20px; margin:32px 0; }
+  .callout { background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--accent); padding:16px 20px; border-radius:6px; margin:24px 0; }
+  .callout.warn { border-left-color:var(--yellow); }
+  .callout.good { border-left-color:var(--green); }
+  .callout.bad { border-left-color:var(--red); }
+  .callout.purple { border-left-color:var(--purple); }
+  code { font-family:'JetBrains Mono','Fira Code','Consolas',monospace; background:var(--surface); padding:2px 6px; border-radius:4px; font-size:0.88em; }
+  pre { background:#0d1117; border:1px solid var(--border); border-radius:8px; padding:20px; overflow-x:auto; margin:24px 0; font-size:0.85em; line-height:1.5; }
+  pre code { background:none; padding:0; font-size:1em; }
+  table { width:100%; border-collapse:collapse; margin:24px 0; font-size:0.95em; }
+  th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); }
+  th { color:var(--accent); font-weight:600; background:var(--surface); }
+  .diagram { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:24px; margin:24px 0; font-family:'JetBrains Mono','Fira Code',monospace; font-size:0.82em; line-height:1.4; white-space:pre; overflow-x:auto; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:24px 0; }
+  .col { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:20px; }
+  .col h4 { color:var(--accent); margin-bottom:12px; font-size:0.95em; }
+  ol, ul { margin:12px 0 12px 24px; }
+  li { margin-bottom:6px; }
+  footer { margin-top:80px; padding-top:24px; border-top:1px solid var(--border); color:var(--dim); font-size:0.9em; }
+  a { color:var(--accent); }
+  .tag { display:inline-block; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:0.1em 0.6em; font-size:0.8em; margin-right:0.3em; }
+  .meta { color:var(--dim); font-size:0.9em; margin-bottom:2rem; }
+  .g { color:var(--green); } .r { color:var(--red); } .y { color:var(--yellow); } .p { color:var(--purple); }
+  .svg-wrap { background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden; margin:24px 0; }
+  .svg-wrap svg { display:block; width:100%; }
+  @media (max-width:640px) { .two-col { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>MCP Servers: The Inference/Execution Boundary</h1>
+<p class="subtitle">When MCP is worth the token cost, when it's not, and why the separation between reasoning and action is the only argument that matters.</p>
+<p class="meta">Joey Lopez &middot; April 2026 &middot; <span class="tag">engineering</span> <span class="tag">opinion</span> <span class="tag">claude-code</span></p>
+
+<!-- ============================================ -->
+<h2>The One Diagram</h2>
+
+<p>MCP's value is one thing: an explicit boundary between the model reasoning and the system acting.</p>
+
+<!-- Diagram 1: Inference/Execution Boundary -->
+<div class="svg-wrap">
+<svg viewBox="0 0 812 260" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <!-- Left box: Inference Layer -->
+  <rect x="20" y="20" width="310" height="180" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="175" y="52" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="600" letter-spacing="0.5">INFERENCE LAYER</text>
+  <text x="175" y="70" text-anchor="middle" fill="#8b949e" font-size="11">(LLM)</text>
+  <text x="175" y="100" text-anchor="middle" fill="#e6edf3" font-size="13">decides what to do</text>
+  <text x="175" y="122" text-anchor="middle" fill="#e6edf3" font-size="13">constructs params</text>
+  <text x="175" y="164" text-anchor="middle" fill="#8b949e" font-size="11">Reasoning only.</text>
+  <text x="175" y="182" text-anchor="middle" fill="#8b949e" font-size="11">No credentials.</text>
+
+  <!-- Right box: Execution Layer -->
+  <rect x="482" y="20" width="310" height="180" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="637" y="52" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="600" letter-spacing="0.5">EXECUTION LAYER</text>
+  <text x="637" y="70" text-anchor="middle" fill="#8b949e" font-size="11">(MCP Server)</text>
+  <text x="637" y="100" text-anchor="middle" fill="#e6edf3" font-size="13">validates &middot; connects</text>
+  <text x="637" y="122" text-anchor="middle" fill="#e6edf3" font-size="13">executes &middot; returns result</text>
+  <text x="637" y="164" text-anchor="middle" fill="#8b949e" font-size="11">Action only.</text>
+  <text x="637" y="182" text-anchor="middle" fill="#8b949e" font-size="11">Logged as events.</text>
+
+  <!-- Dashed boundary line -->
+  <line x1="406" y1="10" x2="406" y2="250" stroke="#d29922" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="406" y="246" text-anchor="middle" fill="#d29922" font-size="10" font-weight="600">BOUNDARY</text>
+
+  <!-- Arrow: params → (left to right) -->
+  <line x1="330" y1="100" x2="480" y2="100" stroke="#58a6ff" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="406" y="94" text-anchor="middle" fill="#58a6ff" font-size="11">params</text>
+
+  <!-- Arrow: result ← (right to left) -->
+  <line x1="482" y1="122" x2="332" y2="122" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="406" y="140" text-anchor="middle" fill="#3fb950" font-size="11">result</text>
+
+  <defs>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+</svg>
+</div>
+
+<p>Everything on the left is <em>thinking</em>. Everything on the right is <em>doing</em>. They're in separate processes with separate permissions, separate logs, separate failure modes. Without MCP, thinking and doing happen in the same undifferentiated stream.</p>
+
+<!-- ============================================ -->
+<h2>The Honest Token Math</h2>
+
+<p>MCP is <strong>not</strong> inherently token-efficient. <a href="https://www.jdhodges.com/blog/claude-code-mcp-server-token-costs/">One measured setup</a>: 4 servers, 58 tools, 55,000 tokens consumed before a single prompt. That's half the context window gone.</p>
+
+<!-- Diagram 2: Token Math Comparison -->
+<div class="svg-wrap">
+<svg viewBox="0 0 812 200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <!-- Left panel label -->
+  <text x="200" y="30" text-anchor="middle" fill="#8b949e" font-size="12" font-weight="600">WITHOUT Tool Search</text>
+
+  <!-- Left big red bar -->
+  <rect x="40" y="44" width="320" height="44" rx="4" fill="#f85149" opacity="0.85"/>
+  <text x="200" y="71" text-anchor="middle" fill="#0d1117" font-size="16" font-weight="700">46K tokens</text>
+
+  <!-- Left caption -->
+  <text x="200" y="116" text-anchor="middle" fill="#f85149" font-size="13">half your context gone</text>
+
+  <!-- Divider -->
+  <line x1="406" y1="20" x2="406" y2="180" stroke="#30363d" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Right panel label -->
+  <text x="612" y="30" text-anchor="middle" fill="#8b949e" font-size="12" font-weight="600">WITH Tool Search</text>
+
+  <!-- Right small green bar -->
+  <rect x="472" y="44" width="20" height="44" rx="4" fill="#3fb950" opacity="0.85"/>
+  <text x="502" y="71" text-anchor="start" fill="#3fb950" font-size="16" font-weight="700">2.9K tokens</text>
+
+  <!-- Right caption -->
+  <text x="612" y="116" text-anchor="middle" fill="#3fb950" font-size="13">85% reduction</text>
+
+  <!-- Scale labels -->
+  <text x="200" y="148" text-anchor="middle" fill="#8b949e" font-size="10">tokens consumed by tool schemas at session start</text>
+  <text x="612" y="148" text-anchor="middle" fill="#8b949e" font-size="10">tokens consumed by tool schemas at session start</text>
+</svg>
+</div>
+<p style="font-size:0.85em;color:var(--dim)">85% reduction with Tool Search. <a href="https://medium.com/@joe.njenga/claude-code-just-cut-mcp-context-bloat-by-46-9-51k-tokens-down-to-8-5k-with-new-tool-search-ddf9e905f734">Source</a></p>
+
+<p>Tool Search helps. But the real token savings from MCP aren't at the schema layer &mdash; they're at the <strong>result</strong> layer. A tool returning <code>pending: 142</code> (5 tokens) vs <code>psql</code> dumping a formatted ASCII table (500+ tokens) for the same data.</p>
+
+<div class="callout bad">
+<strong>Don't believe the "40x savings" claim.</strong> Skills cost 30&ndash;50 tokens at rest (just a name, loaded on demand). MCP tools cost ~50 tokens at rest with Tool Search. They're roughly equal. MCP's advantage is <em>capabilities</em>, not token count. <a href="https://thenewstack.io/how-to-reduce-mcp-token-bloat/">The New Stack documented 10 strategies</a> to reduce MCP bloat &mdash; the fact that there are 10 tells you the problem is real.
+</div>
+
+<!-- ============================================ -->
+<h2>When MCP Is Worth It</h2>
+
+<!-- Diagram 3: Decision Flowchart — clean vertical layout -->
+<div class="svg-wrap">
+<svg viewBox="0 0 812 380" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8b949e"/></marker>
+  </defs>
+
+  <!-- Row 1: Top question -->
+  <rect x="246" y="20" width="320" height="54" rx="27" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="406" y="52" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">Does it need external systems?</text>
+
+  <!-- NO branch (left) -->
+  <line x1="306" y1="74" x2="180" y2="130" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="226" y="96" fill="#f85149" font-size="12" font-weight="600">NO</text>
+
+  <!-- YES branch (right) -->
+  <line x1="506" y1="74" x2="632" y2="130" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="586" y="96" fill="#3fb950" font-size="12" font-weight="600">YES</text>
+
+  <!-- Row 2 Left: Change thinking? -->
+  <rect x="60" y="130" width="240" height="54" rx="27" fill="#161b22" stroke="#bc8cff" stroke-width="1.5"/>
+  <text x="180" y="162" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Change how Claude thinks?</text>
+
+  <!-- Row 2 Right: Audit/creds/state? -->
+  <rect x="512" y="130" width="240" height="54" rx="27" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="632" y="155" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Audit trail? Credentials?</text>
+  <text x="632" y="172" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Persistent state?</text>
+
+  <!-- Left YES → Skill -->
+  <line x1="120" y1="184" x2="120" y2="250" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="108" y="220" fill="#3fb950" font-size="11" font-weight="600">YES</text>
+  <rect x="56" y="254" width="130" height="44" rx="8" fill="#bc8cff" opacity="0.2" stroke="#bc8cff" stroke-width="2"/>
+  <text x="121" y="282" text-anchor="middle" fill="#bc8cff" font-size="16" font-weight="700">Skill</text>
+
+  <!-- Left NO → Bash -->
+  <line x1="240" y1="184" x2="240" y2="250" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="252" y="220" fill="#f85149" font-size="11" font-weight="600">NO</text>
+  <rect x="176" y="254" width="130" height="44" rx="8" fill="#d29922" opacity="0.2" stroke="#d29922" stroke-width="2"/>
+  <text x="241" y="282" text-anchor="middle" fill="#d29922" font-size="16" font-weight="700">Bash</text>
+
+  <!-- Right ANY YES → MCP -->
+  <line x1="572" y1="184" x2="572" y2="250" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="542" y="220" fill="#3fb950" font-size="11" font-weight="600">ANY YES</text>
+  <rect x="508" y="254" width="130" height="44" rx="8" fill="#3fb950" opacity="0.2" stroke="#3fb950" stroke-width="2"/>
+  <text x="573" y="282" text-anchor="middle" fill="#3fb950" font-size="16" font-weight="700">MCP</text>
+
+  <!-- Right ALL NO → Bash -->
+  <line x1="692" y1="184" x2="692" y2="250" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="704" y="220" fill="#f85149" font-size="11" font-weight="600">ALL NO</text>
+  <rect x="628" y="254" width="130" height="44" rx="8" fill="#d29922" opacity="0.2" stroke="#d29922" stroke-width="2"/>
+  <text x="693" y="282" text-anchor="middle" fill="#d29922" font-size="16" font-weight="700">Bash</text>
+
+  <!-- Bottom summary line -->
+  <text x="406" y="340" text-anchor="middle" fill="#8b949e" font-size="12">MCP = you need the boundary. Skill = you need to shape reasoning. Bash = you need neither.</text>
+</svg>
+</div>
+
+<p>Short version: <strong>MCP is worth the cost when you need the boundary.</strong> The boundary gives you auditability, credential isolation, and failure isolation. If you don't need those, a Bash command or a skill is simpler and cheaper.</p>
+
+<table>
+<tr><th>Scenario</th><th>Right tool</th><th>Why</th></tr>
+<tr><td>Query a production database</td><td class="g">MCP</td><td>Credentials stay server-side. Every query logged.</td></tr>
+<tr><td>Explain your codebase conventions</td><td class="p">Skill / CLAUDE.md</td><td>Needs to be IN context to affect reasoning.</td></tr>
+<tr><td>Run <code>git status</code></td><td class="y">Bash</td><td>No credentials, no audit need, no state.</td></tr>
+<tr><td>Handle payment API keys</td><td class="g">MCP</td><td>Structural security: model never sees <code>sk_live_...</code></td></tr>
+<tr><td>Format a markdown table</td><td class="p">Skill</td><td>String manipulation doesn't need IPC.</td></tr>
+<tr><td>Search a 10K-doc knowledge base</td><td class="g">MCP</td><td>Persistent index in server memory. Structured results.</td></tr>
+<tr><td>Deep multi-step research</td><td class="y">Agent</td><td>Needs its own context window for extended reasoning.</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2>The Enterprise Argument: Separation as Governance</h2>
+
+<p>In regulated environments, "what did the AI do?" needs to be answerable from structured logs, not by reading a conversation transcript.</p>
+
+<!-- Diagram 4: Audit Comparison -->
+<div class="svg-wrap">
+<svg viewBox="0 0 812 220" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <!-- Left panel: WITHOUT MCP -->
+  <rect x="20" y="20" width="350" height="180" rx="8" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+  <text x="195" y="46" text-anchor="middle" fill="#f85149" font-size="12" font-weight="600">WITHOUT MCP</text>
+
+  <!-- One big transcript blob -->
+  <rect x="50" y="58" width="290" height="100" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="195" y="100" text-anchor="middle" fill="#e6edf3" font-size="15" font-weight="600">50K token transcript</text>
+  <text x="195" y="124" text-anchor="middle" fill="#8b949e" font-size="11">good luck finding the DB query</text>
+
+  <!-- Right panel: WITH MCP -->
+  <rect x="442" y="20" width="350" height="180" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="617" y="46" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="600">WITH MCP</text>
+
+  <!-- Conversation box -->
+  <rect x="460" y="58" width="130" height="56" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="525" y="84" text-anchor="middle" fill="#e6edf3" font-size="12">Conversation</text>
+  <text x="525" y="102" text-anchor="middle" fill="#8b949e" font-size="11">(30K tokens)</text>
+
+  <!-- Arrow between -->
+  <line x1="592" y1="86" x2="622" y2="86" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arr-mcp)"/>
+
+  <!-- Audit log box -->
+  <rect x="624" y="58" width="148" height="56" rx="6" fill="#0d1117" stroke="#3fb950" stroke-width="1"/>
+  <text x="698" y="79" text-anchor="middle" fill="#3fb950" font-size="12">Audit Log (JSON)</text>
+  <text x="698" y="96" text-anchor="middle" fill="#3fb950" font-size="10">tool: db_query</text>
+  <text x="698" y="110" text-anchor="middle" fill="#3fb950" font-size="10">params: {table: orders}</text>
+
+  <defs>
+    <marker id="arr-mcp" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <text x="617" y="148" text-anchor="middle" fill="#8b949e" font-size="11">structured, queryable, replayable</text>
+</svg>
+</div>
+
+<table>
+<tr><th>Compliance need</th><th>MCP gives you</th><th>Skills give you</th></tr>
+<tr><td>"What actions did the AI take?"</td><td class="g">Structured event log</td><td class="r">Parse a transcript</td></tr>
+<tr><td>"Did it access credentials?"</td><td class="g">Opaque handles &mdash; it never had them</td><td class="r">Hope the model didn't print them</td></tr>
+<tr><td>"Can we replay what happened?"</td><td class="g">Same params = same result</td><td class="r">Context-dependent, non-deterministic</td></tr>
+<tr><td>"Can we restrict what it can do?"</td><td class="g">Server-side permission checks</td><td class="r">Prompt-level "please don't"</td></tr>
+</table>
+
+<!-- ============================================ -->
+<h2>Attention Economics (AAF Lens)</h2>
+
+<p>Four dimensions for evaluating whether a tool respects the model's limited attention budget:</p>
+
+<!-- Diagram 5: AAF Lens — paired bars, same axis -->
+<div class="svg-wrap">
+<svg viewBox="0 0 812 280" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+
+  <!-- Row 1: Precision — MCP wins -->
+  <text x="140" y="38" text-anchor="end" fill="#58a6ff" font-size="14" font-weight="600">Precision</text>
+  <text x="140" y="54" text-anchor="end" fill="#8b949e" font-size="10">(returns only what's needed)</text>
+  <rect x="160" y="28" width="440" height="18" rx="3" fill="#3fb950" opacity="0.85"/>
+  <text x="610" y="42" fill="#3fb950" font-size="11" font-weight="600">MCP</text>
+  <rect x="160" y="50" width="120" height="18" rx="3" fill="#bc8cff" opacity="0.7"/>
+  <text x="290" y="64" fill="#bc8cff" font-size="11">Skill</text>
+
+  <!-- Row 2: Entropy — MCP wins -->
+  <text x="140" y="102" text-anchor="end" fill="#58a6ff" font-size="14" font-weight="600">Entropy Gap</text>
+  <text x="140" y="118" text-anchor="end" fill="#8b949e" font-size="10">(closes uncertainty per call)</text>
+  <rect x="160" y="92" width="360" height="18" rx="3" fill="#3fb950" opacity="0.85"/>
+  <text x="530" y="106" fill="#3fb950" font-size="11" font-weight="600">MCP</text>
+  <rect x="160" y="114" width="200" height="18" rx="3" fill="#bc8cff" opacity="0.7"/>
+  <text x="370" y="128" fill="#bc8cff" font-size="11">Skill</text>
+
+  <!-- Row 3: Identity — SKILL WINS -->
+  <text x="140" y="166" text-anchor="end" fill="#58a6ff" font-size="14" font-weight="600">Identity</text>
+  <text x="140" y="182" text-anchor="end" fill="#8b949e" font-size="10">(shapes how Claude thinks)</text>
+  <rect x="160" y="156" width="100" height="18" rx="3" fill="#3fb950" opacity="0.5"/>
+  <text x="270" y="170" fill="#3fb950" font-size="11">MCP</text>
+  <rect x="160" y="178" width="480" height="18" rx="3" fill="#bc8cff" opacity="0.85"/>
+  <text x="650" y="192" fill="#bc8cff" font-size="11" font-weight="600">Skill wins</text>
+
+  <!-- Row 4: Temporal — MCP wins -->
+  <text x="140" y="230" text-anchor="end" fill="#58a6ff" font-size="14" font-weight="600">Temporal</text>
+  <text x="140" y="246" text-anchor="end" fill="#8b949e" font-size="10">(state persists across calls)</text>
+  <rect x="160" y="220" width="500" height="18" rx="3" fill="#3fb950" opacity="0.85"/>
+  <text x="670" y="234" fill="#3fb950" font-size="11" font-weight="600">MCP</text>
+  <rect x="160" y="242" width="40" height="18" rx="3" fill="#bc8cff" opacity="0.5"/>
+  <text x="210" y="256" fill="#bc8cff" font-size="11">Skill</text>
+
+  <!-- Legend -->
+  <rect x="160" y="272" width="12" height="8" rx="2" fill="#3fb950"/>
+  <text x="178" y="280" fill="#8b949e" font-size="11">MCP wins 3 of 4.</text>
+  <rect x="310" y="272" width="12" height="8" rx="2" fill="#bc8cff"/>
+  <text x="328" y="280" fill="#8b949e" font-size="11">Skills win on Identity — they shape reasoning, MCP can't.</text>
+</svg>
+</div>
+
+<!-- ============================================ -->
+<h2>The Walk-Away Test</h2>
+
+<p class="lead">If you stop using this tool tomorrow, what do you keep?</p>
+
+<div class="svg-wrap">
+<svg viewBox="0 0 812 200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <!-- Headers -->
+  <text x="130" y="24" text-anchor="end" fill="#58a6ff" font-size="12" font-weight="600">ASSET</text>
+  <text x="400" y="24" text-anchor="middle" fill="#8b949e" font-size="12" font-weight="600">PORTABLE?</text>
+  <text x="700" y="24" text-anchor="middle" fill="#8b949e" font-size="12" font-weight="600">WALK-AWAY</text>
+  <line x1="20" y1="32" x2="792" y2="32" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Row 1: MCP servers -->
+  <text x="130" y="60" text-anchor="end" fill="#e6edf3" font-size="13">MCP servers</text>
+  <text x="400" y="60" text-anchor="middle" fill="#8b949e" font-size="12">Python/Node scripts. Run anywhere.</text>
+  <rect x="648" y="46" width="104" height="22" rx="11" fill="#3fb950" opacity="0.2" stroke="#3fb950"/>
+  <text x="700" y="62" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="700">HIGH</text>
+
+  <!-- Row 2: Skills -->
+  <text x="130" y="100" text-anchor="end" fill="#e6edf3" font-size="13">Skills</text>
+  <text x="400" y="100" text-anchor="middle" fill="#8b949e" font-size="12">Markdown. Only useful in Claude Code.</text>
+  <rect x="648" y="86" width="104" height="22" rx="11" fill="#d29922" opacity="0.2" stroke="#d29922"/>
+  <text x="700" y="102" text-anchor="middle" fill="#d29922" font-size="12" font-weight="700">MEDIUM</text>
+
+  <!-- Row 3: Data (good) -->
+  <text x="130" y="140" text-anchor="end" fill="#e6edf3" font-size="13">Data (good MCP)</text>
+  <text x="400" y="140" text-anchor="middle" fill="#8b949e" font-size="12">Plain files, JSON, YAML. cat it.</text>
+  <rect x="648" y="126" width="104" height="22" rx="11" fill="#3fb950" opacity="0.2" stroke="#3fb950"/>
+  <text x="700" y="142" text-anchor="middle" fill="#3fb950" font-size="12" font-weight="700">HIGH</text>
+
+  <!-- Row 4: Data (bad) -->
+  <text x="130" y="180" text-anchor="end" fill="#e6edf3" font-size="13">Data (bad MCP)</text>
+  <text x="400" y="180" text-anchor="middle" fill="#8b949e" font-size="12">Proprietary binary, cloud-only.</text>
+  <rect x="648" y="166" width="104" height="22" rx="11" fill="#f85149" opacity="0.2" stroke="#f85149"/>
+  <text x="700" y="182" text-anchor="middle" fill="#f85149" font-size="12" font-weight="700">ZERO</text>
+</svg>
+</div>
+
+<div class="callout purple">
+<strong>The walk-away test for any MCP server:</strong> Can you <code>cat</code> the data it produces? Can you open it in another app? If the answer is no, you haven't built a tool. You've built a dependency.
+</div>
+
+<!-- ============================================ -->
+<h2>Setup: The One Bug Everyone Hits</h2>
+
+<p>Claude Code spawns MCP servers without sourcing your shell profile. <code>python3</code> resolves to system Python. <code>npx</code> isn't found. Every environment variable from <code>.zshrc</code> is missing.</p>
+
+<pre><code># WRONG (will fail):
+{ "command": "python3", "args": ["server.py"] }
+
+# RIGHT:
+{ "command": "/home/you/.conda/envs/myenv/bin/python3",
+  "args": ["/absolute/path/to/server.py"],
+  "env": { "PYTHONPATH": "/absolute/path/to/project" } }
+
+# For npx — always add -y (no interactive prompt in stdio mode):
+{ "command": "/home/you/.nvm/versions/node/v22/bin/npx",
+  "args": ["-y", "@some/mcp-server@latest"] }</code></pre>
+
+<div class="callout">
+<strong>The 30-second test:</strong> Run <code>env -i /absolute/path/to/python3 /absolute/path/to/server.py</code>. If it works in a bare shell with zero environment, it works in Claude Code. If it doesn't, it won't.
+</div>
+
+<!-- ============================================ -->
+<h2>Summary</h2>
+
+<div class="svg-wrap">
+<svg viewBox="0 0 812 220" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <!-- Left column: USE MCP -->
+  <rect x="20" y="10" width="376" height="200" rx="8" fill="#3fb950" opacity="0.06" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="208" y="38" text-anchor="middle" fill="#3fb950" font-size="15" font-weight="700">USE MCP WHEN</text>
+  <text x="50" y="70" fill="#e6edf3" font-size="13">External systems (DB, API, FS)</text>
+  <text x="50" y="96" fill="#e6edf3" font-size="13">Credential isolation needed</text>
+  <text x="50" y="122" fill="#e6edf3" font-size="13">Audit trail required</text>
+  <text x="50" y="148" fill="#e6edf3" font-size="13">Persistent state across calls</text>
+  <text x="50" y="174" fill="#e6edf3" font-size="13">Structured, minimal results</text>
+  <text x="50" y="200" fill="#e6edf3" font-size="13">Team-shared tooling</text>
+
+  <!-- Right column: DON'T -->
+  <rect x="416" y="10" width="376" height="200" rx="8" fill="#d29922" opacity="0.06" stroke="#d29922" stroke-width="1.5"/>
+  <text x="604" y="38" text-anchor="middle" fill="#d29922" font-size="15" font-weight="700">DON'T USE MCP WHEN</text>
+  <text x="446" y="70" fill="#e6edf3" font-size="13">String manipulation</text>
+  <text x="446" y="96" fill="#e6edf3" font-size="13">Domain knowledge / conventions</text>
+  <text x="446" y="122" fill="#e6edf3" font-size="13">One-off tasks</text>
+  <text x="446" y="148" fill="#e6edf3" font-size="13">Shaping Claude's behavior</text>
+  <text x="446" y="174" fill="#e6edf3" font-size="13">Needs conversation context</text>
+  <text x="446" y="200" fill="#e6edf3" font-size="13">Could be a 10-line skill</text>
+</svg>
+</div>
+
+<p class="lead">MCP's value isn't token savings. It's the explicit boundary between reasoning and action. If you'd put a code review gate between "the AI decided to do X" and "X actually happened" &mdash; that gate is an MCP server. For everything else, there's a simpler option. Use it.</p>
+
+<footer>
+<p>Built with <a href="https://github.com/jlowin/fastmcp">FastMCP 3.x</a> and <a href="https://claude.ai/code">Claude Code</a>. References: <a href="https://thenewstack.io/how-to-reduce-mcp-token-bloat/">New Stack</a>, <a href="https://arxiv.org/abs/2603.13417">arXiv 2603.13417</a>, <a href="https://www.anthropic.com/engineering/code-execution-with-mcp">Anthropic Engineering</a>, <a href="https://blogs.versalence.ai/mcp-model-context-protocol-evolution-2026">Versalence</a></p>
+<p><a href="/">jrlopez.dev</a></p>
+</footer>
+
+</div>
+</body>
+</html>

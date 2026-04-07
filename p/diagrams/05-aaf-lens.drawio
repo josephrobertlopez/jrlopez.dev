@@ -1,0 +1,88 @@
+<mxfile>
+  <diagram name="AAF Lens" id="aaf">
+    <mxGraphModel dx="1100" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="360" background="#0d1117">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Headers -->
+        <mxCell id="2" value="DIMENSION" style="text;fontSize=14;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#58a6ff;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="160" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="MCP" style="text;fontSize=14;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#3fb950;" vertex="1" parent="1">
+          <mxGeometry x="260" y="20" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="4" value="SKILL" style="text;fontSize=14;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#bc8cff;" vertex="1" parent="1">
+          <mxGeometry x="700" y="20" width="100" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Precision -->
+        <mxCell id="10" value="Precision (Pi)" style="rounded=1;fillColor=#161b22;strokeColor=#58a6ff;fontColor=#58a6ff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="11" value="" style="rounded=0;fillColor=#3fb950;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="75" width="350" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="12" value="Returns ONLY what's needed" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#0d1117;" vertex="1" parent="1">
+          <mxGeometry x="270" y="77" width="250" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="13" value="" style="rounded=0;fillColor=#bc8cff;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="700" y="75" width="120" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="14" value="Entire prompt" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#0d1117;" vertex="1" parent="1">
+          <mxGeometry x="710" y="77" width="100" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Entropy -->
+        <mxCell id="20" value="Entropy (DeltaH)" style="rounded=1;fillColor=#161b22;strokeColor=#58a6ff;fontColor=#58a6ff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="130" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="21" value="" style="rounded=0;fillColor=#3fb950;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="135" width="300" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="22" value="Closes one question per call" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#0d1117;" vertex="1" parent="1">
+          <mxGeometry x="270" y="137" width="250" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="23" value="" style="rounded=0;fillColor=#bc8cff;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="700" y="135" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="24" value="Opens everything at once" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#0d1117;" vertex="1" parent="1">
+          <mxGeometry x="710" y="137" width="180" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Identity -->
+        <mxCell id="30" value="Identity (V_id)" style="rounded=1;fillColor=#161b22;strokeColor=#58a6ff;fontColor=#58a6ff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="31" value="" style="rounded=0;fillColor=#3fb95060;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="195" width="150" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="32" value="Only when called" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#e6edf3;" vertex="1" parent="1">
+          <mxGeometry x="270" y="197" width="140" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="33" value="" style="rounded=0;fillColor=#bc8cff;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="700" y="195" width="350" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="34" value="Shapes reasoning (IN context)" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#0d1117;" vertex="1" parent="1">
+          <mxGeometry x="710" y="197" width="250" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Temporal -->
+        <mxCell id="40" value="Temporal (tau)" style="rounded=1;fillColor=#161b22;strokeColor=#58a6ff;fontColor=#58a6ff;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="41" value="" style="rounded=0;fillColor=#3fb950;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="255" width="380" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="42" value="Holds state (DB, cache, index)" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#0d1117;" vertex="1" parent="1">
+          <mxGeometry x="270" y="257" width="250" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="43" value="" style="rounded=0;fillColor=#bc8cff40;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="700" y="255" width="80" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="44" value="Stateless" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#e6edf3;" vertex="1" parent="1">
+          <mxGeometry x="710" y="257" width="80" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Legend -->
+        <mxCell id="50" value="MCP wins on Precision, Entropy, Temporal. Skills win on Identity (shaping reasoning). Use both." style="text;fontSize=12;fontStyle=2;fillColor=none;strokeColor=none;fontColor=#8b949e;" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="600" height="25" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

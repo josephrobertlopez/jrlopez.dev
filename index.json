@@ -3,8 +3,8 @@
   "name": "Joey Lopez",
   "description": "A pastebin of useful things — prompt templates, teaching materials, security research, workshop kits.",
   "base_url": "https://jrlopez.dev/",
-  "updated": "2026-06-07",
-  "total": 28,
+  "updated": "2026-06-22",
+  "total": 29,
   "tags": [
     "prompting",
     "security",
@@ -13,7 +13,8 @@
     "teaching",
     "template",
     "theory",
-    "reference"
+    "reference",
+    "engineering"
   ],
   "atoms": [
     {
@@ -355,6 +356,19 @@
     },
     {
       "id": 28,
+      "title": "MCP Servers: The Inference/Execution Boundary",
+      "desc": "When MCP is worth the token cost, when it's not, and why the separation between reasoning and action is the only argument that matters.",
+      "html_url": "p/mcp-servers-claude-code.html",
+      "md_url": null,
+      "tags": [
+        "engineering",
+        "methodology",
+        "code"
+      ],
+      "date": "2026-04-07"
+    },
+    {
+      "id": 29,
       "title": "Edge Dev on the Hardware You Already Own",
       "desc": "A phone classifies images in 1.4 ms. Wrap any device's accelerator as an MCP tool an agent can call — local, sandboxed, on hardware you already own.",
       "html_url": "p/edge-node-mcp.html",

@@ -13,6 +13,10 @@
 
 - [Aperiodic Guardrails Repo](https://github.com/josephrobertlopez/aperiodic-guardrails): Source code + 91 pattern analysis dataset.
 
+## Engineering
+
+- [MCP Servers: The Inference/Execution Boundary](https://jrlopez.dev/p/mcp-servers-claude-code.html): When MCP is worth the token cost, when it's not, and why the separation between reasoning and action is the only argument that matters.
+
 ## Methodology
 
 - [Agent-First Website Design](https://jrlopez.dev/p/agent-first-design.html): Your website has two audiences now. One of them doesn't have eyes. Standards, patterns, implementation.

@@ -1,0 +1,48 @@
+<mxfile>
+  <diagram name="Audit Comparison" id="audit">
+    <mxGraphModel dx="1100" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="400" background="#0d1117">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Without MCP -->
+        <mxCell id="2" value="" style="rounded=1;whiteSpace=wrap;fillColor=#2d1117;strokeColor=#f85149;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="480" height="330" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="WITHOUT MCP" style="text;fontSize=16;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#f85149;" vertex="1" parent="1">
+          <mxGeometry x="180" y="45" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="4" value="Conversation Transcript&#xa;(50,000 tokens)" style="rounded=1;fillColor=#1a1117;strokeColor=#30363d;fontColor=#e6edf3;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="110" y="90" width="280" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="... reasoning ...&#xa;&quot;I'll query the database now&quot;&#xa;... more reasoning ...&#xa;&quot;The result shows 142 pending&quot;&#xa;... continues ..." style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#8b949e;align=left;" vertex="1" parent="1">
+          <mxGeometry x="110" y="150" width="280" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="6" value="Auditor: &quot;Show me every DB query.&quot;&#xa;You: *scrolls through 50K tokens*" style="text;fontSize=12;fontStyle=2;fillColor=none;strokeColor=none;fontColor=#f85149;align=left;" vertex="1" parent="1">
+          <mxGeometry x="80" y="270" width="380" height="40" as="geometry"/>
+        </mxCell>
+        <!-- With MCP -->
+        <mxCell id="10" value="" style="rounded=1;whiteSpace=wrap;fillColor=#112d11;strokeColor=#3fb950;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="580" y="30" width="480" height="330" as="geometry"/>
+        </mxCell>
+        <mxCell id="11" value="WITH MCP" style="text;fontSize=16;fontStyle=1;fillColor=none;strokeColor=none;fontColor=#3fb950;" vertex="1" parent="1">
+          <mxGeometry x="740" y="45" width="200" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="12" value="Conversation&#xa;(30K tokens)" style="rounded=1;fillColor=#0d2d0d;strokeColor=#30363d;fontColor=#e6edf3;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="610" y="90" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="13" value="MCP Audit Log&#xa;(structured JSON)" style="rounded=1;fillColor=#0d2d0d;strokeColor=#3fb950;fontColor=#e6edf3;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="830" y="90" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="14" value="{&quot;tool&quot;:&quot;db_query&quot;,&#xa; &quot;params&quot;:{&quot;table&quot;:&quot;orders&quot;},&#xa; &quot;result&quot;:&quot;142&quot;,&#xa; &quot;ts&quot;:&quot;2026-04-07T14:23Z&quot;}" style="text;fontSize=11;fillColor=none;strokeColor=none;fontColor=#3fb950;align=left;fontFamily=JetBrains Mono;" vertex="1" parent="1">
+          <mxGeometry x="820" y="155" width="230" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="15" value="" style="strokeColor=#3fb950;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="12" target="13">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="16" value="Auditor: &quot;Show me every DB query.&quot;&#xa;You: SELECT * FROM audit_log&#xa;      WHERE tool='db_query'" style="text;fontSize=12;fontStyle=2;fillColor=none;strokeColor=none;fontColor=#3fb950;align=left;" vertex="1" parent="1">
+          <mxGeometry x="620" y="260" width="380" height="60" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
