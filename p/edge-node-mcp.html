@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge Dev on the Hardware You Already Own | Joey Lopez</title>
+<meta name="description" content="The chips in your phone, laptop, and Raspberry Pi mostly sit idle. Edge development is just using them — and one AI agent across your devices ties them together. A short on-ramp with a worked example at ~1.4 ms.">
+<meta property="og:title" content="Edge Dev on the Hardware You Already Own | Joey Lopez">
+<meta property="og:description" content="What the idle chips in your own devices can do, how to start wiring them up, and how Claude Code across your machines connects them. Worked example: a phone classifying an image in ~1.4 ms.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jrlopez.dev/p/edge-node-mcp.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "name": "Edge Dev on the Hardware You Already Own | Joey Lopez",
+  "description": "An on-ramp to edge development on devices you already own, connected by an AI agent over a private mesh.",
+  "author": {"@type": "Person", "name": "Joey Lopez", "url": "https://jrlopez.dev"},
+  "datePublished": "2026-06-07",
+  "keywords": ["edge", "hardware", "MCP", "Claude Code", "Tailscale", "TPU"],
+  "url": "https://jrlopez.dev/p/edge-node-mcp.html"
+}
+</script>
+<link rel="alternate" type="text/markdown" href="edge-node-mcp.md">
+<meta name="keywords" content="edge, hardware, MCP, Claude Code, Tailscale, TPU">
+<meta property="article:published_time" content="2026-06-07">
+<meta property="article:author" content="Joey Lopez">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>JL</text></svg>">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f0f1a;
+  --bg-card: #161625;
+  --bg-code: #1a1a2e;
+  --bg-elevated: #1e1e30;
+  --border: #2a2a40;
+  --text: #c8c8d8;
+  --text-bright: #e8e8f0;
+  --text-muted: #8888a0;
+  --accent: #e94560;
+  --blue: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d4a017;
+  --purple: #a78bfa;
+  --radius: 10px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- NAV --- */
+.nav-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(15,15,26,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex; align-items: center; gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-bar::-webkit-scrollbar { display: none; }
+.nav-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav-pill:hover, .nav-pill.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  text-decoration: none;
+}
+
+/* --- HERO --- */
+.hero {
+  background: linear-gradient(135deg, #0f0f1a 0%, #0f1a1a 40%, #0f1520 100%);
+  text-align: center;
+  padding: 60px 16px 44px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.hero h1 {
+  font-size: clamp(1.6em, 4vw, 2.2em);
+  color: var(--text-bright);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.hero .subtitle {
+  color: var(--text-muted);
+  font-size: 1.05em;
+  max-width: 600px;
+  margin: 0 auto 12px;
+  line-height: 1.6;
+}
+.hero .author { color: var(--blue); font-size: 0.9em; margin-bottom: 4px; }
+.hero .date-tag { color: var(--text-muted); font-size: 0.85em; font-family: 'SF Mono', ui-monospace, monospace; }
+.hero-tags {
+  display: flex; justify-content: center; gap: 10px;
+  flex-wrap: wrap; margin-top: 24px;
+}
+.hero-tag {
+  padding: 5px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.hero-tag:hover { background: rgba(255,255,255,0.07); text-decoration: none; }
+.hero-tag.red   { color: var(--accent); border-color: var(--accent); }
+.hero-tag.blue  { color: var(--blue);   border-color: var(--blue); }
+.hero-tag.green { color: var(--green);  border-color: var(--green); }
+.hero-tag.purple { color: var(--purple); border-color: var(--purple); }
+
+/* --- LAYOUT --- */
+.container { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
+
+/* --- SECTION --- */
+.section { margin-bottom: 40px; scroll-margin-top: 68px; }
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-family: 'SF Mono', ui-monospace, monospace;
+}
+h2 {
+  font-size: 1.35em;
+  color: var(--text-bright);
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+p { margin-bottom: 16px; }
+em { color: var(--text-bright); font-style: normal; font-weight: 600; }
+ul { margin: 0 0 16px; padding-left: 22px; }
+li { margin-bottom: 8px; }
+
+/* --- CODE --- */
+code {
+  font-family: 'SF Mono', ui-monospace, 'Fira Code', monospace;
+  font-size: 13px;
+  background: var(--bg-code);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--green);
+}
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-family: 'SF Mono', ui-monospace, 'Fira Code', monospace;
+  font-size: 13px;
+  color: #c9d1d9;
+  overflow-x: auto;
+  line-height: 1.6;
+  margin: 16px 0 20px;
+}
+pre code { background: none; padding: 0; color: inherit; }
+pre .c { color: var(--text-muted); }
+pre .k { color: var(--blue); }
+pre .s { color: var(--green); }
+
+/* --- CALLOUT --- */
+.callout {
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 20px 0;
+  background: var(--bg-elevated);
+}
+.callout-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  margin-bottom: 8px;
+}
+.callout.note     { border-left: 4px solid var(--blue); }
+.callout.note     .callout-label { color: var(--blue); }
+.callout.try      { border-left: 4px solid var(--green); }
+.callout.try      .callout-label { color: var(--green); }
+.callout p:last-child { margin-bottom: 0; }
+
+/* --- SVG DIAGRAMS --- */
+.diagram-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  margin: 24px 0;
+  overflow-x: auto;
+}
+.diagram-caption {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-family: 'SF Mono', ui-monospace, monospace;
+}
+
+/* --- FOOTER --- */
+.footer {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-muted);
+  font-size: 0.88em;
+  border-top: 1px solid var(--border);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.footer a { color: var(--text-muted); }
+.footer a:hover { color: var(--blue); }
+
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.45em; }
+  .container { padding: 24px 16px 64px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <a class="nav-pill" href="../index.html">jrlopez.dev</a>
+  <a class="nav-pill" href="#idea">The Idea</a>
+  <a class="nav-pill" href="#example">A Worked Example</a>
+  <a class="nav-pill" href="#start">How to Start</a>
+  <a class="nav-pill" href="#sandbox">The Sandbox</a>
+  <a class="nav-pill" href="#code">The Code</a>
+  <a class="nav-pill" href="#mesh">Your Device Mesh</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Edge Dev on the Hardware You Already Own</h1>
+  <p class="subtitle">The chips in your phone, laptop, and Raspberry Pi mostly sit idle. Edge development is just using them — and it's more reachable than it looks. Here's a worked example, how to start, and how one AI agent ties your devices together.</p>
+  <p class="author">Joey Lopez</p>
+  <p class="date-tag">June 2026</p>
+  <div class="hero-tags">
+    <a class="hero-tag red"    href="#idea">The Idea</a>
+    <a class="hero-tag blue"   href="#example">A Worked Example</a>
+    <a class="hero-tag green"  href="#start">How to Start</a>
+    <a class="hero-tag green"  href="#sandbox">The Sandbox</a>
+    <a class="hero-tag blue"   href="#code">The Code</a>
+    <a class="hero-tag purple" href="#mesh">Your Device Mesh</a>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="container">
+
+<div class="section" id="idea">
+  <div class="section-eyebrow">The Idea</div>
+  <h2>You Own Several Computers. You Use One.</h2>
+
+  <p>Count the computers around you. A laptop, a phone, maybe a Raspberry Pi or an old desktop. Each one has processors built for heavy math — a GPU, and on most recent phones and laptops a neural <em>accelerator</em>: a chip that runs the multiply-and-add inside machine-learning models very fast. Nearly all of it sits idle while your apps ship the work to a data center.</p>
+
+  <p>Edge development is the opposite habit — do the work on the hardware you already have, next to where the data is. It used to mean special boards and a lot of patience. It still takes some patience, but the pieces are now small enough to wire up in an afternoon. The rest of this is one example, how to start your own, and the thing that makes it click: a single AI agent that can reach all your devices at once.</p>
+</div>
+
+<div class="section" id="example">
+  <div class="section-eyebrow">A Worked Example</div>
+  <h2>A Phone That Classifies Images in 1.4 ms</h2>
+
+  <p>Here is one small enough to describe in full. A phone runs a little <em>server</em> — a few dozen lines of Python in Termux — that exposes its accelerator as a tool an AI agent can call. The standard for that is MCP: a tool is just a named function at a network address. The whole interesting part is one function:</p>
+
+  <pre><code><span class="c"># on the phone, inside the MCP server</span>
+<span class="k">@mcp.tool</span>()
+<span class="k">def</span> classify_image(path: str) -> dict:
+    <span class="s">"""Classify an image on the phone's accelerator."""</span>
+    out = run([<span class="s">"./broker"</span>, <span class="s">"--image"</span>, path])   <span class="c"># the broker owns the chip</span>
+    <span class="k">return</span> parse(out)                            <span class="c"># -> {label, ms}</span></code></pre>
+
+  <p>The agent on my laptop sees <code>classify_image</code> in its tool list and calls it by name. The phone does the work and answers in about 1.4 ms — roughly 20× its own CPU. (A small native <em>broker</em> program does the actual talking to the chip, because the chip's driver is locked to the operating system and ordinary code can't open it directly. The server just hands it the job.)</p>
+
+  <p>Strip away the acronym and that <em>server</em> is a small program that sits at a network address and waits — concretely, a FastMCP streamable-HTTP app, a few dozen lines, bound to the phone's tailnet interface. It exposes a handful of named functions — classify this image, embed this text, run this prompt — and any agent that speaks the protocol can call them. The phone runs the function; the laptop just knows its name and where to knock.</p>
+
+  <p>What that buys you is reach. The Pixel's accelerator was previously locked behind Android's own APIs, callable only by code running on the device. Wrap it in an MCP server and it becomes a function any agent can invoke from anywhere on your tailnet. The auth boundary is one bearer token, checked by a pure-ASGI gate before the request is ever handed to the app — refuse the header, refuse the call, no exceptions.</p>
+
+  <pre><code><span class="k">class</span> <span class="c">BearerGate</span>:  <span class="c"># pure-ASGI: require Authorization: Bearer &lt;EDGE_TOKEN&gt;</span>
+    <span class="k">def</span> __init__(self, app, token): self.app, self.token = app, token
+    <span class="k">async def</span> __call__(self, scope, receive, send):
+        <span class="k">if</span> scope.get(<span class="s">"type"</span>) == <span class="s">"http"</span>:
+            hdrs = dict(scope.get(<span class="s">"headers"</span>) <span class="k">or</span> [])
+            <span class="k">if</span> hdrs.get(b<span class="s">"authorization"</span>, b<span class="s">""</span>).decode() != <span class="s">f"Bearer {self.token}"</span>:
+                <span class="k">await</span> send({<span class="s">"type"</span>: <span class="s">"http.response.start"</span>, <span class="s">"status"</span>: <span class="c">401</span>, ...})
+                <span class="k">return</span>
+        <span class="k">await</span> self.app(scope, receive, send)</code></pre>
+
+  <p>The other half lives on the laptop — one block of config that names the tool and where to find it. That's the entire handshake.</p>
+
+  <pre><code><span class="s">"mcpServers"</span>: {
+  <span class="s">"edge-node"</span>: {
+    <span class="s">"type"</span>: <span class="s">"http"</span>,
+    <span class="s">"url"</span>: <span class="s">"http://pixel-10a:8765/mcp"</span>,
+    <span class="s">"headers"</span>: { <span class="s">"Authorization"</span>: <span class="s">"Bearer &lt;EDGE_TOKEN&gt;"</span> }
+  }
+}</code></pre>
+
+  <p>On the same phone, classifying one image: 30.7 ms on its CPU, 14.3 ms on its GPU, 1.4 ms on the accelerator. Same device throughout — the only honest comparison. These are one model on one chip; another device will land somewhere else.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 520 150" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:520px;display:block;margin:0 auto;" aria-label="Same phone, one image: CPU 30.7 ms, GPU 14.3 ms, accelerator chip 1.4 ms — about 20 times faster than this phone's CPU.">
+      <text x="6" y="34" font-family="-apple-system,sans-serif" font-size="12" fill="#c8c8d8">CPU</text>
+      <rect x="56" y="22" width="380" height="16" rx="3" fill="#58a6ff" opacity="0.7"/>
+      <text x="444" y="34" font-family="'SF Mono',ui-monospace,monospace" font-size="12" fill="#58a6ff">30.7 ms</text>
+      <text x="6" y="72" font-family="-apple-system,sans-serif" font-size="12" fill="#c8c8d8">GPU</text>
+      <rect x="56" y="60" width="177" height="16" rx="3" fill="#a78bfa" opacity="0.7"/>
+      <text x="241" y="72" font-family="'SF Mono',ui-monospace,monospace" font-size="12" fill="#a78bfa">14.3 ms</text>
+      <text x="6" y="110" font-family="-apple-system,sans-serif" font-size="12" fill="#3fb950" font-weight="700">chip</text>
+      <rect x="56" y="98" width="17" height="16" rx="3" fill="#3fb950"/>
+      <text x="81" y="110" font-family="'SF Mono',ui-monospace,monospace" font-size="12" fill="#3fb950" font-weight="700">1.4 ms</text>
+      <text x="158" y="110" font-family="-apple-system,sans-serif" font-size="12" fill="#3fb950" font-weight="700">— ~20× faster than this phone's CPU</text>
+    </svg>
+    <p class="diagram-caption">MobileNet-v1 int8 · 50-run average · one Pixel 10a — chip ~1.4 ms (1.25–1.58), ~6.8× its 8-thread CPU build.</p>
+  </div>
+
+  <p>The whole thing — the MCP server, the broker, the cross-compile recipe, and a runnable test client — is on GitHub: <a href="https://github.com/josephrobertlopez/edge-node-mcp">github.com/josephrobertlopez/edge-node-mcp</a>.</p>
+</div>
+
+<div class="section" id="start">
+  <div class="section-eyebrow">How to Start</div>
+  <h2>See What's There, Test It, Then Build</h2>
+
+  <p>You can't tell what a device can really do from its spec sheet. The method is empirical, and it's the same three steps every time — the tool comes last, not first.</p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 560 72" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:560px;display:block;margin:0 auto;" aria-label="The method, in order: see what chips are there, then smoke-test each, then build the tool last.">
+      <defs><marker id="ms" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8888a0"/></marker></defs>
+      <rect x="6" y="18" width="158" height="40" rx="8" fill="#1e1e30" stroke="#2a2a40"/>
+      <text x="85" y="36" font-family="-apple-system,sans-serif" font-size="11.5" fill="#c8c8d8" text-anchor="middle">See what chips</text>
+      <text x="85" y="51" font-family="-apple-system,sans-serif" font-size="11.5" fill="#c8c8d8" text-anchor="middle">are there</text>
+      <line x1="168" y1="38" x2="198" y2="38" stroke="#8888a0" stroke-width="1.4" marker-end="url(#ms)"/>
+      <rect x="202" y="18" width="158" height="40" rx="8" fill="#1e1e30" stroke="#2a2a40"/>
+      <text x="281" y="42" font-family="-apple-system,sans-serif" font-size="11.5" fill="#c8c8d8" text-anchor="middle">Smoke-test each</text>
+      <line x1="364" y1="38" x2="394" y2="38" stroke="#8888a0" stroke-width="1.4" marker-end="url(#ms)"/>
+      <rect x="398" y="18" width="158" height="40" rx="8" fill="#0f1a10" stroke="#3fb950" stroke-width="1.3"/>
+      <text x="477" y="42" font-family="-apple-system,sans-serif" font-size="11.5" fill="#3fb950" text-anchor="middle" font-weight="700">Build the tool — last</text>
+    </svg>
+    <p class="diagram-caption">Measure first; the tool wraps whatever won.</p>
+  </div>
+
+  <p><strong>1. See what chips are there.</strong> Ask the runtime what it can run on instead of guessing. On a phone, a TensorFlow Lite build will report the backends available to it — usually a CPU path, a GPU path, and a neural one (NNAPI, which routes to the NPU or TPU):</p>
+
+  <pre><code><span class="c"># what can this device actually run a model on?</span>
+backends = list_delegates()      <span class="c"># -> ['cpu', 'gpu', 'nnapi']</span></code></pre>
+
+  <p><strong>2. Smoke-test each one.</strong> Run a small, known model — MobileNet is the classic — through every backend and time it. This is where the spec sheet meets reality: some chips reject certain operations, and some <em>silently</em> fall back to the CPU while reporting success. So you measure, and you check what actually ran where. Those three numbers from the example are just this step on one phone.</p>
+
+  <pre><code><span class="c"># same model, every backend, 50 runs each</span>
+<span class="k">for</span> b <span class="k">in</span> backends:
+    print(b, benchmark(model, backend=b))   <span class="c"># cpu 30.7 · gpu 14.3 · nnapi 1.4 ms</span></code></pre>
+
+  <p><strong>3. Build the tool around the winner.</strong> Only now do you write the tool, and you wrap the exact path that won — not a guess. Force it to fail loudly if the fast chip isn't really there, so you never ship a number that was secretly the CPU. Build last, around a measured result.</p>
+
+  <p>That whole loop fits in an afternoon on one device. What costs time isn't the three steps — it's the mundane walls around them: a phone kills background processes, won't let your code read some files, forgets everything on reboot. Keep experiments small and reversible and you'll clear them. You don't need new hardware or a cloud account, just a device you already own.</p>
+</div>
+
+<div class="section" id="sandbox">
+  <div class="section-eyebrow">The Sandbox</div>
+  <h2>The Sandbox Is What Makes the Tinkering Fearless</h2>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 540 168" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:540px;display:block;margin:0 auto;" role="img" aria-label="The sandbox: a proot isolation box on a phone you own holds the files, network, and shell; the agent reaches in to tinker, but nothing it touches escapes the box.">
+      <defs>
+        <marker id="sbArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#8888a0"/>
+        </marker>
+      </defs>
+
+      <!-- agent node, left -->
+      <rect x="14" y="62" width="104" height="44" rx="8" fill="#1e1e30" stroke="#2a2a40"/>
+      <text x="66" y="82" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#c8c8d8">agent</text>
+      <text x="66" y="98" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="10.5" fill="#8888a0">reaches in</text>
+
+      <!-- the phone = the sandbox boundary -->
+      <rect x="186" y="14" width="338" height="140" rx="14" fill="none" stroke="#2a2a40" stroke-width="1.4"/>
+      <text x="204" y="34" font-family="'SF Mono',ui-monospace,monospace" font-size="11" fill="#8888a0">your phone — hardware you own</text>
+
+      <!-- the sandbox box (green = the answer: bounded, safe) -->
+      <rect x="204" y="46" width="302" height="92" rx="8" fill="#0f1a10" stroke="#3fb950" stroke-width="1.4"/>
+      <text x="355" y="66" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="11.5" fill="#3fb950" font-weight="700">proot sandbox</text>
+
+      <!-- contained resources -->
+      <rect x="220" y="80" width="84" height="44" rx="6" fill="#1e1e30" stroke="#2a2a40"/>
+      <text x="262" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11.5" fill="#c8c8d8">files</text>
+      <text x="262" y="115" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="10" fill="#8888a0">isolated</text>
+
+      <rect x="313" y="80" width="84" height="44" rx="6" fill="#1e1e30" stroke="#2a2a40"/>
+      <text x="355" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11.5" fill="#c8c8d8">shell</text>
+      <text x="355" y="115" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="10" fill="#8888a0">isolated</text>
+
+      <rect x="406" y="80" width="84" height="44" rx="6" fill="#1e1e30" stroke="#2a2a40"/>
+      <text x="448" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11.5" fill="#c8c8d8">network</text>
+      <text x="448" y="115" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="10" fill="#8888a0">isolated</text>
+
+      <!-- agent reaches into the sandbox -->
+      <line x1="118" y1="84" x2="200" y2="84" stroke="#8888a0" stroke-width="1.4" marker-end="url(#sbArrow)"/>
+      <text x="159" y="76" text-anchor="middle" font-family="'SF Mono',ui-monospace,monospace" font-size="10" fill="#8888a0">tinker</text>
+
+      <!-- nothing escapes: blocked arrow at the green boundary -->
+      <line x1="262" y1="138" x2="262" y2="154" stroke="#8888a0" stroke-width="1.4" stroke-dasharray="3 3"/>
+      <text x="355" y="151" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#3fb950" font-weight="700">nothing escapes the box</text>
+    </svg>
+    <p class="diagram-caption">Tailscale ACL → bearer gate → Termux proot → EDGE_FILE_ROOT jail. The agent only ever tinkers inside the innermost box.</p>
+  </div>
+
+  <p>The agent never gets the whole phone. It runs inside a sandbox — Termux into a proot, its own throwaway Linux on hardware you own — and gets a fenced-off directory it can read and write inside, and nothing above. Every path the agent hands in gets resolved against a single root, and if the resolved path tries to climb out, the call is refused before anything touches disk. No <code>..</code>, no symlink trick, no quiet escape. The shell stays off by default, behind a destructive-command denylist, for the same reason.</p>
+
+  <pre><code><span class="k">def</span> _safe_path(path: str) -&gt; str:
+    <span class="c"># resolve under EDGE_FILE_ROOT; raise if it escapes (.. or symlink)</span>
+    candidate = path <span class="k">if</span> os.path.isabs(path) <span class="k">else</span> os.path.join(EDGE_FILE_ROOT, path)
+    rp = os.path.realpath(candidate)
+    root = EDGE_FILE_ROOT
+    <span class="k">if</span> rp != root <span class="k">and not</span> rp.startswith(root + os.sep):
+        <span class="k">raise</span> PermissionError(<span class="s">f"path escapes sandbox EDGE_FILE_ROOT={root}"</span>)
+    <span class="k">return</span> rp</code></pre>
+
+  <p>That single function is the whole reason you can tinker without flinching. The hardware is yours, the directory is throwaway, and there's no cloud account to bill you for a mistake — delete the folder and the experiment never happened. It's reproducible because the boundary is one line of code, not a <em>trust me</em>: its own pip venv, imports that degrade instead of dying, a fence you can read in a sitting. Knock it down and rebuild it; nothing of yours is on the other side. The mesh of your devices is one tinkerer's sandbox — isolated, reversible, reproducible.</p>
+</div>
+
+<div class="section" id="code">
+  <div class="section-eyebrow">The Code</div>
+  <h2>The Code, Top to Bottom</h2>
+
+  <p>It's all in one repo — <a href="https://github.com/josephrobertlopez/edge-node-mcp">github.com/josephrobertlopez/edge-node-mcp</a> — and it's short enough to read in a sitting. Three pieces do the work: <code>edge_node.py</code>, the MCP server that holds the twelve tools behind the bearer gate and binds uvicorn to the tailnet; the launcher that keeps the server alive on a device that would rather kill it; and the test client that proves the fast chip is actually the chip that ran.</p>
+
+  <p>Start with the server. The tools are honest about themselves — <code>classify_image</code> doesn't claim the accelerator ran just because it was asked to. It reports the delegate that <em>actually</em> executed, and if the accelerator library fails to load it says so in the return value instead of silently falling back and lying about it.</p>
+
+  <pre><code>delegate_used = <span class="s">"cpu-xnnpack"</span>
+<span class="k">if</span> EDGETPU_DELEGATE_LIB <span class="k">and</span> os.path.exists(EDGETPU_DELEGATE_LIB):
+    <span class="k">try</span>:
+        delegates = [load_delegate(EDGETPU_DELEGATE_LIB)]
+        delegate_used = <span class="s">f"delegate:{os.path.basename(EDGETPU_DELEGATE_LIB)}"</span>
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        delegate_used = <span class="s">f"cpu-xnnpack (delegate load failed: {repr(e)[:80]})"</span>
+<span class="c"># ... returns {"results": res, "delegate": delegate_used}  &lt;- which chip really ran</span></code></pre>
+
+  <p>The same server degrades instead of dying. If the heavy dependencies aren't installed, the RAG tools return a clear error and the rest of the server keeps serving — a missing library shouldn't take the whole phone offline.</p>
+
+  <pre><code><span class="k">try</span>:
+    <span class="k">import</span> numpy <span class="k">as</span> np
+    <span class="k">import</span> rag_cli   <span class="c"># embedder, retrieve, build_prompt, run_llm, IDX_*</span>
+<span class="k">except</span> Exception <span class="k">as</span> e:  <span class="c"># deps missing -&gt; RAG tools degrade, server still serves</span>
+    RAG_OK, RAG_ERR = <span class="k">False</span>, repr(e)
+
+<span class="k">def</span> _need_rag():
+    <span class="k">if not</span> RAG_OK:
+        <span class="k">return</span> {<span class="s">"error"</span>: <span class="s">f"RAG deps unavailable: {RAG_ERR}. Install fastembed+numpy."</span>}
+    <span class="k">return</span> <span class="k">None</span></code></pre>
+
+  <p>The file tools sit behind the <code>_safe_path</code> jail from the last section, so the same server that serves the chip can't be talked into reading something it shouldn't. Then the launcher — the mundane-walls answer in one loop. A phone kills background processes and forgets them on reboot, so the launcher grabs a wake-lock to survive the screen going dark and supervises the server so a crash or an OOM just restarts it. Not clever. Just stubborn.</p>
+
+  <pre><code><span class="s">"$WAKELOCK"</span> &amp;&amp; echo <span class="s">"[edge-node] wake-lock acquired"</span>   <span class="c"># survive screen-off</span>
+trap cleanup INT TERM
+<span class="k">while</span> true; <span class="k">do</span>
+  <span class="s">"$PY"</span> <span class="s">"$SRV"</span>
+  echo <span class="s">"[edge-node] exited (code $?) — restarting in 2s"</span> &gt;&amp;2
+  sleep 2
+<span class="k">done</span></code></pre>
+
+  <p>The last piece is the desktop side: <code>test_edge_client.py</code> as the smoke-test, and <code>mcp.client.json</code> plus a short <code>CONNECT.md</code> as the handshake you copy into your own agent. Clone it, point the config at your own device's name, and call a tool. The loop only closes when the laptop knocks and the phone answers.</p>
+</div>
+
+<div class="section" id="mesh">
+  <div class="section-eyebrow">Your Device Mesh</div>
+  <h2>One Agent, All Your Devices</h2>
+
+  <p>Here's the part that makes it more than a trick. Run Claude Code — or any tool that speaks MCP — on your laptop, and point it at the tools running on your other devices. Claude Code is happy to hold several of these connections at once, so a single agent can reach all your hardware: the phone's camera and accelerator, the desktop's GPU, the Pi's sensors. Each is just a tool at an address on your private mesh.</p>
+
+  <p>Your scattered gadgets stop being separate things and become one system you operate by asking. <em>Classify what the phone camera sees. Run this on the desktop GPU. Read the greenhouse sensor and tell me if it's dry.</em> Same agent, different hardware, nothing leaving your network. A camera that thinks, a GPU shared between machines, a house of sensors with one brain — built from devices you already own.</p>
+
+  <div class="callout try">
+    <div class="callout-label">A first project</div>
+    <p>Take the oldest phone in your drawer. Put one tool on it — classify whatever its camera sees — and wire it to Claude Code on your laptop. That's a working edge node and your first device on the mesh. The second one is the same recipe with the address changed.</p>
+  </div>
+
+  <p>The hardware is already yours, and already idle. The only missing piece is deciding to wire one thing up. Whatever is beside you right now has been waiting for exactly that.</p>
+
+  <div class="callout note">
+    <div class="callout-label">Why bother, when there's a cloud for this</div>
+    <p>Because the cloud has the math backwards. Tokens are cheap and effectively infinite — what's scarce is your attention, and the trust of the people whose attention you spend. So the tool wraps the delegate that <em>measured</em> as the winner, never a guess; it reports which chip really ran instead of confident bullshit; and it keeps the boundary one line of code so a mistake is cheap to undo — isolation and reproducibility as respect for finite attention. And it's all public on GitHub, reproducible by a stranger on hardware they already own — because shared, reproducible tinkering is the one thing that actually compounds.</p>
+    <p>Pick up the phone you already own and ask it to do something. See what it says back.</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>Joey Lopez &middot; 2026 &middot; <a href="https://jrlopez.dev">jrlopez.dev</a></p>
+  <p style="margin-top:12px">
+    <a href="../index.html">&larr; jrlopez.dev</a>
+    &nbsp;&middot;&nbsp;
+    <a href="agent-first-design.html">agent-first design &rarr;</a>
+    &nbsp;&middot;&nbsp;
+    <a href="guardrails-deep-dive.html">guardrails deep dive &rarr;</a>
+  </p>
+</div>
+
+<script>
+(function() {
+  const sections = document.querySelectorAll('.section[id]');
+  const pills = document.querySelectorAll('.nav-pill');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        pills.forEach(p => p.classList.remove('active'));
+        const active = document.querySelector(`.nav-pill[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+  pills.forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      const href = pill.getAttribute('href');
+      if (!href.startsWith('#')) return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+</script>
+</body>
+</html>
