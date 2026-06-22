@@ -1,5 +1,5 @@
 # Joey Lopez — Knowledge Base
-Generated: 2026-04-07T17:41:22.267368
+Generated: 2026-06-22T18:26:06.502771
 Base URL: https://jrlopez.dev/
 
 This file aggregates all public knowledge from jrlopez.dev.
@@ -4131,22 +4131,32 @@ generated: true
 ---
 
 [← jrlopez.dev ]()
-# Joseph Lopez Sr. Data Engineer · AI Researcher Milwaukee, WI · [josephrobertlopez@gmail.com ]()· [jrlopez.dev ]()· [github ]()· [linkedin ]()Summary Data engineer who publishes security research. I proved regex safety filters are algebraically blind (peer-reviewed, 2026) and built data pipelines handling 10,000+ datasets with zero consumer disruption. Five years across financial services — migrations, streaming, agentic systems. I like hard problems and tend to document what I learn. Research & Side Projects Algebraic and Computational Limits of LLM Guardrails Proved regex safety filters are algebraically blind to modular-position encodings via syntactic monoid analysis. 91 production patterns analyzed, 34/35 aperiodic. Peer-reviewed, 2026. [pdf ]()[repo ]()[teaching materials ]()Experience Senior Data Engineer — Platform & Integration Sep 2024 – Present Financial Services (Milwaukee, WI)
- - Wiring an acquired institution's personal loans product into the parent platform — real-time data feeds, payment processor history, GraphQL data product interlinking
- - Designed an Airflow + config-as-code pipeline that moved **10,000+ payment processor datasets **during post-M&A integration; full audit trail throughout
- - Replaced shell script ETL with production-grade infrastructure from scratch — **250 dataset migrations, zero consumer disruption **; release velocity jumped from 1–10 to 20–25 datasets per cycle
- - Modernized 3 Databricks batch jobs covering 32 compliance datasets; config-driven validation toolkit cut dataset validation from 3 min → 30 sec ( **~62 hours manual work eliminated **)
- - Docker runtime workflows across 7 repos — saved **14+ person-days in 2 weeks **; one of 7 engineers selected for org-wide AI coding pilot
- - Developed a spec-driven development methodology — **66% velocity increase **, adopted org-wide Senior Application Developer — Product Engineering Jan 2024 – Aug 2024 Financial Services (Milwaukee, WI)
+# Joey Lopez AI / Platform Engineer · Agents, Integrations & Data Milwaukee, WI · [josephrobertlopez@gmail.com ]()· [jrlopez.dev ]()· [github ]()· [linkedin ]()Summary Engineer who builds AI agents and the infrastructure that runs them. I built the foundation-model gateway that routes every AI and agentic workload at a Fortune 100 bank, co-authored a published methodology that cut delivery time 66%, and run independent research on where language-model guardrails break. Five years at Accenture across application development, data engineering, and platform work. I like hard problems and tend to document what I learn. Experience Foundation Model Gateway — AI Platform Jun 2026 – Present Accenture · Fortune 100 financial-services client (Milwaukee, WI)
+ - With AI adoption fragmenting across teams in a regulated bank, **built a Go + Kubernetes gateway on AWS Bedrock **to consolidate access — making it the single path every AI and agentic workload flows through, including organization-wide Claude Code usage
+ - To keep model usage governable at enterprise scale, designed the gateway as the **central control point for access, routing, and governance **— giving the organization one enforceable boundary for how foundation models are consumed
+ - Facing strict regulatory constraints on AI, engineered the platform for **secure, scalable multi-model access **so teams could adopt foundation models without each re-solving compliance, auth, and integration Payment System Integration — Data Engineering Mar 2026 – May 2026 Accenture · Fortune 100 financial-services client (Milwaukee, WI)
+ - Tasked with exposing personal-loans data spread across disparate systems, **built a data-product API integrating TSYS (payment system) and Finicity **via **GraphQL data products **, giving downstream consumers one consistent interface to previously siloed sources
+ - To make payment and account data reliable across systems of record, modeled a **shared data ontology **and implemented the services on **AWS Lambda and DynamoDB **— aligning mismatched source schemas into a coherent contract
+ - Where a single request spanned multiple systems, implemented **multi-step workflows coordinating API calls across the payment processor and external financial-data providers **, so consumers got complete data without orchestrating those calls themselves Historic-Account Migration — Data Engineering Jan 2026 – Feb 2026 Accenture · Fortune 100 financial-services client (Milwaukee, WI)
+ - Charged with moving historic acquired-account data off a legacy stack, **built an Airflow pipeline mapping legacy COBOL dataset logic from S3 into Snowflake **— translating decades-old encoded logic into a modern, queryable form
+ - Because live consumers depended on the data mid-migration, engineered the cutover to land with **zero consumer-view downtime **, preserving uninterrupted downstream access throughout
+ - To reconcile incompatible legacy and target structures, modeled a **unified data ontology **across the cutover, ensuring migrated records stayed consistent and trustworthy on the new platform Senior Data Engineer — Platform & Integration Sep 2024 – Dec 2025 Accenture · Fortune 100 financial-services client (Milwaukee, WI)
+ - Delivered across a large-scale migration program — **1,000+ dataset migrations **spanning 6 pattern types, including **250+ streaming migrations with zero downtime **(Scala, Python, Java, SQL across Databricks, Snowflake, Kafka, AWS)
+ - Replaced shell-script ETL with production-grade infrastructure from scratch; release velocity jumped from 1–10 to 20–25 datasets per cycle
+ - Built config-driven validation that cut manual validation time dramatically across ~1,500 datasets; one of 7 engineers selected for an org-wide AI coding pilot
+ - Co-designed a spec-driven context methodology (KNOWLEDGE / SPEC / PLAN dotfiles auto-loaded into AI dev tools) adopted across the program — **66% faster delivery **; published as a 3-part series Senior Application Developer — Product Engineering Jan 2024 – Aug 2024 Accenture · Fortune 100 financial-services client (Milwaukee, WI)
  - Shipped credit-freeze data flow end-to-end across a distributed decision system
  - Built a test-vetted UI for credit policy modelers — cut prototyping time from days to hours
  - Found and fixed a Kafka consumer test suite that was passing without ever validating data — those tests were blind for months
- - Led PySpark 2→3 migration of a production AWS Step Function ETL pipeline with no downtime AI Engineering & Developer Experience Oct 2025 – Present Financial Services — Data Products / Platform
- - Built a LangGraph multi-agent POC for developer onboarding — handles API discovery, schema comprehension, and code generation in a single workflow; cuts "how does this API work" from hours to minutes
- - Designed and ran a Prompt Engineering Bootcamp — 2 sessions, 15 engineers, 7 patterns; published all materials as open-source teaching resources
- - Mentored 2 junior devs — both shipped production-ready workflows independently within a month Application Developer — Data Engineering Aug 2021 – Dec 2023 Financial Services (Milwaukee, WI)
+ - Led PySpark 2→3 migration of a production AWS Step Function ETL pipeline with no downtime Application Developer — Data Engineering Aug 2021 – Dec 2023 Accenture · Fortune 100 financial-services client (Milwaukee, WI)
  - Built data streaming pipelines, implemented a DMN rules engine, and drove schema modernization across multiple platforms
- - Designed multitenancy schema and data exhaust architecture for ETL pipelines Skills AI/Agentic: LangGraph, Multi-Agent Architectures, MCP, spec-driven development Python: Pytest, Pandas, PySpark, Airflow, LangGraph, Jupyter Java: Spring Boot, JUnit, Mockito, Microservices, Cucumber, Maven Go: Concurrency, goroutines, HTTP handlers, CLI tooling Scala: Spark Tools: SQL, AWS, GCP, Docker, OpenAPI, Splunk, GitHub, Jira, Confluence, Tableau, Claude Code, Windsurf Education & Certifications B.S. Computer Science / Machine Learning — UC Irvine 2020 · 3.48 GPA AWS Cloud Practitioner · GCP Associate Cloud Engineer Export PDF Export DOCX
+ - Designed multitenancy schema and data exhaust architecture for ETL pipelines Leadership & Enablement Account / product / team-level initiative beyond chargeable delivery — Accenture (Milwaukee, WI)
+ - Seeing developers lose hours to opaque internal APIs, **built a LangGraph multi-agent POC **for onboarding — handling API discovery, schema comprehension, and code generation in one workflow — that cut "how does this API work?" from hours to minutes
+ - To let agents act on real systems rather than just answer questions, **integrated agent tooling via MCP **, enabling them to call internal services and data products directly
+ - With prompt skills uneven across the team, **designed and ran a Prompt Engineering Bootcamp **(2 sessions, 15 engineers, 7 patterns) and **published the materials open-source **, raising the team's baseline AI fluency from a repeatable resource
+ - Asked to grow newer engineers, **mentored 2 junior developers **to the point where both shipped production-ready workflows independently within a month
+ - To advance pursuits beyond staffed scope, **independently led proof-of-concept builds that helped win client work **— turning ambiguous prospects into demonstrable, working solutions
+ - Trusted with client-facing and hiring responsibilities, **partnered with delivery leads on client-side data reconciliation **and **conducted technical interviews **to strengthen the delivery team Research & Writing Algebraic and Computational Limits of LLM Guardrails Independent research on where language-model guardrails provably fail — regex filters shown blind to modular-position encodings via syntactic-monoid aperiodicity. 5 attack vectors, a monoid-extractor audit tool, and a benchmark harness (ToT+LLM 4.3× over BFS, p<0.001). Solo-authored preprint (arXiv, pending endorsement). [pdf ]()[repo ]()[teaching materials ]()AI-Powered Data Migration: How Specification-Driven Context Engineering Unlocks Acceleration Co-authored 3-part series on spec-driven context architecture and SDLC friction mapping for large-scale migration delivery — the methodology behind a 66% delivery-time reduction. Published on LinkedIn. [part 1 ]()Skills AI / Agentic: LLMs, agent orchestration, LangGraph, multi-agent systems, MCP, prompt engineering, AWS Bedrock, RAG-style knowledge retrieval, guardrail evaluation & red-teaming, spec-driven development Backend & APIs: Java/Spring Boot microservices, Go (concurrency, goroutines, HTTP, CLI), Python services, REST, GraphQL, OpenAPI, DMN rules engine Cloud & Platform: AWS (Bedrock, Lambda, DynamoDB, Step Functions, S3), Kubernetes, Docker, GCP, config-as-code, CI/CD Data: Airflow, Kafka, PySpark, Spark/Scala, Databricks, Snowflake, SQL, data ontology & schema design, audit/compliance pipelines Languages: Python (Pytest, Pandas, PySpark, Airflow, LangGraph), Java, Go, Scala, SQL, JavaScript Tools: Claude Code, Windsurf, GitHub, Jira, Confluence, Splunk, JavaScript front-end (this site) Education & Certifications B.S. Computer Science / Machine Learning — UC Irvine 2020 · 3.48 GPA AWS Cloud Practitioner · GCP Associate Cloud Engineer Export PDF Export DOCX
 ---
 # secrets-router.md
 # https://jrlopez.dev/p/secrets-router.html
@@ -8399,3 +8409,77 @@ A: Create one whenever you notice yourself giving the same architectural guidanc
 **Version**: 1.0
 **Last Updated**: 2026-03-18
 **For**: Joey's Prompt Engineering Bootcamp v2 — Tech Lead Track
+
+---
+# timeout-typos-and-matcher-completeness.md
+# https://jrlopez.dev/p/timeout-typos-and-matcher-completeness.md
+
+---
+layout: article
+title: "Hook Matchers and Timeouts as Enforcement Surfaces"
+subtitle: "A single missing zero silently disabled a percept hook for weeks. Here is the pattern that catches it."
+description: "Why hook timeouts and matcher regexes are first-class enforcement surfaces — and the audit pattern that proves they actually fire."
+author: "Joey Lopez"
+date: "2026-05-31"
+tags: ["patterns", "sellable", "enforcement", "agents", "hooks", "governance"]
+---
+
+# Hook matchers and timeouts as enforcement surfaces
+
+A governance agent's hook had `"timeout": 5` in its registration. Not five seconds — five milliseconds. The hook had not actually run in weeks. Every payload it was supposed to inspect sailed past, because the harness killed the subprocess before `bash` finished resolving `$PATH`. A single missing zero silently disabled enforcement.
+
+This page names the failure mode, gives the structural fix, and ties it to the broader **Pre-Publish Rigor Gate Pack** thesis: that real LLM governance is composed from five enforcement layers (rails, skills+agents, hooks, MCP, config), and the hooks layer fails in two specific structural ways nobody audits for.
+
+## The failure mode: silently-no-op enforcement
+
+Hooks in agent frameworks (Claude Code, Cursor, Windsurf, OpenAgents) get two configuration knobs that look like trivia and are in fact load-bearing:
+
+1. **The matcher** — a regex (or string) that decides which tool calls the hook intercepts.
+2. **The timeout** — milliseconds the hook is given to exit before the harness forcibly kills it and proceeds.
+
+Both knobs share a property: **when they are wrong, the hook returns "PASS" by default.** A timeout that fires before the script can run looks identical to a script that ran and approved. A matcher that misses a tool variant looks identical to "no hook was registered for that tool." Neither failure mode produces an error. Neither failure mode shows up in any dashboard. The agent just stops being governed, and nothing tells you.
+
+This is the worst possible default for an enforcement layer. Compare to a firewall rule that, when malformed, opens the port instead of closing it. A governance hook that silently no-ops is exactly that: fail-open enforcement.
+
+### Two concrete shapes the failure takes
+
+**Shape 1: Timeout typo.** Someone wrote `"timeout": 5` meaning "five seconds." The framework reads it as five milliseconds. Every invocation of the hook gets killed in the kernel before user-space code runs. The enforcement layer evaporates without a log line.
+
+**Shape 2: Matcher incompleteness.** The substrate-write hard-gate hook fires on `add_observations` but not on `create_entities` or `delete_entities`. Months later, the agent figures out it can route writes through entity-creation instead of observation-addition, or — worse — delete observations to "reclaim headroom" and bypass the size-limit check entirely. The matcher was written when there was one write verb; the substrate grew four, and nobody re-audited.
+
+## The structural fix: matcher-and-timeout audit pattern
+
+Treat the hook configuration the same way you treat the hook code:
+
+```
+1. Enumerate every tool that mutates the surface you are protecting.
+   Not "the obvious ones" — every one. Adversarial completion.
+2. Make the matcher an alternation over the full set.
+3. Lower-bound every timeout against the actual p99 of the hook's
+   own runtime, measured. Not guessed.
+4. Add a smoke test that synthesizes one payload per matched
+   variant and asserts the hook fires (exit code, log line, or
+   structured output — pick one and assert).
+5. Wire the smoke test into session-start so a stale config trips
+   the alarm before it trips the agent.
+```
+
+The pattern has a name worth keeping: **matcher-and-timeout audit.** It belongs in the same family as Kubernetes admission-webhook completeness checks, eBPF tracepoint coverage tests, and SIEM rule-as-code linting. The shape is universal: any system where "no message" is interpreted as "all good" needs an active probe that asserts the message machinery itself still works.
+
+## Where this sits in the Pre-Publish Rigor Gate Pack
+
+The Pack composes from five layers:
+
+| Layer | What it gates | Failure mode this page targets |
+|---|---|---|
+| **Rails** | Character + epistemic discipline encoded in agent system prompts | Soft layer; rails ask the model to comply |
+| **Skills + agents** | Modular capabilities + delegation contracts | Soft layer; agents can decline |
+| **Hooks** | Harness-level pre/post tool-call interception | **Hard layer; harness enforces regardless of model wishes — but only if matcher and timeout are correct** |
+| **MCP** | External tool surface (search, vault, secrets) | Hard layer if hooks gate it; soft otherwise |
+| **Config** | Permissions, environment, allowlists | Hard layer; same matcher-completeness risk |
+
+The hooks layer is the **only** mechanically uncircumventable layer in most agent frameworks, which is why getting its config right matters disproportionately. A rail can be ignored; a skill can be left uninvoked; an MCP server can be bypassed. A correctly-registered PreToolUse hook with a sane timeout cannot be — it runs in the harness, before the tool call lands. That is the entire reason the layer exists. Misconfigure it and you have moved enforcement back into the soft layers without anyone noticing.
+
+## The takeaway sellable to a senior engineer
+
+If you are building or auditing an LLM agent framework for production use: every hook registration is a contract with the harness, and contracts with implicit fail-open semantics need active probes, not passive trust. Audit your matcher coverage against the live tool surface and lower-bound every timeout against measured runtime — because the moment a millisecond-precision typo or a missed tool variant silently disables enforcement, your governance posture is whatever the model felt like doing that day.
