@@ -3,6 +3,8 @@
 
 ## Code
 
+- [Edge Dev on the Hardware You Already Own](https://jrlopez.dev/p/edge-node-mcp.html): A phone classifies images in 1.4 ms. Wrap any device's accelerator as an MCP tool an agent can call — local, sandboxed, on hardware you already own.
+
 - [I Taught Claude to Pay My Water Bill](https://jrlopez.dev/p/secrets-router.html): My card number ended up in the AI context window. So I built a credential isolation layer.
 
 - [Dev Second Brain](https://jrlopez.dev/p/bootcamp-skills.html#tab-dev): ReAct-driven code migrations, refactoring, debugging.
