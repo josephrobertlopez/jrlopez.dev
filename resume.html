@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Resume — Joey Lopez</title>
-<meta name="description" content="AI / Platform Engineer. 5 years building agentic systems, LLM infrastructure, and data platforms at scale. Independent language-model guardrail research.">
+<meta name="description" content="AI / Platform Engineer. 5 years building AI platform infrastructure and data systems at scale. Independent language-model guardrail research.">
 <meta property="og:title" content="Resume — Joey Lopez">
-<meta property="og:description" content="AI / Platform Engineer. 5 years building agentic systems, LLM infrastructure, and data platforms at scale. Independent language-model guardrail research.">
+<meta property="og:description" content="AI / Platform Engineer. 5 years building AI platform infrastructure and data systems at scale. Independent language-model guardrail research.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jrlopez.dev/resume.html">
 <meta property="og:image" content="https://jrlopez.dev/og-image.png">
@@ -165,6 +165,37 @@
     color: var(--green);
     font-weight: 600;
     margin-top: 0.5rem;
+  }
+
+  .employer-block {
+    border-left: 2px solid var(--border);
+    padding-left: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .employer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .employer-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-bright);
+  }
+
+  .employer-meta {
+    font-size: 0.85rem;
+    color: var(--blue);
+    margin-bottom: 0.9rem;
+  }
+
+  .employer-block .role {
+    margin-bottom: 1.2rem;
   }
 
   .pub-item {
@@ -463,134 +494,128 @@
 
   <div class="section-title">Summary</div>
   <div class="summary">
-    Engineer who builds AI agents and the production infrastructure that runs them — end to end, from ambiguous problem to deployed, monitored system. I built the foundation-model gateway that routes every AI and agentic workload at a Fortune 100 bank (Anthropic + OpenAI on AWS Bedrock), shipped a LangGraph multi-agent platform over MCP, co-authored a published methodology that cut delivery time 66%, and run independent research on where language-model guardrails break. Five years at Accenture across application development, data engineering, and platform work. I like hard problems and tend to document what I learn.
+    Five years at Accenture working on data infrastructure and AI platform integration for a Fortune 100 bank. I like understanding how things break — I read papers, run experiments, and tend to write up what I find. Current side project is figuring out where LLM guardrails actually fail.
   </div>
 
   <div class="section-title">Experience</div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Foundation Model Gateway — AI Platform</span>
-      <span class="role-date">Jun 2026 – Present</span>
+  <div class="employer-block">
+    <div class="employer-header">
+      <span class="employer-name">Accenture</span>
+      <span class="role-date">Aug 2021 – Present</span>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>With AI adoption fragmenting across teams in a regulated bank, <strong>built a Go + Kubernetes gateway on AWS Bedrock</strong> to consolidate access — the single path every AI and agentic workload flows through, including organization-wide <strong>Claude Code (Anthropic)</strong> and OpenAI usage</li>
-      <li>Owned the platform across its full lifecycle — <strong>design, routing, deployment, and runtime governance</strong> — giving the organization one enforceable boundary for how foundation models are accessed, monitored, and consumed at scale</li>
-      <li>Facing strict regulatory constraints on AI, engineered the platform for <strong>secure, scalable multi-model access</strong> so teams could adopt foundation models without each re-solving compliance, auth, and integration</li>
-    </ul>
-  </div>
+    <div class="employer-meta">Fortune 100 financial-services client · Milwaukee, WI</div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Agentic Onboarding Platform — Applied AI</span>
-      <span class="role-date">2025 – 2026</span>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">AI Platform Engineer — Foundation Model Gateway</span>
+        <span class="role-date">2025 – Present</span>
+      </div>
+      <div class="phase-label">Go + Kubernetes foundation-model gateway on AWS Bedrock — all org LLM workloads · 5-person team</div>
+      <ul>
+        <li>Engineered <strong>E2E integration test harness</strong> — validated Codex + third-party integrations against hard deadlines using Claude Code</li>
+        <li>Built <strong>enterprise chargeback logging</strong> — AI spend attributed by team across all foundation-model workloads, enabling org-wide cost accountability</li>
+      </ul>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>Seeing developers lose hours to opaque internal APIs, <strong>built a LangGraph multi-agent system</strong> handling API discovery, schema comprehension, and code generation in one workflow — cutting "how does this API work?" from hours to minutes</li>
-      <li>To let agents act on real systems instead of just answering, <strong>integrated agent tooling over MCP</strong>, enabling direct calls to internal services and data products — codebases built to be legible to both agents and developers</li>
-      <li>Took the work from <strong>ambiguous prototype to demonstrable, working solution</strong> that helped advance client conversations</li>
-    </ul>
-  </div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Payment System Integration — Data Engineering</span>
-      <span class="role-date">Mar 2026 – May 2026</span>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Payment System Integration — Data Engineering</span>
+        <span class="role-date">Mar – May 2026</span>
+      </div>
+      <div class="phase-label">TSYS + Finicity unification — personal-loans data across disparate systems · Lambda + DynamoDB</div>
+      <ul>
+        <li>Built <strong>GraphQL data-product API</strong> across 3 ETL schemas — one interface replacing per-consumer integration work</li>
+        <li>Multi-step orchestration across payment processor + external providers — consumers get complete data, no call coordination required</li>
+      </ul>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>Tasked with exposing personal-loans data spread across disparate systems, <strong>built a data-product API integrating TSYS (payment system) and Finicity</strong> via <strong>GraphQL data products</strong>, giving downstream consumers one consistent interface to previously siloed sources</li>
-      <li>To make payment and account data reliable across systems of record, modeled a <strong>shared data ontology across 3 ETL schemas</strong> and implemented the services on <strong>AWS Lambda and DynamoDB</strong> — choosing DynamoDB for high-throughput key-based access, in contrast to the PostgreSQL-backed relational decisioning work elsewhere — aligning mismatched source schemas into a coherent contract</li>
-      <li>Where a single request spanned multiple systems, implemented <strong>multi-step workflows coordinating API calls across the payment processor and external financial-data providers</strong>, so consumers got complete data without orchestrating those calls themselves</li>
-    </ul>
-  </div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Historic-Account Migration — Data Engineering</span>
-      <span class="role-date">Jan 2026 – Feb 2026</span>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Historic-Account Migration — Data Engineering</span>
+        <span class="role-date">Jan – Feb 2026</span>
+      </div>
+      <div class="phase-label">Legacy COBOL account data · S3 → Snowflake</div>
+      <ul>
+        <li><strong>Airflow pipeline</strong> — zero consumer downtime, cutover ran behind existing views throughout</li>
+        <li>Unified data ontology across legacy/target — migrated records consistent on new platform</li>
+      </ul>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>Charged with moving historic acquired-account data off a legacy stack, <strong>built an Airflow pipeline mapping legacy COBOL dataset logic from S3 into Snowflake</strong> — translating decades-old encoded logic into a modern, queryable form</li>
-      <li>Because live consumers depended on the data mid-migration, engineered the cutover to land <strong>behind the existing customer-facing views with zero downtime</strong> — customers kept querying historic data through the same views throughout</li>
-      <li>To reconcile incompatible legacy and target structures, modeled a <strong>unified data ontology</strong> across the cutover, ensuring migrated records stayed consistent and trustworthy on the new platform</li>
-    </ul>
-  </div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Senior Data Engineer — Platform &amp; Integration</span>
-      <span class="role-date">Sep 2024 – Dec 2025</span>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Senior Data Engineer — Platform &amp; Integration</span>
+        <span class="role-date">Sep 2024 – Dec 2025</span>
+      </div>
+      <div class="phase-label">Large-scale migration program · Databricks, Snowflake, Kafka · Scala, Python, Java, SQL on AWS</div>
+      <ul>
+        <li><strong>1,000+ dataset migrations</strong> (6 pattern types); <strong>250+ streaming</strong> with zero downtime</li>
+        <li>Replaced shell-script ETL — release velocity <strong>1–10 → 20–25 datasets/cycle</strong></li>
+        <li>Config-driven validation across ~1,500 datasets — <strong>3 min → 30 sec/dataset</strong>, ~62 hrs eliminated per cycle</li>
+        <li>One of <strong>7 engineers selected</strong> org-wide for AI coding pilot</li>
+        <li>Co-designed KNOWLEDGE/SPEC/PLAN methodology — <strong>66% reduction in per-story delivery time</strong>; published as series</li>
+      </ul>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>Delivered across a large-scale migration program — <strong>1,000+ dataset migrations</strong> spanning 6 pattern types (cutover, union, and legacy-governance uplift to enterprise standards), including <strong>250+ streaming migrations with zero downtime</strong>, treating <strong>Databricks, Snowflake, and Kafka sinks as equivalent target states</strong> (Scala, Python, Java, SQL on AWS)</li>
-      <li>Replaced shell-script ETL with production-grade infrastructure from scratch; release velocity jumped from 1–10 to 20–25 datasets per cycle</li>
-      <li>Built config-driven validation that cut manual validation time dramatically across ~1,500 datasets; one of 7 engineers selected for an org-wide AI coding pilot</li>
-      <li>Co-designed a spec-driven context methodology (KNOWLEDGE / SPEC / PLAN dotfiles auto-loaded into AI dev tools) adopted across the program — <strong>66% faster delivery</strong>; published as a 3-part series</li>
-    </ul>
-  </div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Senior Application Developer — Product Engineering</span>
-      <span class="role-date">Jan 2024 – Aug 2024</span>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Senior Application Developer — Product Engineering</span>
+        <span class="role-date">Jan – Aug 2024</span>
+      </div>
+      <div class="phase-label">Credit-card decisioning system · PostgreSQL-backed distributed pipeline</div>
+      <ul>
+        <li>Led data integration + schema design for credit-freeze flow across full card-acquisition lifecycle</li>
+        <li>Built test-vetted UI for credit-policy modelers — prototyping <strong>days → hours</strong></li>
+        <li>Found + fixed Kafka consumer test suite blind for months — prevented silent data-correctness failures reaching consumers</li>
+        <li><strong>PySpark 2→3</strong> migration of production Step Function ETL — zero downtime</li>
+      </ul>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>Shipped credit-freeze data flow end-to-end across a distributed decision system, with <strong>PostgreSQL</strong>-backed services as the system of record</li>
-      <li>Built a test-vetted UI for credit-policy modelers over a <strong>PostgreSQL</strong>-backed policy store — cut prototyping time from days to hours</li>
-      <li>Found and fixed a Kafka consumer test suite that was passing without ever validating data — those tests were blind for months</li>
-      <li>Led PySpark 2→3 migration of a production AWS Step Function ETL pipeline with no downtime</li>
-    </ul>
-  </div>
 
-  <div class="role">
-    <div class="role-header">
-      <span class="role-title">Application Developer — Data Engineering</span>
-      <span class="role-date">Aug 2021 – Dec 2023</span>
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Application Developer — Data Engineering</span>
+        <span class="role-date">Aug 2021 – Dec 2023</span>
+      </div>
+      <div class="phase-label">Core financial-services data infrastructure · audit-compliance constraints · multi-platform decisioning</div>
+      <ul>
+        <li>Built production streaming pipelines; contributed to <strong>DMN rules engine</strong> + credit-card decisioning data infrastructure on PostgreSQL</li>
+        <li>Designed <strong>multitenancy schema + data exhaust architecture</strong> — business-unit isolation over shared ETL infrastructure</li>
+        <li>Drove schema modernization across platforms — aligned legacy/modern contracts for decisioning-system consumers</li>
+      </ul>
     </div>
-    <div class="role-org">Accenture · Fortune 100 financial-services client (Milwaukee, WI)</div>
-    <ul>
-      <li>Built data streaming pipelines and implemented a <strong>DMN rules engine and credit-card decisioning engine on PostgreSQL</strong>, driving schema modernization across multiple platforms</li>
-      <li>Designed multitenancy schema and data exhaust architecture for ETL pipelines</li>
-    </ul>
   </div>
 
   <div class="section-title">Leadership &amp; Enablement</div>
   <div class="role">
     <div class="role-org">Account / product / team-level initiative beyond chargeable delivery — Accenture (Milwaukee, WI)</div>
     <ul>
-      <li>With prompt skills uneven across the team, <strong>designed and ran a Prompt Engineering Bootcamp</strong> (2 sessions, 15 engineers, 7 patterns) and <strong>published the materials open-source</strong>, raising the team's baseline AI fluency from a repeatable resource</li>
-      <li>Asked to grow newer engineers, <strong>mentored 2 junior developers</strong> to the point where both shipped production-ready workflows independently within a month</li>
-      <li>To advance pursuits beyond staffed scope, <strong>independently led proof-of-concept builds that helped win client work</strong> — turning ambiguous prospects into demonstrable, working solutions</li>
-      <li>Trusted with client-facing and hiring responsibilities, <strong>partnered with delivery leads on client-side data reconciliation</strong> and <strong>conducted technical interviews</strong> to strengthen the delivery team</li>
+      <li><strong>Designed and ran a Prompt Engineering Bootcamp</strong> (2 sessions, 15 engineers, 7 patterns) and published all materials open-source — raised team AI fluency from a repeatable, shareable resource</li>
+      <li><strong>Mentored 2 junior developers</strong> — both shipped production-ready features independently within a month</li>
+      <li><strong>Independently led proof-of-concept builds that helped win client work</strong> — turned ambiguous prospects into demonstrable, working solutions</li>
+      <li>Trusted with client-facing and hiring responsibilities — <strong>partnered with delivery leads on data reconciliation</strong> and <strong>conducted technical interviews</strong></li>
     </ul>
   </div>
 
   <div class="section-title">Research &amp; Writing</div>
   <div class="pub-item">
     <div class="pub-title">Algebraic and Computational Limits of LLM Guardrails</div>
-    <div class="pub-desc">Independent research on where language-model guardrails provably fail — regex filters shown blind to modular-position encodings via syntactic-monoid aperiodicity. 5 attack vectors, a monoid-extractor audit tool, and a benchmark harness (ToT+LLM 4.3× over BFS, p&lt;0.001). Solo-authored preprint — <strong>not peer-reviewed</strong> (arXiv, pending endorsement).</div>
+    <div class="pub-desc">Independent research on where language-model guardrails provably fail — regex filters shown blind to modular-position encodings via syntactic-monoid aperiodicity. 5 attack vectors, monoid-extractor audit tool, benchmark harness (ToT+LLM 4.3× over BFS, p&lt;0.001). Solo-authored preprint — <strong>not peer-reviewed</strong>.</div>
     <div class="pub-links"><a href="https://github.com/josephrobertlopez/aperiodic-guardrails/blob/main/paper/main.pdf" target="_blank">pdf</a> <a href="https://github.com/josephrobertlopez/aperiodic-guardrails" target="_blank">repo</a> <a href="https://jrlopez.dev/p/guardrails-engineers.html">teaching materials</a></div>
   </div>
   <div class="pub-item">
     <div class="pub-title">AI-Powered Data Migration: How Specification-Driven Context Engineering Unlocks Acceleration</div>
-    <div class="pub-desc">Co-authored 3-part series on spec-driven context architecture and SDLC friction mapping for large-scale migration delivery — the methodology behind a 66% delivery-time reduction. Published on LinkedIn.</div>
+    <div class="pub-desc">Co-authored series on spec-driven context architecture and SDLC friction mapping for large-scale migration delivery — the methodology behind a 66% delivery-time reduction. Published on LinkedIn.</div>
     <div class="pub-links"><a href="https://www.linkedin.com/pulse/ai-powered-data-migration-how-specification-driven-context-lopez-gi28c/" target="_blank">part 1</a></div>
   </div>
 
   <div class="section-title">Skills</div>
   <div class="skills-grid">
-    <div><span class="skill-cat">AI / Agentic:</span> <span class="skill-list">LLMs, agent orchestration, LangGraph, multi-agent systems, MCP, Anthropic &amp; OpenAI frontier models, AWS Bedrock, prompt engineering, RAG-style retrieval, guardrail evaluation &amp; red-teaming, spec-driven development</span></div>
-    <div><span class="skill-cat">Languages:</span> <span class="skill-list">Python (Pytest, Pandas, PySpark, Airflow, LangGraph), TypeScript / JavaScript, Go (concurrency, goroutines, HTTP, CLI), Java, Scala, SQL</span></div>
-    <div><span class="skill-cat">Cloud &amp; Platform:</span> <span class="skill-list">AWS (Bedrock, Lambda, DynamoDB, Step Functions, S3), Docker, Kubernetes, Terraform, GCP, config-as-code, CI/CD</span></div>
-    <div><span class="skill-cat">Backend &amp; APIs:</span> <span class="skill-list">Go &amp; Python services, Java/Spring Boot microservices, REST, GraphQL, OpenAPI, DMN rules engine</span></div>
-    <div><span class="skill-cat">Data:</span> <span class="skill-list">PostgreSQL, DynamoDB, Snowflake, Kafka, Airflow, PySpark, Spark/Scala, Databricks, data ontology &amp; schema design, audit/compliance pipelines</span></div>
-    <div><span class="skill-cat">Tools:</span> <span class="skill-list">Claude Code, Windsurf, GitHub, Jira, Confluence, Splunk</span></div>
+    <div><span class="skill-cat">AI / Platform:</span> <span class="skill-list">LLMs, AWS Bedrock, Claude Code, Codex, prompt engineering, spec-driven development, AI platform integration &amp; validation, enterprise cost instrumentation</span></div>
+    <div><span class="skill-cat">Languages:</span> <span class="skill-list">Python (Pytest, Pandas, PySpark, Airflow), TypeScript, Java, Scala, SQL</span></div>
+    <div><span class="skill-cat">Cloud &amp; Platform:</span> <span class="skill-list">AWS (Bedrock, Lambda, DynamoDB, Step Functions, S3), Kubernetes, Docker, GCP, Terraform, CI/CD</span></div>
+    <div><span class="skill-cat">Data:</span> <span class="skill-list">Snowflake, Databricks, Kafka, PostgreSQL, Airflow, PySpark, Spark/Scala, data ontology &amp; schema design</span></div>
+    <div><span class="skill-cat">Backend &amp; APIs:</span> <span class="skill-list">REST, GraphQL, OpenAPI, Java/Spring Boot, DMN rules engine</span></div>
+    <div><span class="skill-cat">Tools:</span> <span class="skill-list">Claude Code, GitHub, Splunk, Jira, Confluence</span></div>
   </div>
 
   <div class="section-title">Education &amp; Certifications</div>
